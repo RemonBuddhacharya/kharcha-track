@@ -15,7 +15,7 @@ Follow these tutorials in sequence to build the complete KharchaTrack applicatio
 3. [Authentication & User Management](tutorials/03-authentication.md) - Implementing user authentication and roles
 4. [Frontend Development](tutorials/04-frontend.md) - Setting up Mary UI and frontend components
 5. [Expense Management](tutorials/05-expense-management.md) - Creating the expense tracking functionality
-6. [Forecasting System](tutorials/06-forecasting-system.md) - Building the expense forecasting feature
+6. [Forecasting System](tutorials/06-forecasting.md) - Building the expense forecasting feature
 7. [Anomaly Detection](tutorials/07-anomaly-detection.md) - Implementing the anomaly detection system
 
 ## 🎯 What You'll Learn

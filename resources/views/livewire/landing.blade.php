@@ -16,8 +16,8 @@ class extends Component {
 
 <div class="min-h-screen flex flex-col items-center justify-center p-4">
     <div class="text-center mb-8">
-        <h1 class="text-4xl font-bold mb-4">Welcome to Our Platform</h1>
-        <p class="text-lg text-gray-600">Get started with your journey today</p>
+        <h1 class="text-4xl font-bold mb-4">Welcome to Kharcha Track</h1>
+        <p class="text-lg text-gray-600">Track your expenses easily</p>
         @if (session('verified'))
             <div class="mt-4">
                 <x-alert title="{{ session('verified') }}" class="alert-success" icon="o-check" />

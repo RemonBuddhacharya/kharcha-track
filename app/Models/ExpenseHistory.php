@@ -21,7 +21,7 @@ class ExpenseHistory extends Model
         'description',
         'amount',
         'date',
-        'category',
+        'category_id',
         'payment_method',
         'is_recurring',
         'action',
@@ -46,6 +46,14 @@ class ExpenseHistory extends Model
         return $this->belongsTo(Expense::class);
     }
 
+    /**
+     * Get the category that owns the expense.
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+    
     /**
      * Get the user that created the history.
      */

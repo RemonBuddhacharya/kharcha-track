@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('amount', 10, 2);
             $table->date('date');
-            $table->string('category');
+            $table->foreignId('category_id')->constrained('categories', 'id')->cascadeOnDelete();
             $table->string('payment_method')->nullable();
             $table->boolean('is_recurring')->default(false);
             $table->string('action')->default('update'); // create, update, delete

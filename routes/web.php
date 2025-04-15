@@ -69,6 +69,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Volt::route('/permissions', 'admin.permissions.index')->name('permissions.index');
     });
 
+
+    Volt::route('/forecast', 'expenses.forecasting')->name('forecast.index');
+    Volt::route('/anomaly', 'expenses.anomalies')->name('anomaly.index');
     // Regular user routes
     Volt::route('/expenses', 'expenses.index')->name('expenses.index');
+    Volt::route('/expenses/create', 'expenses.create')->name('expenses.create');
+    Volt::route('/expenses/{id}/edit', 'expenses.edit')->name('expenses.edit');
+
+    Volt::route('/categories', 'categories.index')->name('categories.index');
 });

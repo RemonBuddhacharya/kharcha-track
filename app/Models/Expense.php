@@ -21,7 +21,7 @@ class Expense extends Model
         'description',
         'amount',
         'date',
-        'category',
+        'category_id',
         'payment_method',
         'is_recurring',
         'is_anomaly',
@@ -56,6 +56,15 @@ class Expense extends Model
     }
 
     /**
+     * Get the category that owns the expense.
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+
+    /**
      * Track changes to the expense.
      */
     protected static function booted()
@@ -68,7 +77,7 @@ class Expense extends Model
                 'description' => $expense->description,
                 'amount' => $expense->amount,
                 'date' => $expense->date,
-                'category' => $expense->category,
+                'category_id' => $expense->category_id,
                 'payment_method' => $expense->payment_method,
                 'is_recurring' => $expense->is_recurring,
                 'action' => 'create',
@@ -83,7 +92,7 @@ class Expense extends Model
                 'description' => $expense->description,
                 'amount' => $expense->amount,
                 'date' => $expense->date,
-                'category' => $expense->category,
+                'category_id' => $expense->category_id,
                 'payment_method' => $expense->payment_method,
                 'is_recurring' => $expense->is_recurring,
                 'action' => 'update',
@@ -98,7 +107,7 @@ class Expense extends Model
                 'description' => $expense->description,
                 'amount' => $expense->amount,
                 'date' => $expense->date,
-                'category' => $expense->category,
+                'category_id' => $expense->category_id,
                 'payment_method' => $expense->payment_method,
                 'is_recurring' => $expense->is_recurring,
                 'action' => 'delete',

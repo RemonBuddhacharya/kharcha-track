@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Access\AuthorizationException;
 
 // Landing page - accessible to all
 Volt::route('/', 'landing')->name('landing');
@@ -67,4 +68,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Volt::route('/roles', 'admin.roles.index')->name('roles.index');
         Volt::route('/permissions', 'admin.permissions.index')->name('permissions.index');
     });
+
+    // Regular user routes
+    Volt::route('/expenses', 'expenses.index')->name('expenses.index');
 });

@@ -1,5 +1,6 @@
 class Diagram
 
+```
 classDiagram
     class User {
         +id: bigint
@@ -93,11 +94,12 @@ classDiagram
     Category "1" --o "*" ExpenseHistory : categorizes
     Expense "1" --o "*" ExpenseHistory : tracks
     Expense "1" --o "*" Anomaly : detects
-
+```
 
 
 object diagram
 
+```
 @startuml
 ' Styling
 skinparam object {
@@ -225,11 +227,12 @@ vsp ..> dashboard
 vsp ..> expensesIndex
 vsp ..> categoryIndex
 @enduml
-
+```
 
 
 State transition diagram
 
+```
 @startuml
 ' Styling
 skinparam state {
@@ -328,9 +331,10 @@ state "Expense Lifecycle" as ExpenseLifecycle {
     }
 }
 @enduml
-
+```
 
 Sequence diagram
+```
 @startuml
 ' Styling
 skinparam sequence {
@@ -422,10 +426,11 @@ group ML Processing
     L --> B: Update UI
 end
 @enduml
-
+```
 
 Activity diagram
 
+```
 @startuml
 skinparam ActivityBackgroundColor #F0F8FF
 skinparam ActivityBorderColor #2C3E50
@@ -510,9 +515,11 @@ legend right
   |#Pink| ML Features |
 endlegend
 @enduml
+```
 
 
 Refinement of Class
+```
 @startuml
 ' Styling
 skinparam class {
@@ -647,10 +654,11 @@ DashboardComponent ..> Anomaly
 ExpenseComponent ..> Expense
 ExpenseComponent ..> Category
 @enduml
-
+```
 
 
 Refinement of Object
+```
 @startuml
 ' Styling
 skinparam object {
@@ -743,12 +751,13 @@ dashboard ..> exp1 : shows
 dashboard ..> forecast : presents
 dashboard ..> anomaly : alerts
 @enduml
-
+```
 
 
 
 Component Diagram
 
+```
 @startuml
 ' Styling
 skinparam {
@@ -854,9 +863,11 @@ Category --> DBTables
 ExpenseHistory --> DBTables
 Auth --> User
 @enduml
-
+```
 
 Deployment Diagram
+
+```
 flowchart TB
     subgraph DeveloperLaptop["Developer Laptop"]
         subgraph LaravelApplication["Laravel Application"]
@@ -905,3 +916,4 @@ flowchart TB
     %% note right of Cloudflared: Secure tunnel to Cloudflare
     %% note right of CFTunnel: Routes traffic to local server
     %% note left of Users: Access via money.remanbuddhacharya.com.np
+```

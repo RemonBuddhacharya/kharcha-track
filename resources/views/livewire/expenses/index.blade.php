@@ -16,6 +16,8 @@ class extends Component {
 
     public string $search = '';
     public bool $drawer = false;
+    public bool $historyDrawer = false; // Add this property
+    public ?Expense $selectedExpense = null; // Add this property
     public array $sortBy = ['column' => 'date', 'direction' => 'desc'];
     public int $perPage = 10;
     
@@ -134,6 +136,12 @@ class extends Component {
         $expense->delete();
         $this->success('Expense deleted successfully');
     }
+
+    public function viewHistory(Expense $expense): void 
+    {
+        $this->selectedExpense = $expense;
+        $this->historyDrawer = true;
+    }
 }; ?>
 
 <div>
@@ -174,6 +182,12 @@ class extends Component {
             
             @scope('actions', $expense)
                 <div class="flex justify-center gap-1">
+                    <x-button 
+                icon="o-pencil" 
+                class="btn-ghost btn-sm" 
+                title="View History"
+                @click="$wire.viewHistory({{ $expense->id }})" 
+            />
                     <x-button icon="o-pencil" class="btn-ghost btn-sm" @click="$wire.edit({{ $expense->id }})" />
                     <x-button icon="o-trash" class="btn-ghost btn-sm text-error" 
                         @click="$wire.delete({{ $expense->id }})"
@@ -225,5 +239,69 @@ class extends Component {
                 <x-button label="Save" class="btn-primary" type="submit" spinner="save" />
             </x-slot:actions>
         </x-form>
+    </x-drawer>
+
+    <x-drawer 
+        wire:model="historyDrawer" 
+        title="Expense History" 
+        subtitle="View changes over time"
+        right 
+        separator 
+        with-close-button
+    >
+        @if($selectedExpense)
+            <!-- Current Expense Details -->
+            <div class="bg-base-200 rounded-lg p-4 mb-6">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <span class="text-sm text-gray-500">Title</span>
+                        <p class="font-medium">{{ $selectedExpense->title }}</p>
+                    </div>
+                    <div>
+                        <span class="text-sm text-gray-500">Amount</span>
+                        <p class="font-medium">{{ number_format($selectedExpense->amount, 2) }}</p>
+                    </div>
+                    <div>
+                        <span class="text-sm text-gray-500">Category</span>
+                        <p class="font-medium">{{ $selectedExpense->category->name }}</p>
+                    </div>
+                    <div>
+                        <span class="text-sm text-gray-500">Date</span>
+                        <p class="font-medium">{{ $selectedExpense->date->format('Y-m-d') }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Change History Timeline -->
+            <div class="space-y-4">
+                @forelse($selectedExpense->audits->sortByDesc('created_at') as $index => $audit)
+                    <x-timeline-item 
+                        :first="$loop->first"
+                        :last="$loop->last"
+                        :title="$audit->event"
+                        :subtitle="$audit->created_at->format('Y-m-d H:i')"
+                        icon="o-pencil-square"
+                    >
+                        <div class="space-y-2 text-sm">
+                            @foreach($audit->new_values as $key => $value)
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-500">{{ ucfirst($key) }}</span>
+                                    <span class="font-medium">{{ $value }}</span>
+                                </div>
+                            @endforeach
+                        </div>
+                    </x-timeline-item>
+                @empty
+                    <div class="text-center text-gray-500 py-4">
+                        <x-icon name="o-information-circle" class="w-8 h-8 mx-auto mb-2" />
+                        <p>No history available for this expense</p>
+                    </div>
+                @endforelse
+            </div>
+        @endif
+
+        <x-slot:actions>
+            <x-button label="Close" @click="$wire.historyDrawer = false" />
+        </x-slot:actions>
     </x-drawer>
 </div>

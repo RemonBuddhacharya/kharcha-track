@@ -6,12 +6,13 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Volt\Component;
 use Mary\Traits\Toast;
+use Livewire\WithPagination;
 
 new
 #[Layout('components.layouts.app')]
 #[Title('Expenses')]
 class extends Component {
-    use Toast;
+    use Toast, WithPagination;
 
     public string $search = '';
     public bool $drawer = false;

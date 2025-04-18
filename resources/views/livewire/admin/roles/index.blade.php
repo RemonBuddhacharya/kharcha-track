@@ -5,9 +5,10 @@ use Livewire\Volt\Component;
 use Mary\Traits\Toast;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Livewire\WithPagination;
 
 new class extends Component {
-    use Toast;
+    use Toast, WithPagination;
 
     public string $search = '';
     public bool $drawer = false;

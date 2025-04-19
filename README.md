@@ -1,4 +1,4 @@
-# Kharcha Track
+# Kharcha Track (Expense Tracker)
 
 A modern expense tracking application built with Laravel 12, Livewire, and MaryUI.
 

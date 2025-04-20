@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('anomalies', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('expense_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('expense_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->decimal('anomaly_score', 5, 2);
             $table->string('detection_method');
             $table->text('reason')->nullable();

@@ -70,8 +70,7 @@ class Expense extends Model
     protected static function booted()
     {
         static::created(function ($expense) {
-            ExpenseHistory::create([
-                'expense_id' => $expense->id,
+            $expense->histories()->create([
                 'user_id' => $expense->user_id,
                 'title' => $expense->title,
                 'description' => $expense->description,
@@ -85,8 +84,7 @@ class Expense extends Model
         });
 
         static::updated(function ($expense) {
-            ExpenseHistory::create([
-                'expense_id' => $expense->id,
+            $expense->histories()->create([
                 'user_id' => $expense->user_id,
                 'title' => $expense->title,
                 'description' => $expense->description,
@@ -96,21 +94,6 @@ class Expense extends Model
                 'payment_method' => $expense->payment_method,
                 'is_recurring' => $expense->is_recurring,
                 'action' => 'update',
-            ]);
-        });
-
-        static::deleted(function ($expense) {
-            ExpenseHistory::create([
-                'expense_id' => $expense->id,
-                'user_id' => $expense->user_id,
-                'title' => $expense->title,
-                'description' => $expense->description,
-                'amount' => $expense->amount,
-                'date' => $expense->date,
-                'category_id' => $expense->category_id,
-                'payment_method' => $expense->payment_method,
-                'is_recurring' => $expense->is_recurring,
-                'action' => 'delete',
             ]);
         });
     }

@@ -4,7 +4,7 @@ return [
     'name' => 'KharchaTrack',
     'manifest' => [
         'name' => env('APP_NAME', 'KharchaTrack'),
-        'short_name' => 'KT',
+        'short_name' => 'KharchaTrack',
         'start_url' => '/',
         'background_color' => '#ffffff',
         'theme_color' => '#000000',

@@ -16,12 +16,12 @@ class extends Component {
     public bool $drawer = false;
     public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
     public int $perPage = 10;
-    
+
     // Form properties
     public ?int $editing_id = null;
     public string $name = '';
     public string $color = '#3b82f6'; // Default blue color
-    
+
     public function with(): array
     {
         return [
@@ -33,7 +33,6 @@ class extends Component {
     public function headers(): array
     {
         return [
-            ['key' => 'id', 'label' => '#', 'class' => 'w-1'],
             ['key' => 'color', 'label' => 'Color', 'class' => 'w-1', 'sortable' => false],
             ['key' => 'name', 'label' => 'Name', 'sortable' => true],
             ['key' => 'expense_count', 'label' => 'Expenses', 'sortable' => false],
@@ -58,7 +57,7 @@ class extends Component {
         $this->editing_id = $category->id;
         $this->name = $category->name;
         $this->color = $category->color ?? '#3b82f6';
-        
+
         $this->drawer = true;
     }
 
@@ -67,7 +66,7 @@ class extends Component {
         $this->editing_id = null;
         $this->name = '';
         $this->color = '#3b82f6';
-        
+
         $this->drawer = true;
     }
 
@@ -81,11 +80,11 @@ class extends Component {
                 function ($attribute, $value, $fail) {
                     $query = Category::where('user_id', auth()->id())
                         ->where('name', $value);
-                    
+
                     if ($this->editing_id) {
                         $query->where('id', '!=', $this->editing_id);
                     }
-                    
+
                     if ($query->exists()) {
                         $fail('You already have a category with this name.');
                     }
@@ -93,20 +92,20 @@ class extends Component {
             ],
             'color' => 'required|string',
         ]);
-        
+
         $data['user_id'] = auth()->id();
-        
+
         if ($this->editing_id) {
             $category = Category::findOrFail($this->editing_id);
             $category->update($data);
-            
+
             $this->success('Category updated successfully');
         } else {
             Category::create($data);
-            
+
             $this->success('Category created successfully');
         }
-        
+
         $this->drawer = false;
     }
 
@@ -117,7 +116,7 @@ class extends Component {
             $this->error('Cannot delete category with expenses. Please reassign or delete those expenses first.');
             return;
         }
-        
+
         $category->delete();
         $this->success('Category deleted successfully');
     }
@@ -136,11 +135,11 @@ class extends Component {
 
     <!-- TABLE -->
     <x-card>
-        <x-table 
-            :headers="$headers" 
-            :rows="$categories" 
-            :sort-by="$sortBy" 
-            striped 
+        <x-table
+            :headers="$headers"
+            :rows="$categories"
+            :sort-by="$sortBy"
+            striped
             with-pagination
             per-page="perPage"
             :per-page-values="[5, 10, 15, 25, 50]"
@@ -148,17 +147,17 @@ class extends Component {
             @scope('cell_color', $category)
                 <div class="w-6 h-6 rounded-full" style="background-color: {{ $category->color ?? '#3b82f6' }}"></div>
             @endscope
-            
+
             @scope('cell_expense_count', $category)
                 <div class="font-semibold">
                     {{ $category->expenses_count }}
                 </div>
             @endscope
-            
+
             @scope('actions', $category)
                 <div class="flex justify-center gap-1">
                     <x-button icon="o-pencil" class="btn-ghost btn-sm" @click="$wire.edit({{ $category->id }})" />
-                    <x-button icon="o-trash" class="btn-ghost btn-sm text-error" 
+                    <x-button icon="o-trash" class="btn-ghost btn-sm text-error"
                         @click="$wire.delete({{ $category->id }})"
                         wire:confirm.prompt="Are you sure?\nType DELETE to confirm|DELETE" />
                 </div>
@@ -170,9 +169,9 @@ class extends Component {
     <x-drawer wire:model="drawer" title="{{ $editing_id ? 'Edit Category' : 'New Category' }}" right separator with-close-button>
         <x-form wire:submit="save">
             <x-input label="Name" wire:model="name" placeholder="e.g. Groceries" />
-            
+
             <x-colorpicker wire:model="color" label="Color" hint="A nice color" />
-            
+
             <x-slot:actions>
                 <x-button label="Cancel" @click="$wire.drawer = false" />
                 <x-button label="Save" class="btn-primary" type="submit" spinner="save" />

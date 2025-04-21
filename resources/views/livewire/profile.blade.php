@@ -79,25 +79,18 @@ new class extends Component {
     <x-card title="Profile Information" subtitle="Update your account's profile information and email address.">
         <x-form wire:submit="updateProfile">
             <x-input label="Name" wire:model="name" required />
-
             <x-input label="Email" type="email" wire:model="email" required />
-
             <x-badge :value="auth()->user()->hasVerifiedEmail() ? 'Verified' : 'Unverified'" :class="auth()->user()->hasVerifiedEmail() ? 'badge-success' : 'badge-warning'" />
-
             @unless (auth()->user()->hasVerifiedEmail())
                 <x-button label="Resend Verification Email" wire:click="resendVerification" class="btn-ghost btn-sm" />
             @endunless
             <x-input label="Current Password" type="password" wire:model="current_password"
                 hint="Leave empty if you don't want to change your password" />
-
             <x-input label="New Password" type="password" wire:model="new_password" hint="Minimum 8 characters" />
-
             <x-input label="Confirm New Password" type="password" wire:model="new_password_confirmation" />
-
             @if ($message)
                 <x-alert :title="$message" :class="$messageType === 'success' ? 'alert-success' : 'alert-error'" icon="o-information-circle" />
             @endif
-
             <x-button label="Save Changes" class="btn-primary" type="submit" spinner="updateProfile" />
         </x-form>
     </x-card>

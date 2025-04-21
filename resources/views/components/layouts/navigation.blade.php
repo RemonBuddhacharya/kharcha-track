@@ -1,21 +1,14 @@
 <x-slot:sidebar drawer="main-drawer" collapsible class="bg-base-100 lg:bg-inherit">
-
     {{-- BRAND --}}
     <x-partials.brand class="px-5 pt-4" />
-
     <x-menu-separator />
-
     {{-- MENU --}}
     <x-menu activate-by-route>
-
         {{-- User --}}
         @if ($user = auth()->user())
-
             <x-menu-item title="Dashboard" icon="o-home" link="/dashboard" />
-
             @if ($user->hasVerifiedEmail())
                 {{-- Dashboard (requires verified email) --}}
-
                 {{-- Admin only menu items (requires verified email) --}}
                 @role('admin')
                     <x-menu-sub title="Administration" icon="o-cog">
@@ -23,7 +16,6 @@
                         <x-menu-item title="Roles" icon="o-user-group" link="/admin/roles" />
                         <x-menu-item title="Permissions" icon="o-key" link="/admin/permissions" />
                     </x-menu-sub>
-
                     <x-menu-item title="Categories" icon="o-tag" link="/categories" />
                 @else
                     {{-- User only menu items (requires verified email) --}}
@@ -43,9 +35,7 @@
             {{-- Profile page (always accessible) --}}
             <x-menu-item title="Profile" icon="o-user" link="/profile" />
         @endif
-
         <x-menu-separator />
-
         <x-list-item :item="$user" value="name" sub-value="email" no-separator no-hover
             class="-mx-2 !-my-2 rounded">
             <x-slot:actions>
@@ -56,6 +46,5 @@
                 </div>
             </x-slot:actions>
         </x-list-item>
-
     </x-menu>
 </x-slot:sidebar>

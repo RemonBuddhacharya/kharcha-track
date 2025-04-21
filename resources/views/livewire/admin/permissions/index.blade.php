@@ -13,16 +13,16 @@ new class extends Component {
     public bool $drawer = false;
     public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
     public int $perPage = 10;
-    
+
     // Form properties
     public ?int $editing_id = null;
     public string $name = '';
-    
+
     public function mount()
     {
         $this->authorize('view permissions');
     }
-    
+
     public function with(): array
     {
         return [
@@ -34,7 +34,6 @@ new class extends Component {
     public function headers(): array
     {
         return [
-            ['key' => 'id', 'label' => '#', 'class' => 'w-1'],
             ['key' => 'name', 'label' => 'Name', 'sortable' => true],
             ['key' => 'actions', 'label' => 'Actions', 'class' => 'w-1', 'sortable' => false],
         ];
@@ -53,20 +52,20 @@ new class extends Component {
     public function edit(Permission $permission): void
     {
         $this->authorize('edit permissions');
-        
+
         $this->editing_id = $permission->id;
         $this->name = $permission->name;
-        
+
         $this->drawer = true;
     }
 
     public function create(): void
     {
         $this->authorize('create permissions');
-        
+
         $this->editing_id = null;
         $this->name = '';
-        
+
         $this->drawer = true;
     }
 
@@ -74,39 +73,39 @@ new class extends Component {
     {
         if ($this->editing_id) {
             $this->authorize('edit permissions');
-            
+
             $permission = Permission::find($this->editing_id);
             $data = $this->validate([
                 'name' => 'required|string|max:255|unique:permissions,name,'.$this->editing_id,
             ]);
-            
+
             $permission->update($data);
-            
+
             $this->success('Permission updated successfully');
         } else {
             $this->authorize('create permissions');
-            
+
             $data = $this->validate([
                 'name' => 'required|string|max:255|unique:permissions,name',
             ]);
-            
+
             Permission::create($data);
-            
+
             $this->success('Permission created successfully');
         }
-        
+
         $this->drawer = false;
     }
 
     public function delete(Permission $permission): void
     {
         $this->authorize('delete permissions');
-        
+
         if (in_array($permission->name, ['access dashboard'])) {
             $this->error('Cannot delete system permissions');
             return;
         }
-        
+
         $permission->delete();
         $this->success('Permission deleted successfully');
     }
@@ -125,11 +124,11 @@ new class extends Component {
 
     <!-- TABLE -->
     <x-card>
-        <x-table 
-            :headers="$headers" 
-            :rows="$permissions" 
-            :sort-by="$sortBy" 
-            striped 
+        <x-table
+            :headers="$headers"
+            :rows="$permissions"
+            :sort-by="$sortBy"
+            striped
             with-pagination
             per-page="perPage"
             :per-page-values="[5, 10, 15, 25, 50]"
@@ -137,7 +136,7 @@ new class extends Component {
             @scope('actions', $permission)
                 <div class="flex gap-1">
                     <x-button icon="o-pencil" class="btn-ghost btn-sm" @click="$wire.edit({{ $permission->id }})" />
-                    <x-button icon="o-trash" class="btn-ghost btn-sm text-error" 
+                    <x-button icon="o-trash" class="btn-ghost btn-sm text-error"
                         @click="$wire.delete({{ $permission->id }})"
                         wire:confirm.prompt="Are you sure?\nType DELETE to confirm|DELETE" />
                 </div>
@@ -156,4 +155,4 @@ new class extends Component {
             </x-slot:actions>
         </x-form>
     </x-drawer>
-</div> 
+</div>

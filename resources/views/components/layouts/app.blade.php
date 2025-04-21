@@ -8,7 +8,6 @@
     <title>{{ isset($title) ? $title . ' - ' . config('app.name') : config('app.name') }}</title>
     @vite('resources/js/app.js')
 </head>
-
 <body class="min-h-screen font-sans antialiased bg-base-200">
     {{-- NAVBAR mobile only --}}
     <x-nav sticky class="lg:hidden">
@@ -21,21 +20,16 @@
             </label>
         </x-slot:actions>
     </x-nav>
-
     {{-- MAIN --}}
     <x-main>
         {{-- SIDEBAR --}}
         <x-layouts.navigation />
-
         {{-- The `$slot` goes here --}}
         <x-slot:content>
             {{ $slot }}
         </x-slot:content>
     </x-main>
-
     {{--  TOAST area --}}
     <x-toast />
-
 </body>
-
 </html>

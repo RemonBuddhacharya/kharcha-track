@@ -24,7 +24,6 @@ class extends Component {
             </div>
         @endif
     </div>
-
     <div class="flex flex-col md:flex-row gap-4">
         @auth
             <x-button label="Go to Dashboard" link="/dashboard" icon="o-chart-bar" class="btn-primary" />
@@ -34,4 +33,4 @@ class extends Component {
             <x-button label="Register" link="/register" icon="o-user-plus" class="btn-ghost" />
         @endauth
     </div>
-</div> 
+</div>

@@ -45,7 +45,7 @@ new #[Layout('components.layouts.app')] #[Title('Expenses')] class extends Compo
 
     public function headers(): array
     {
-        return [['key' => 'id', 'label' => '#', 'class' => 'w-1'], ['key' => 'date', 'label' => 'Date', 'sortable' => true], ['key' => 'description', 'label' => 'Description', 'sortable' => true], ['key' => 'amount', 'label' => 'Amount', 'sortable' => true], ['key' => 'category', 'label' => 'Category', 'sortable' => false], ['key' => 'actions', 'label' => 'Actions', 'class' => 'w-1 text-center', 'sortable' => false]];
+        return [['key' => 'date', 'label' => 'Date', 'sortable' => true], ['key' => 'description', 'label' => 'Description', 'sortable' => true], ['key' => 'amount', 'label' => 'Amount', 'sortable' => true], ['key' => 'category', 'label' => 'Category', 'sortable' => false], ['key' => 'actions', 'label' => 'Actions', 'class' => 'w-1 text-center', 'sortable' => false]];
     }
 
     public function expenses()
@@ -239,7 +239,7 @@ new #[Layout('components.layouts.app')] #[Title('Expenses')] class extends Compo
             <!-- Change History Timeline -->
             <div class="space-y-4">
                 @forelse($selectedExpense->histories->sortByDesc('created_at') as $history)
-                    <x-timeline-item 
+                    <x-timeline-item
                         :first="$loop->first"
                         :last="$loop->last"
                         :title="collect([

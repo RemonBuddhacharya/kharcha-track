@@ -13,13 +13,8 @@ class extends Component {
         // No additional logic needed for now
     }
 }; ?>
-
 <div>
-    <x-header title="Dashboard" separator progress-indicator>
-        
-    </x-header>
-
+    <x-header title="Dashboard" separator progress-indicator></x-header>
     <div>
-        {{-- Content of Dashboard Goes Here --}}
     </div>
-</div> 
+</div>

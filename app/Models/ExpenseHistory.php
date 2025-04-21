@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ExpenseHistory extends Model
 {
-    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -41,7 +40,7 @@ class ExpenseHistory extends Model
     /**
      * Get the expense that owns the history.
      */
-    public function expense()
+    public function expense(): BelongsTo
     {
         return $this->belongsTo(Expense::class);
     }
@@ -49,15 +48,15 @@ class ExpenseHistory extends Model
     /**
      * Get the category that owns the expense.
      */
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
-    
+
     /**
      * Get the user that created the history.
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

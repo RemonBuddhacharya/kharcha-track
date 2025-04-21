@@ -67,7 +67,7 @@ class extends Component {
 
 <div class="md:w-96 mx-auto mt-20">
     <div class="mb-10">
-        <x-app-brand />
+        <x-partials.brand />
     </div>
 
     <x-card title="Reset Password" subtitle="Enter your new password below.">
@@ -82,4 +82,4 @@ class extends Component {
             </x-slot:actions>
         </x-form>
     </x-card>
-</div> 
+</div>

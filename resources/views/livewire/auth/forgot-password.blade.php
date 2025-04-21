@@ -21,11 +21,11 @@ class extends Component {
     public function sendResetLink()
     {
         $this->validate();
-        
+
         $status = Password::sendResetLink(
             ['email' => $this->email]
         );
-        
+
         if ($status === Password::RESET_LINK_SENT) {
             $this->status = __($status);
             $this->email = '';
@@ -39,7 +39,7 @@ class extends Component {
 
 <div class="md:w-96 mx-auto mt-20">
     <div class="mb-10">
-        <x-app-brand />
+        <x-partials.brand />
     </div>
 
     <x-card title="Forgot Password" subtitle="No problem. Just let us know your email address and we will email you a password reset link.">
@@ -56,4 +56,4 @@ class extends Component {
             </x-slot:actions>
         </x-form>
     </x-card>
-</div> 
+</div>

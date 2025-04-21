@@ -1,7 +1,7 @@
 <x-slot:sidebar drawer="main-drawer" collapsible class="bg-base-100 lg:bg-inherit">
 
     {{-- BRAND --}}
-    <x-app-brand class="px-5 pt-4" />
+    <x-partials.brand class="px-5 pt-4" />
 
     <x-menu-separator />
 
@@ -25,7 +25,6 @@
                     </x-menu-sub>
 
                     <x-menu-item title="Categories" icon="o-tag" link="/categories" />
-
                 @else
                     {{-- User only menu items (requires verified email) --}}
                     <x-menu-sub title="Expenses" icon="o-building-library">

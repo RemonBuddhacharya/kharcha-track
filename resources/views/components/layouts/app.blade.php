@@ -10,6 +10,7 @@
     <link rel="manifest" href="{{ asset('site.webmanifest') }}">
     <meta name="description" content="{{ $metaDescription ?? config('app.name') . ' - ' . config('app.description', 'Laravel Application') }}">
     <title>{{ isset($title) ? $title . ' - ' . config('app.name') : config('app.name') }}</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     @vite('resources/js/app.js')
     @laravelPWA
 </head>

@@ -9,10 +9,10 @@ use Illuminate\Support\Carbon;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Volt\Component;
-
+new 
 #[Layout('components.layouts.app')]
 #[Title('Dashboard')]
-new class extends Component {
+class extends Component {
     public $totalUsers;
     public $totalExpenses;
     public $totalCategories;

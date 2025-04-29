@@ -10,42 +10,96 @@ use Livewire\Volt\Component;
 new class extends Component {
     public array $anomalies = [];
     public array $anomalyChart = [];
+    public string $dateFrom;
+    public string $dateTo;
+    public float $threshold = 2.0;
+    public bool $loading = false;
 
     public function mount(): void
     {
+        $this->dateFrom = Carbon::now()->subMonths(3)->format('Y-m-d');
+        $this->dateTo = Carbon::now()->format('Y-m-d');
+        $this->analyze();
+    }
+
+    public function analyze(): void
+    {
+        $this->loading = true;
         $userId = Auth::id();
-        $this->anomalies = Anomaly::detectForUser($userId);
-        // Group anomalies by month for chart
-        $grouped = collect($this->anomalies)
-            ->groupBy(fn($a) => Carbon::parse($a['reviewed_at'] ?? now())->format('M Y'));
-        $labels = $grouped->keys()->toArray();
-        $data = $grouped->map->count()->values()->toArray();
+        $this->anomalies = Anomaly::detectForUser($userId, $this->threshold, $this->dateFrom, $this->dateTo);
+        // Prepare scatter plot data: x = date, y = anomaly_score
+        $points = collect($this->anomalies)
+            ->map(function ($a) {
+                return [
+                    'x' => $a['reviewed_at'] ? Carbon::parse($a['reviewed_at'])->format('Y-m-d') : now()->format('Y-m-d'),
+                    'y' => $a['anomaly_score'],
+                ];
+            })->toArray();
         $this->anomalyChart = [
-            'type' => 'bar',
+            'type' => 'scatter',
             'data' => [
-                'labels' => $labels,
                 'datasets' => [[
-                    'label' => 'Anomalies Detected',
-                    'data' => $data,
+                    'label' => 'Anomaly Score by Date',
+                    'data' => $points,
                     'backgroundColor' => '#f87171',
                     'borderColor' => '#dc2626',
-                    'borderWidth' => 1,
+                    'showLine' => false,
                 ]],
             ],
             'options' => [
                 'responsive' => true,
                 'plugins' => [
-                    'legend' => ['display' => true],
+                    'legend' => [
+                        'position' => 'top',
+                    ],
+                    'title' => [
+                        'display' => true,
+                        'text' => 'Chart.js Scatter Chart',
+                    ],
+                ],
+                'scales' => [
+                    'x' => [
+                        'type' => 'time',
+                        'title' => [
+                            'display' => true,
+                            'text' => 'Date',
+                        ],
+                    ],
+                    'y' => [
+                        'title' => [
+                            'display' => true,
+                            'text' => 'Anomaly Score',
+                        ],
+                    ],
                 ],
             ],
         ];
+        $this->loading = false;
     }
 }; ?>
 
 <div>
     <x-header title="Expense Anomalies" separator />
     <x-card class="mb-6">
-        <div class="font-semibold mb-2">Anomalies Detected (Last 12 Months)</div>
+        <form wire:submit.prevent="analyze" class="flex flex-wrap gap-4 items-end mb-4">
+            <div>
+                <label class="block text-sm font-medium mb-1">From</label>
+                <input type="date" wire:model.defer="dateFrom" class="input input-bordered" />
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1">To</label>
+                <input type="date" wire:model.defer="dateTo" class="input input-bordered" />
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1">Threshold</label>
+                <input type="number" step="0.1" min="0.1" wire:model.defer="threshold" class="input input-bordered w-24" />
+            </div>
+            <button type="submit" class="btn btn-primary">Analyze</button>
+            @if($loading)
+                <span class="ml-2 text-info">Analyzing...</span>
+            @endif
+        </form>
+        <div class="font-semibold mb-2">Anomalies Detected (Scatter Plot)</div>
         <x-chart wire:model="anomalyChart" />
     </x-card>
     <x-card>
@@ -55,7 +109,7 @@ new class extends Component {
                 <thead>
                     <tr>
                         <th>Date</th>
-                        <th>Amount</th>
+                        <th>Expense ID</th>
                         <th>Score</th>
                         <th>Reason</th>
                     </tr>

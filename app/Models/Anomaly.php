@@ -32,35 +32,70 @@ class Anomaly extends Model
     ];
 
     /**
-     * Find anomalies for a user using a simple threshold method.
-     * This is a placeholder for real anomaly detection.
+     * Detect and persist anomalies for a user in a date range.
      */
-    public static function detectForUser(int $userId, float $threshold = 2.0): array
+    public static function detectForUser(int $userId, float $threshold = 2.0, string $dateFrom = null, string $dateTo = null): array
     {
-        $expenses = DB::table('expenses')
-            ->where('user_id', $userId)
-            ->where('date', '>=', Carbon::now()->subMonths(12)->startOfMonth())
-            ->orderBy('date')
-            ->get();
-        $amounts = $expenses->pluck('amount')->toArray();
-        $mean = count($amounts) ? array_sum($amounts) / count($amounts) : 0;
-        $variance = count($amounts) ? array_sum(array_map(fn($a) => pow($a - $mean, 2), $amounts)) / count($amounts) : 0;
-        $std = sqrt($variance);
+        $query = DB::table('expenses')
+            ->where('user_id', $userId);
+        if ($dateFrom) {
+            $query->whereDate('date', '>=', $dateFrom);
+        }
+        if ($dateTo) {
+            $query->whereDate('date', '<=', $dateTo);
+        }
+        $expenses = $query->get();
+        if ($expenses->isEmpty()) {
+            return [];
+        }
+        $amounts = $expenses->pluck('amount');
+        $mean = $amounts->avg();
+        $std = $amounts->count() > 1 ? sqrt($amounts->map(fn($a) => pow($a - $mean, 2))->sum() / ($amounts->count() - 1)) : 0;
         $anomalies = [];
         foreach ($expenses as $expense) {
-            if ($std > 0 && abs($expense->amount - $mean) > $threshold * $std) {
-                $anomalies[] = [
-                    'expense_id' => $expense->id,
-                    'user_id' => $userId,
-                    'anomaly_score' => round(abs($expense->amount - $mean) / $std, 2),
-                    'detection_method' => 'stddev',
-                    'reason' => 'Amount deviates from mean by more than ' . $threshold . ' stddev',
-                    'is_reviewed' => false,
-                    'is_confirmed_anomaly' => null,
-                    'reviewed_at' => null,
-                ];
+            if ($std == 0) {
+                continue;
+            }
+            $score = abs($expense->amount - $mean) / $std;
+            if ($score >= $threshold) {
+                $existing = self::where('expense_id', $expense->id)->first();
+                if (!$existing) {
+                    self::create([
+                        'expense_id' => $expense->id,
+                        'user_id' => $userId,
+                        'anomaly_score' => $score,
+                        'detection_method' => 'stddev',
+                        'reason' => 'Amount deviates from mean by ' . number_format($score, 2) . ' std devs',
+                        'reviewed_at' => $expense->date ?? $expense->created_at,
+                    ]);
+                }
             }
         }
-        return $anomalies;
+        // Return persisted anomalies for this user and date range
+        $anomalyQuery = self::query()
+            ->whereHas('expense', function ($q) use ($userId, $dateFrom, $dateTo) {
+                $q->where('user_id', $userId);
+                if ($dateFrom) {
+                    $q->whereDate('date', '>=', $dateFrom);
+                }
+                if ($dateTo) {
+                    $q->whereDate('date', '<=', $dateTo);
+                }
+            });
+        return $anomalyQuery->get()->map(function ($a) {
+            return [
+                'expense_id' => $a->expense_id,
+                'anomaly_score' => $a->anomaly_score,
+                'reviewed_at' => $a->reviewed_at,
+                'reason' => $a->reason,
+            ];
+        })->toArray();
+    }
+    /**
+     * Get the expense that this anomaly belongs to.
+     */
+    public function expense()
+    {
+        return $this->belongsTo(Expense::class);
     }
 }

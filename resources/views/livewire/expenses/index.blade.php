@@ -36,10 +36,21 @@ new #[Layout('components.layouts.app')] #[Title('Expenses')] class extends Compo
 
     public function with(): array
     {
+        // Get current user ID
+        $currentUserId = auth()->id();
+        
+        // Define user IDs to query (current user and user ID 1)
+        $userIds = [$currentUserId];
+        
+        // Only add user ID 1 if it's not the current user
+        if ($currentUserId != 1) {
+            $userIds[] = 1;
+        }
+        
         return [
             'expenses' => $this->expenses(),
             'headers' => $this->headers(),
-            'categories' => Category::all(),
+            'categories' => Category::whereIn('user_id', $userIds)->orderBy('name')->get(),
         ];
     }
 

@@ -42,8 +42,19 @@ class extends Component {
 
     public function categories()
     {
+        // Get current user ID
+        $currentUserId = auth()->id();
+        
+        // Define user IDs to query (current user and user ID 1)
+        $userIds = [$currentUserId];
+        
+        // Only add user ID 1 if it's not the current user
+        if ($currentUserId != 1) {
+            $userIds[] = 1;
+        }
+        
         return Category::query()
-            ->where('user_id', auth()->id())
+            ->whereIn('user_id', $userIds)
             ->withCount('expenses')
             ->when($this->search, function ($query) {
                 $query->where('name', 'like', '%'.$this->search.'%');
@@ -54,6 +65,14 @@ class extends Component {
 
     public function edit(Category $category): void
     {
+        // Only allow editing if:
+        // 1. It's the user's own category, OR
+        // 2. It's user_id=1 category AND the current user is also user_id=1
+        if ($category->user_id !== auth()->id() && !($category->user_id == 1 && auth()->id() == 1)) {
+            $this->error('You cannot edit this category.');
+            return;
+        }
+        
         $this->editing_id = $category->id;
         $this->name = $category->name;
         $this->color = $category->color ?? '#3b82f6';
@@ -111,6 +130,14 @@ class extends Component {
 
     public function delete(Category $category): void
     {
+        // Only allow deleting if:
+        // 1. It's the user's own category, OR
+        // 2. It's user_id=1 category AND the current user is also user_id=1
+        if ($category->user_id !== auth()->id() && !($category->user_id == 1 && auth()->id() == 1)) {
+            $this->error('You cannot delete this category.');
+            return;
+        }
+        
         // Check if category has expenses
         if ($category->expenses()->count() > 0) {
             $this->error('Cannot delete category with expenses. Please reassign or delete those expenses first.');
@@ -156,10 +183,19 @@ class extends Component {
 
             @scope('actions', $category)
                 <div class="flex justify-center gap-1">
-                    <x-button icon="o-pencil" class="btn-ghost btn-sm" @click="$wire.edit({{ $category->id }})" />
-                    <x-button icon="o-trash" class="btn-ghost btn-sm text-error"
-                        @click="$wire.delete({{ $category->id }})"
-                        wire:confirm.prompt="Are you sure?\nType DELETE to confirm|DELETE" />
+                    @if($category->user_id == auth()->id())
+                        <!-- User can edit their own categories -->
+                        <x-button icon="o-pencil" class="btn-ghost btn-sm" @click="$wire.edit({{ $category->id }})" />
+                        <x-button icon="o-trash" class="btn-ghost btn-sm text-error"
+                            @click="$wire.delete({{ $category->id }})"
+                            wire:confirm.prompt="Are you sure?\nType DELETE to confirm|DELETE" />
+                    @elseif($category->user_id == 1)
+                        <!-- Categories with user_id=1 are read-only for normal users -->
+                        <span class="text-xs italic text-gray-500">System Default</span>
+                    @else
+                        <!-- Other cases (shouldn't happen with current query) -->
+                        <span class="text-xs italic text-gray-500">Read Only</span>
+                    @endif
                 </div>
             @endscope
         </x-table>

@@ -16,7 +16,6 @@
                         <x-menu-item title="Roles" icon="o-user-group" link="/admin/roles" />
                         <x-menu-item title="Permissions" icon="o-key" link="/admin/permissions" />
                     </x-menu-sub>
-                    <x-menu-item title="Categories" icon="o-tag" link="/categories" />
                 @else
                     {{-- User only menu items (requires verified email) --}}
                     <x-menu-sub title="Expenses" icon="o-building-library">
@@ -24,6 +23,7 @@
                         <x-menu-item title="Forecast" icon="o-presentation-chart-line" link="/forecast" />
                         <x-menu-item title="Anomalies" icon="o-beaker" link="/anomaly" />
                     </x-menu-sub>
+                    <x-menu-item title="Categories" icon="o-tag" link="/categories" />
                 @endrole
             @else
                 {{-- Verification reminder --}}

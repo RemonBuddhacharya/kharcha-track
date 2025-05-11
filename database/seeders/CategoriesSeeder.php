@@ -26,14 +26,12 @@ class CategoriesSeeder extends Seeder
         ];
 
         // Create default categories for each user
-        User::all()->each(function ($user) use ($defaultCategories) {
-            foreach ($defaultCategories as $category) {
-                Category::create([
-                    'name' => $category['name'],
-                    'color' => $category['color'],
-                    'user_id' => $user->id,
-                ]);
-            }
-        });
+        foreach ($defaultCategories as $category) {
+            Category::create([
+                'name' => $category['name'],
+                'color' => $category['color'],
+                'user_id' => 1,
+            ]);
+        }
     }
 }

@@ -32,7 +32,6 @@ class extends Component {
         if (Auth::user()->hasRole('admin')) {
             $this->totalUsers = DB::table('users')->count();
             $this->totalExpenses = Expense::sum('amount');
-            $this->totalCategories = DB::table('categories')->count();
             $this->totalAnomalies = DB::table('anomalies')->count();
             $this->totalForecasts = DB::table('forecasts')->count();
             // Example: Fetch and prepare system-wide expense trend data
@@ -158,15 +157,6 @@ class extends Component {
                     <div>
                         <div class="text-2xl font-bold">{{ number_format($totalExpenses, 2) }}</div>
                         <div class="text-gray-500">Total Expenses (NPR)</div>
-                    </div>
-                </div>
-            </x-card>
-            <x-card class="col-span-1">
-                <div class="flex items-center gap-4">
-                    <x-icon name="o-tag" class="w-8 h-8 text-warning" />
-                    <div>
-                        <div class="text-2xl font-bold">{{ $totalCategories }}</div>
-                        <div class="text-gray-500">Total Categories</div>
                     </div>
                 </div>
             </x-card>

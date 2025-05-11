@@ -18,9 +18,9 @@ class ExpenseFactory extends Factory
     public function definition(): array
     {
         $userId = 2;
-        $category = Category::where('user_id', $userId)->inRandomOrder()->first();
+        $category = Category::where('user_id', 1)->inRandomOrder()->first();
         if (!$category) {
-            $category = Category::factory()->create(['user_id' => $userId]);
+            $category = Category::factory()->create(['user_id' => 1]);
         }
 
         $expenseTypes = [

@@ -214,8 +214,11 @@ new class extends Component {
                             <td>{{ number_format($row['predicted_amount'], 2) }}</td>
                             <td>{{ number_format($row['confidence_score'] * 100, 0) }}%</td>
                             <td>
-                                @if(isset($row['model_parameters']['method']))
-                                    {{ ucfirst(str_replace('_', ' ', $row['model_parameters']['method'])) }}
+                                @php
+                                    $params = is_array($row['model_parameters']) ? $row['model_parameters'] : json_decode($row['model_parameters'], true);
+                                @endphp
+                                @if(isset($params['method']))
+                                    {{ ucfirst(str_replace('_', ' ', $params['method'])) }}
                                 @else
                                     Unknown
                                 @endif
@@ -294,8 +297,11 @@ new class extends Component {
                                     <td>{{ number_format($forecast['predicted_amount'], 2) }}</td>
                                     <td>{{ number_format($forecast['confidence_score'] * 100, 0) }}%</td>
                                     <td>
-                                        @if(isset($forecast['model_parameters']['method']))
-                                            {{ ucfirst(str_replace('_', ' ', $forecast['model_parameters']['method'])) }}
+                                        @php
+                                            $params = is_array($forecast['model_parameters']) ? $forecast['model_parameters'] : json_decode($forecast['model_parameters'], true);
+                                        @endphp
+                                        @if(isset($params['method']))
+                                            {{ ucfirst(str_replace('_', ' ', $params['method'])) }}
                                         @else
                                             Unknown
                                         @endif

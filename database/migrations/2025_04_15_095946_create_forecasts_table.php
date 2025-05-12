@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('forecasts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('category');
+            $table->string('category_id')->nullable();
             $table->decimal('predicted_amount', 10, 2);
             $table->date('forecast_date');
             $table->decimal('confidence_score', 5, 2);

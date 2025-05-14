@@ -57,7 +57,6 @@ new class extends Component {
 
         // Get category-specific forecasts
         $this->categoryForecasts = Forecast::forecastByCategory($userId, $this->forecastMonths);
-
         // Group forecasts by category
         $groupedForecasts = [];
         foreach ($this->categoryForecasts as $forecast) {

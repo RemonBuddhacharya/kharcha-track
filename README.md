@@ -100,3 +100,5 @@ If you discover any security-related issues, please email [your-email] instead o
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/ChandanShakya/kharcha-track)

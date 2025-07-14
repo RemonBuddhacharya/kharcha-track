@@ -1,11 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\Expense;
-use App\Models\User;
 use App\Models\Category;
+use App\Models\Expense;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +19,7 @@ class ExpenseFactory extends Factory
     {
         $userId = 2;
         $category = Category::where('user_id', 1)->inRandomOrder()->first();
-        if (!$category) {
+        if (! $category) {
             $category = Category::factory()->create(['user_id' => 1]);
         }
 
@@ -73,4 +73,4 @@ class ExpenseFactory extends Factory
             'is_anomaly' => $this->faker->boolean(5),
         ];
     }
-} 
+}

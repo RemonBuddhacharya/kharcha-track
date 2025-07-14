@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class Anomaly extends Model
@@ -32,7 +30,7 @@ class Anomaly extends Model
     /**
      * Detect and persist anomalies for a user in a date range using Isolation Forest algorithm.
      */
-    public static function detectForUser(int $userId, float $threshold = 2.0, string $dateFrom = null, string $dateTo = null): array
+    public static function detectForUser(int $userId, float $threshold = 2.0, ?string $dateFrom = null, ?string $dateTo = null): array
     {
         $query = DB::table('expenses')
             ->where('user_id', $userId);
@@ -83,7 +81,7 @@ class Anomaly extends Model
             // Apply threshold
             if ($score >= $threshold / 10) { // Adjust threshold scale for our simplified algorithm
                 $existing = self::where('expense_id', $expense->id)->first();
-                if (!$existing) {
+                if (! $existing) {
                     self::create([
                         'expense_id' => $expense->id,
                         'user_id' => $userId,
@@ -99,6 +97,7 @@ class Anomaly extends Model
         // Get all expenses with their anomaly status for the scatter plot
         $allExpenses = $expenses->map(function ($expense) {
             $anomaly = self::where('expense_id', $expense->id)->first();
+
             return [
                 'expense_id' => $expense->id,
                 'amount' => $expense->amount,
@@ -112,6 +111,7 @@ class Anomaly extends Model
 
         return $allExpenses;
     }
+
     /**
      * Get the expense that this anomaly belongs to.
      */

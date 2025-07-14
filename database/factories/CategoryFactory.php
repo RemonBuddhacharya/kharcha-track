@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Database\Factories;
@@ -21,4 +22,4 @@ class CategoryFactory extends Factory
             'user_id' => 2,
         ];
     }
-} 
+}

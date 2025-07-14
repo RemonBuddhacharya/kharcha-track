@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('color')->nullable();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
-            
+
             // Each user can have unique category names
             $table->unique(['name', 'user_id']);
         });

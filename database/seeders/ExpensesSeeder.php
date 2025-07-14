@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Expense;
+use Illuminate\Database\Seeder;
 
 class ExpensesSeeder extends Seeder
 {
@@ -15,4 +16,4 @@ class ExpensesSeeder extends Seeder
     {
         Expense::factory()->count(1000)->create();
     }
-} 
+}

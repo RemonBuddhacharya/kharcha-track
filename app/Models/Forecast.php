@@ -86,7 +86,7 @@ class Forecast extends Model
                 $parameters = [
                     'method' => 'moving_average',
                     'window_size' => $windowSize,
-                    'data_points' => count($monthlyTotals)
+                    'data_points' => count($monthlyTotals),
                 ];
                 $monthlyTotals[] = $movingAvg;
             }
@@ -173,7 +173,7 @@ class Forecast extends Model
                     $parameters = [
                         'method' => 'moving_average',
                         'window_size' => $windowSize,
-                        'data_points' => count($monthlyTotals)
+                        'data_points' => count($monthlyTotals),
                     ];
                     $monthlyTotals[] = $movingAvg;
                 }

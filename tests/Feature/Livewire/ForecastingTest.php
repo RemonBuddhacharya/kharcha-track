@@ -1,12 +1,13 @@
 <?php
 
-use App\Models\User;
-use App\Models\Forecast;
 use App\Models\Category;
 use App\Models\Expense;
+use App\Models\Forecast;
+use App\Models\User;
 use Illuminate\Support\Carbon;
 use Livewire\Volt\Volt;
-use function Pest\Laravel\{actingAs, get};
+
+use function Pest\Laravel\actingAs;
 
 it('renders the forecasting component for authenticated users', function () {
     $user = User::factory()->create();

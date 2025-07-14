@@ -1,9 +1,9 @@
 <?php
 
+use App\Models\Category;
+use App\Models\Expense;
 use App\Models\Forecast;
 use App\Models\User;
-use App\Models\Expense;
-use App\Models\Category;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
 

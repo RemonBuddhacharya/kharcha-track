@@ -1,9 +1,9 @@
 <?php
 
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Auth\Access\AuthorizationException;
 
 // Landing page - accessible to all
 Volt::route('/', 'landing')->name('landing');
@@ -18,8 +18,8 @@ Route::middleware('guest')->group(function () {
 
 Route::get('/email/verify/{id}/{hash}', function (\Illuminate\Http\Request $request, $id, $hash) {
     $user = \App\Models\User::findOrFail($id);
-    
-    if (!hash_equals((string) $hash, sha1($user->getEmailForVerification()))) {
+
+    if (! hash_equals((string) $hash, sha1($user->getEmailForVerification()))) {
         throw new AuthorizationException;
     }
 
@@ -31,17 +31,17 @@ Route::get('/email/verify/{id}/{hash}', function (\Illuminate\Http\Request $requ
     $user->previously_verified = true;
     $user->save();
 
-    if (!Auth::check()) {
+    if (! Auth::check()) {
         $message = $user->previously_verified
         ? 'Welcome back! Your new email address has been verified.'
         : 'Email verification completed successfully!';
         Auth::login($user);
     } else {
         $message = $user->previously_verified
-        ? 'New Email address has been verified for ' . $user->name . '.'
-        : 'Email verification completed successfully for ' . $user->name . '.';
+        ? 'New Email address has been verified for '.$user->name.'.'
+        : 'Email verification completed successfully for '.$user->name.'.';
     }
-    
+
     $user->sendEmailVerificationNotification();
 
     return redirect('/')->with('verified', $message);
@@ -68,7 +68,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Volt::route('/roles', 'admin.roles.index')->name('roles.index');
         Volt::route('/permissions', 'admin.permissions.index')->name('permissions.index');
     });
-
 
     Volt::route('/forecast', 'expenses.forecasting')->name('forecast.index');
     Volt::route('/anomaly', 'expenses.anomalies')->name('anomaly.index');

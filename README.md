@@ -95,10 +95,10 @@ This project follows PSR-12 coding standards. To format your code:
 
 ## Security
 
-If you discover any security-related issues, please email [your-email] instead of using the issue tracker.
+If you discover any security-related issues, please email [Mail](mailto:remanbuddhacharya@gmail.com) instead of using the issue tracker.
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/ChandanShakya/kharcha-track)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/RemonBuddhacharya/kharcha-track)

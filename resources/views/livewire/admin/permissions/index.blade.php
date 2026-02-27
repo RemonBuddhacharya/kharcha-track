@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Collection;
-use Livewire\Volt\Component;
+use Livewire\Component;
 use Mary\Traits\Toast;
 use Spatie\Permission\Models\Permission;
 use Livewire\WithPagination;

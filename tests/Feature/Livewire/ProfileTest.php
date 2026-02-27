@@ -1,8 +1,6 @@
 <?php
 
-use Livewire\Volt\Volt;
-
 it('renders the profile component', function () {
-    Volt::test('profile')
+    Livewire::test('profile')
         ->assertSee('Expected content in the profile component');
 });

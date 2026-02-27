@@ -3,28 +3,37 @@
 declare(strict_types=1);
 
 use App\Models\Expense;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
-use Livewire\Volt\Component;
-new 
+use Livewire\Component;
+
+new
 #[Layout('components.layouts.app')]
 #[Title('Dashboard')]
-class extends Component {
+class extends Component
+{
     public $totalUsers;
+
     public $totalExpenses;
+
     public $totalCategories;
+
     public $totalAnomalies;
+
     public $totalForecasts;
 
     public $userExpenses;
+
     public $userCategories;
+
     public $userAnomalies;
 
     // Chart state for Mary UI <x-chart>
     public array $systemExpenseTrendChart = [];
+
     public array $userExpenseTrendChart = [];
 
     public function mount(): void
@@ -47,8 +56,8 @@ class extends Component {
                             'borderColor' => '#2563eb',
                             'borderWidth' => 2,
                             'tension' => 0.4,
-                        ]
-                    ]
+                        ],
+                    ],
                 ],
                 'options' => [
                     'responsive' => true,
@@ -75,8 +84,8 @@ class extends Component {
                             'borderColor' => '#ea580c',
                             'borderWidth' => 2,
                             'tension' => 0.4,
-                        ]
-                    ]
+                        ],
+                    ],
                 ],
                 'options' => [
                     'responsive' => true,
@@ -92,12 +101,13 @@ class extends Component {
     private function getLast12Months(): array
     {
         return collect(range(0, 11))
-            ->map(fn($i) => Carbon::now()->subMonths(11 - $i)->format('M Y'))
+            ->map(fn ($i) => Carbon::now()->subMonths(11 - $i)->format('M Y'))
             ->toArray();
     }
+
     private function getSystemExpensesForLast12Months(): array
     {
-        $expenses = 
+        $expenses =
             Expense::query()
                 ->selectRaw('EXTRACT(YEAR FROM date) as year, EXTRACT(MONTH FROM date) as month, SUM(amount) as total')
                 ->where('date', '>=', Carbon::now()->subMonths(11)->startOfMonth())
@@ -109,12 +119,15 @@ class extends Component {
         $totals = collect(range(0, 11))
             ->map(function ($i) use ($expenses) {
                 $date = Carbon::now()->subMonths(11 - $i);
-                $match = $expenses->first(fn($e) => (int)$e->year === $date->year && (int)$e->month === $date->month);
+                $match = $expenses->first(fn ($e) => (int) $e->year === $date->year && (int) $e->month === $date->month);
+
                 return $match ? (float) $match->total : 0.0;
             })
             ->toArray();
+
         return $totals;
     }
+
     private function getUserExpensesForLast12Months(int $userId): array
     {
         $expenses =
@@ -130,10 +143,12 @@ class extends Component {
         $totals = collect(range(0, 11))
             ->map(function ($i) use ($expenses) {
                 $date = Carbon::now()->subMonths(11 - $i);
-                $match = $expenses->first(fn($e) => (int)$e->year === $date->year && (int)$e->month === $date->month);
+                $match = $expenses->first(fn ($e) => (int) $e->year === $date->year && (int) $e->month === $date->month);
+
                 return $match ? (float) $match->total : 0.0;
             })
             ->toArray();
+
         return $totals;
     }
 }; ?>

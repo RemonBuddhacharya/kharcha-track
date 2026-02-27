@@ -4,7 +4,7 @@ use App\Models\Expense;
 use App\Models\Category;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
-use Livewire\Volt\Component;
+use Livewire\Component;
 use Mary\Traits\Toast;
 use Livewire\WithPagination;
 

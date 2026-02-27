@@ -6,7 +6,7 @@ use App\Models\Forecast;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Livewire\Volt\Component;
+use Livewire\Component;
 
 new class extends Component {
     public array $forecastData = [];

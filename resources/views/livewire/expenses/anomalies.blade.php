@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Models\Anomaly;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
-use Livewire\Volt\Component;
+use Livewire\Component;
 
 new class extends Component {
     public array $anomalies = [];

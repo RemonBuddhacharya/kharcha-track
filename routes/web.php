@@ -3,17 +3,16 @@
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Livewire\Volt\Volt;
 
 // Landing page - accessible to all
-Volt::route('/', 'landing')->name('landing');
+Route::livewire('/', 'landing')->name('landing');
 
 // Authentication routes
 Route::middleware('guest')->group(function () {
-    Volt::route('/login', 'auth.login')->name('login');
-    Volt::route('/register', 'auth.register')->name('register');
-    Volt::route('/forgot-password', 'auth.forgot-password')->name('password.request');
-    Volt::route('/reset-password/{token}', 'auth.reset-password')->name('password.reset');
+    Route::livewire('/login', 'auth.login')->name('login');
+    Route::livewire('/register', 'auth.register')->name('register');
+    Route::livewire('/forgot-password', 'auth.forgot-password')->name('password.request');
+    Route::livewire('/reset-password/{token}', 'auth.reset-password')->name('password.reset');
 });
 
 Route::get('/email/verify/{id}/{hash}', function (\Illuminate\Http\Request $request, $id, $hash) {
@@ -49,14 +48,14 @@ Route::get('/email/verify/{id}/{hash}', function (\Illuminate\Http\Request $requ
 
 // Email verification routes
 Route::middleware('auth')->group(function () {
-    Volt::route('/email/verify', 'auth.verify-email')->name('verification.notice');
+    Route::livewire('/email/verify', 'auth.verify-email')->name('verification.notice');
 });
 
 // Routes that require authentication but not email verification
 Route::middleware('auth')->group(function () {
-    Volt::route('/profile', 'profile')->name('profile');
-    Volt::route('/dashboard', 'dashboard')->name('dashboard')->middleware('permission:access dashboard');
-    Volt::route('/logout', 'auth.logout')->name('logout');
+    Route::livewire('/profile', 'profile')->name('profile');
+    Route::livewire('/dashboard', 'dashboard')->name('dashboard')->middleware('permission:access dashboard');
+    Route::livewire('/logout', 'auth.logout')->name('logout');
 });
 
 // Protected routes requiring email verification
@@ -64,17 +63,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Admin routes
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
-        Volt::route('/users', 'admin.users.index')->name('users.index');
-        Volt::route('/roles', 'admin.roles.index')->name('roles.index');
-        Volt::route('/permissions', 'admin.permissions.index')->name('permissions.index');
+        Route::livewire('/users', 'admin.users.index')->name('users.index');
+        Route::livewire('/roles', 'admin.roles.index')->name('roles.index');
+        Route::livewire('/permissions', 'admin.permissions.index')->name('permissions.index');
     });
 
-    Volt::route('/forecast', 'expenses.forecasting')->name('forecast.index');
-    Volt::route('/anomaly', 'expenses.anomalies')->name('anomaly.index');
+    Route::livewire('/forecast', 'expenses.forecasting')->name('forecast.index');
+    Route::livewire('/anomaly', 'expenses.anomalies')->name('anomaly.index');
     // Regular user routes
-    Volt::route('/expenses', 'expenses.index')->name('expenses.index');
-    Volt::route('/expenses/create', 'expenses.create')->name('expenses.create');
-    Volt::route('/expenses/{id}/edit', 'expenses.edit')->name('expenses.edit');
+    Route::livewire('/expenses', 'expenses.index')->name('expenses.index');
+    Route::livewire('/expenses/create', 'expenses.create')->name('expenses.create');
+    Route::livewire('/expenses/{id}/edit', 'expenses.edit')->name('expenses.edit');
 
-    Volt::route('/categories', 'categories.index')->name('categories.index');
+    Route::livewire('/categories', 'categories.index')->name('categories.index');
 });

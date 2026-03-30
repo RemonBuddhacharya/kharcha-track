@@ -1,13 +1,11 @@
 <?php
 
 use App\Models\Category;
-use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Mary\Traits\Toast;
 use Livewire\WithPagination;
 new
-#[Layout('components.layouts.app')]
 #[Title('Categories')]
 class extends Component {
     use Toast, WithPagination;

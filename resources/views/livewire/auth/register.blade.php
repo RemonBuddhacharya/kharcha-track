@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 
 new
-#[Layout('components.layouts.empty')]
+#[Layout('layouts::empty')]
 #[Title('Registration')]
 class extends Component {
     #[Rule('required')]

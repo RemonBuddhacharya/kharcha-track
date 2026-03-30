@@ -59,7 +59,7 @@ class Forecast extends Model
 
         // Get the last 12 months of expense data
         $history = DB::table('expenses')
-            ->selectRaw('EXTRACT(YEAR FROM date) as year, EXTRACT(MONTH FROM date) as month, SUM(amount) as total')
+            ->selectRaw("strftime('%Y', date) as year, strftime('%m', date) as month, SUM(amount) as total")
             ->where('user_id', $userId)
             ->where('date', '>=', $now->copy()->subMonths(12)->startOfMonth())
             ->groupBy('year', 'month')
@@ -145,7 +145,7 @@ class Forecast extends Model
         foreach ($categories as $category) {
             // Get history for this category
             $history = DB::table('expenses')
-                ->selectRaw('EXTRACT(YEAR FROM date) as year, EXTRACT(MONTH FROM date) as month, SUM(amount) as total')
+                ->selectRaw("strftime('%Y', date) as year, strftime('%m', date) as month, SUM(amount) as total")
                 ->where('user_id', $userId)
                 ->where('category_id', $category->id)
                 ->where('date', '>=', $now->copy()->subMonths(12)->startOfMonth())

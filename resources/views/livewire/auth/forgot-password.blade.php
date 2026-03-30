@@ -7,7 +7,7 @@ use Livewire\Attributes\Rule;
 use Livewire\Attributes\Title;
 
 new
-#[Layout('components.layouts.empty')]
+#[Layout('layouts::empty')]
 #[Title('Forgot Password')]
 class extends Component {
     public $email = '';

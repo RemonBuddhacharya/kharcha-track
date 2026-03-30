@@ -5,7 +5,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 
 new
-#[Layout('components.layouts.empty')]
+#[Layout('layouts::empty')]
 #[Title('Welcome')]
 class extends Component {
     public function mount()

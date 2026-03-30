@@ -2,13 +2,12 @@
 
 use App\Models\Expense;
 use App\Models\Category;
-use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Mary\Traits\Toast;
 use Livewire\WithPagination;
 
-new #[Layout('components.layouts.app')] #[Title('Expenses')] class extends Component {
+new #[Title('Expenses')] class extends Component {
     use Toast, WithPagination;
 
     public string $search = '';

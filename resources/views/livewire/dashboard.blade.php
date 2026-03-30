@@ -6,12 +6,10 @@ use App\Models\Expense;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
 new
-#[Layout('components.layouts.app')]
 #[Title('Dashboard')]
 class extends Component
 {
@@ -109,7 +107,7 @@ class extends Component
     {
         $expenses =
             Expense::query()
-                ->selectRaw('EXTRACT(YEAR FROM date) as year, EXTRACT(MONTH FROM date) as month, SUM(amount) as total')
+                ->selectRaw("strftime('%Y', date) as year, strftime('%m', date) as month, SUM(amount) as total")
                 ->where('date', '>=', Carbon::now()->subMonths(11)->startOfMonth())
                 ->groupBy('year', 'month')
                 ->orderBy('year')
@@ -132,7 +130,7 @@ class extends Component
     {
         $expenses =
             Expense::query()
-                ->selectRaw('EXTRACT(YEAR FROM date) as year, EXTRACT(MONTH FROM date) as month, SUM(amount) as total')
+                ->selectRaw("strftime('%Y', date) as year, strftime('%m', date) as month, SUM(amount) as total")
                 ->where('user_id', $userId)
                 ->where('date', '>=', Carbon::now()->subMonths(11)->startOfMonth())
                 ->groupBy('year', 'month')

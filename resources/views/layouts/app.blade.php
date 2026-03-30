@@ -18,14 +18,14 @@
 <body class="min-h-screen font-sans antialiased bg-base-200">
     @mobile
         {{-- NativePHP Mobile: Top Bar --}}
-        <x-native-top-bar
+        <native:top-bar
             title="Kharcha Track"
             :show-navigation-icon="false"
             background-color="#1a1a1a"
             text-color="#ffffff"
         >
-            <x-native-top-bar-action icon="user" url="/profile" />
-        </x-native-top-bar>
+            <native:top-bar-action id="profile" label="Profile" icon="user" url="/profile" />
+        </native:top-bar>
     @endmobile
 
     @web
@@ -57,38 +57,74 @@
 
     @mobile
         {{-- NativePHP Mobile: Bottom Navigation --}}
-        <x-native-bottom-nav :dark="false" label-visibility="labeled">
-            <x-native-bottom-nav-item
+        <native:bottom-nav :dark="false" label-visibility="labeled">
+            <native:bottom-nav-item
+                id="dashboard"
                 icon="home"
                 label="Home"
                 url="/dashboard"
-                :selected="request()->is('dashboard')"
+                :active="request()->is('dashboard')"
             />
-            <x-native-bottom-nav-item
-                icon="banknotes"
-                label="Expenses"
-                url="/expenses"
-                :selected="request()->is('expenses*')"
-            />
-            <x-native-bottom-nav-item
-                icon="tag"
-                label="Categories"
-                url="/categories"
-                :selected="request()->is('categories')"
-            />
-            <x-native-bottom-nav-item
-                icon="chart-line"
-                label="Forecast"
-                url="/forecast"
-                :selected="request()->is('forecast')"
-            />
-            <x-native-bottom-nav-item
-                icon="beaker"
-                label="Anomalies"
-                url="/anomaly"
-                :selected="request()->is('anomaly')"
-            />
-        </x-native-bottom-nav>
+            @role('admin')
+                <native:bottom-nav-item
+                    id="users"
+                    icon="person"
+                    label="Users"
+                    url="/admin/users"
+                    :active="request()->is('admin/users')"
+                />
+                <native:bottom-nav-item
+                    id="roles"
+                    icon="group"
+                    label="Roles"
+                    url="/admin/roles"
+                    :active="request()->is('admin/roles')"
+                />
+                <native:bottom-nav-item
+                    id="permissions"
+                    icon="connections"
+                    label="Permissions"
+                    url="/admin/permissions"
+                    :active="request()->is('admin/permissions')"
+                />
+                <native:bottom-nav-item
+                    id="categories"
+                    icon="tag"
+                    label="Category"
+                    url="/categories"
+                    :active="request()->is('categories')"
+                />
+            @else
+                <native:bottom-nav-item
+                    id="expenses"
+                    icon="receipt"
+                    label="Expenses"
+                    url="/expenses"
+                    :active="request()->is('expenses*')"
+                />
+                <native:bottom-nav-item
+                    id="categories"
+                    icon="tag"
+                    label="Category"
+                    url="/categories"
+                    :active="request()->is('categories')"
+                />
+                <native:bottom-nav-item
+                    id="forecast"
+                    icon="trending-up"
+                    label="Forecast"
+                    url="/forecast"
+                    :active="request()->is('forecast')"
+                />
+                <native:bottom-nav-item
+                    id="anomalies"
+                    icon="warning"
+                    label="Anomaly"
+                    url="/anomaly"
+                    :active="request()->is('anomaly')"
+                />
+            @endrole
+        </native:bottom-nav>
     @endmobile
 
     {{--  TOAST area --}}

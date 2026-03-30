@@ -12,11 +12,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call([
-            RolesAndPermissionsSeeder::class,
-            DefaultUsersSeeder::class,
-            CategoriesSeeder::class,
-            ExpensesSeeder::class,
-        ]);
+        // Data bootstrapping moved to migration files.
+        // Keep these calls commented to avoid duplicate inserts.
+        // $this->call([
+        //     RolesAndPermissionsSeeder::class,
+        //     DefaultUsersSeeder::class,
+        //     CategoriesSeeder::class,
+        //     ExpensesSeeder::class,
+        // ]);
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Expense;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -25,6 +26,7 @@ return new class extends Migration
             $table->string('action')->default('update'); // create, update, delete
             $table->timestamps();
         });
+        Expense::factory()->count(1000)->create();
     }
 
     /**

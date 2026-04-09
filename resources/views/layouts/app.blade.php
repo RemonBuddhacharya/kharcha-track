@@ -15,7 +15,7 @@
     @vite('resources/js/app.js')
     @laravelPWA
 </head>
-<body class="min-h-screen font-sans antialiased bg-base-200">
+<body class="min-h-screen font-sans antialiased bg-base-200 nativephp-safe-area">
     @mobile
         {{-- NativePHP Mobile: Top Bar --}}
         <native:top-bar

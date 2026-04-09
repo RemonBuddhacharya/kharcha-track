@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inside Kharcha Track: How Your Expense App Really Works</title>
+
+  <!-- Google Fonts: Bricolage Grotesque · DM Sans · JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400;1,9..40,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    :root {
+      --color-accent:       #2D8B55;
+      --color-accent-hover: #226B41;
+      --color-accent-light: #E8F5EE;
+      --color-accent-muted: #5AAD7A;
+    }
+  </style>
+
+  <script src="main.js" defer></script>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="nav-inner">
+      <span class="nav-title">Inside Kharcha Track</span>
+      <div class="nav-dots" id="nav-dots" role="tablist">
+        <button class="nav-dot" data-target="module-1" data-tooltip="What Is Kharcha Track?" role="tab" aria-label="Module 1: What Is Kharcha Track?"></button>
+        <button class="nav-dot" data-target="module-2" data-tooltip="Meet the Cast" role="tab" aria-label="Module 2: Meet the Cast"></button>
+        <button class="nav-dot" data-target="module-3" data-tooltip="How the Pieces Talk" role="tab" aria-label="Module 3: How the Pieces Talk"></button>
+        <button class="nav-dot" data-target="module-4" data-tooltip="The Crystal Ball" role="tab" aria-label="Module 4: The Crystal Ball"></button>
+        <button class="nav-dot" data-target="module-5" data-tooltip="Guards & Gates" role="tab" aria-label="Module 5: Guards & Gates"></button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+    <!-- modules/*.html content is assembled here by build.sh -->
+<!-- ============================================================
+     MODULE 1 — WHAT IS KHARCHA TRACK?
+     ============================================================ -->
+<section class="module" id="module-1" style="background: var(--color-bg)">
+
+  <!-- ── Screen 1: Welcome ──────────────────────────────────── -->
+  <div class="module-header animate-in">
+    <span class="module-number">01</span>
+    <h2 class="module-title">What Is Kharcha Track?</h2>
+    <p class="module-subtitle">Your expense tracker — and the code behind it</p>
+  </div>
+
+  <div class="screen animate-in">
+    <p>Kharcha Track is a personal expense tracker with superpowers. "Kharcha" means "expense" in Nepali. It does what any good tracker does — records what you spend — but it also <strong>predicts your future spending</strong> and <strong>detects unusual purchases</strong> automatically.</p>
+
+    <p>Think of it as a financial diary that reads itself back to you and warns you about unusual pages. By the end of this course, you will understand every line of code that makes it work.</p>
+  </div>
+
+  <!-- ── Screen 2: Tech Stack ───────────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>The Technology Behind It</h3>
+    <p>Four main technologies work together to make Kharcha Track run. Each handles a different job.</p>
+
+    <div class="pattern-cards stagger-children">
+
+      <div class="pattern-card animate-in">
+        <div class="icon-circle" style="background: var(--color-actor-1); color: white;">&#9881;&#65039;</div>
+        <strong><span class="term" data-definition="A PHP framework — a pre-built toolkit that handles common web app tasks like routing, database access, and security so you don't start from scratch.">Laravel</span> 12</strong>
+        <p>The engine that powers everything — handles requests, talks to the database, enforces rules.</p>
+      </div>
+
+      <div class="pattern-card animate-in">
+        <div class="icon-circle" style="background: var(--color-actor-2); color: white;">&#9889;</div>
+        <strong><span class="term" data-definition="A Laravel tool that lets you build interactive web pages using only PHP. Instead of writing separate JavaScript, your PHP code handles button clicks, form submissions, and page updates automatically.">Livewire</span> 4</strong>
+        <p>Makes pages interactive without writing JavaScript separately — like magic HTML that updates itself.</p>
+      </div>
+
+      <div class="pattern-card animate-in">
+        <div class="icon-circle" style="background: var(--color-actor-3); color: white;">&#127912;</div>
+        <strong><span class="term" data-definition="A component library for Laravel — pre-built UI pieces like buttons, tables, modals, and forms that you can drop into your pages.">MaryUI</span> + <span class="term" data-definition="A CSS framework where you style elements by adding class names directly in HTML, like 'text-red-500' for red text. No separate stylesheet needed.">Tailwind CSS</span></strong>
+        <p>The visual layer — beautiful buttons, tables, and forms out of the box.</p>
+      </div>
+
+      <div class="pattern-card animate-in">
+        <div class="icon-circle" style="background: var(--color-actor-5); color: white;">&#128452;&#65039;</div>
+        <strong><span class="term" data-definition="A powerful open-source database. Think of it as a super-organized spreadsheet that can handle millions of rows and multiple users at once.">PostgreSQL</span></strong>
+        <p>The filing cabinet — stores every expense, category, and user permanently.</p>
+      </div>
+
+    </div>
+
+    <p>All of these are built on <span class="term" data-definition="A programming language designed for building web applications. It runs on the server — the computer that hosts your website.">PHP</span>, a server-side language, and follow a <span class="term" data-definition="A pre-built foundation of code that handles common tasks, so you can focus on what makes your app unique instead of reinventing the wheel.">framework</span> pattern that keeps code organized.</p>
+  </div>
+
+  <!-- ── Screen 3: Project Map ──────────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>The Project Map</h3>
+    <p>Here is where the important files live. You will visit each of these throughout the course.</p>
+
+    <div class="file-tree">
+      <div class="file-tree-item">
+        <span class="folder">app/Models/</span> — <em>The 6 data characters (User, Expense, Category...)</em>
+        <div class="file-tree-item">
+          <span class="file">Expense.php</span> — <em>The star — defines what an expense looks like</em>
+        </div>
+        <div class="file-tree-item">
+          <span class="file">Forecast.php</span> — <em>The oracle — predicts future spending</em>
+        </div>
+        <div class="file-tree-item">
+          <span class="file">Anomaly.php</span> — <em>The detective — spots unusual expenses</em>
+        </div>
+      </div>
+      <div class="file-tree-item">
+        <span class="folder">resources/views/livewire/</span> — <em>The pages users actually see</em>
+        <div class="file-tree-item">
+          <span class="file">expenses/index.blade.php</span> — <em>The main expense list</em>
+        </div>
+        <div class="file-tree-item">
+          <span class="file">dashboard.blade.php</span> — <em>Your spending overview</em>
+        </div>
+      </div>
+      <div class="file-tree-item">
+        <span class="file">routes/web.php</span> — <em>The traffic director — maps URLs to pages</em>
+      </div>
+      <div class="file-tree-item">
+        <span class="folder">database/migrations/</span> — <em>The blueprints — define database table structures</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Screen 4: Tracing "Add Expense" ────────────────────── -->
+  <div class="screen animate-in">
+    <h3>Tracing "Add Expense"</h3>
+    <p>Let us follow a single action through the entire codebase — from button click to database row.</p>
+
+    <div class="step-cards stagger-children">
+      <div class="step-card animate-in">
+        <span class="step-number">1</span>
+        <p>User clicks "Add Expense" button</p>
+      </div>
+      <div class="step-card animate-in">
+        <span class="step-number">2</span>
+        <p><span class="term" data-definition="A Laravel tool that lets you build interactive web pages using only PHP. Instead of writing separate JavaScript, your PHP code handles button clicks, form submissions, and page updates automatically.">Livewire</span> opens a side drawer with an empty form</p>
+      </div>
+      <div class="step-card animate-in">
+        <span class="step-number">3</span>
+        <p>User fills in title, amount, category, date</p>
+      </div>
+      <div class="step-card animate-in">
+        <span class="step-number">4</span>
+        <p><code>save()</code> method validates all fields (amount &gt; 0, category exists, etc.)</p>
+      </div>
+      <div class="step-card animate-in">
+        <span class="step-number">5</span>
+        <p><code>Expense::create()</code> saves to database</p>
+      </div>
+      <div class="step-card animate-in">
+        <span class="step-number">6</span>
+        <p>Model event fires — ExpenseHistory auto-logs the creation</p>
+      </div>
+    </div>
+
+    <div class="code-translation animate-in">
+      <div class="translation-code">
+<pre><code><span class="code-keyword">protected static function</span> <span class="code-function">booted</span>(): <span class="code-keyword">void</span>
+{
+    <span class="code-keyword">static</span>::<span class="code-function">created</span>(<span class="code-keyword">function</span> (<span class="code-property">$expense</span>) {
+        <span class="code-property">$expense</span>-&gt;<span class="code-function">histories</span>()-&gt;<span class="code-function">create</span>([
+            <span class="code-string">'user_id'</span> <span class="code-operator">=&gt;</span> <span class="code-property">$expense</span>-&gt;user_id,
+            <span class="code-string">'title'</span> <span class="code-operator">=&gt;</span> <span class="code-property">$expense</span>-&gt;title,
+            <span class="code-string">'amount'</span> <span class="code-operator">=&gt;</span> <span class="code-property">$expense</span>-&gt;amount,
+            <span class="code-string">'action'</span> <span class="code-operator">=&gt;</span> <span class="code-string">'create'</span>,
+        ]);
+    });
+}</code></pre>
+      </div>
+      <div class="translation-english">
+        <div class="translation-lines">
+          <p class="tl">When this model first wakes up, set up automatic behaviors...</p>
+          <p class="tl">Whenever a new expense is created...</p>
+          <p class="tl">Automatically create a history record...</p>
+          <p class="tl">Copy the user, title, and amount...</p>
+          <p class="tl">Mark it as a 'create' action — the first entry in this expense's story</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-accent animate-in">
+      <div class="callout-icon">&#128161;</div>
+      <div class="callout-content">
+        <strong class="callout-title">Key Insight</strong>
+        <p>This pattern — "when X happens, automatically do Y" — is called an <strong>event listener</strong>. It is everywhere: when you get an email, your phone dings. Kharcha Track uses it so every expense change is automatically journaled.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Screen 5: Quiz ─────────────────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>Check Your Understanding</h3>
+
+    <div class="quiz-container" id="quiz-module1">
+
+      <div class="quiz-question-block"
+           data-correct="option-b"
+           data-explanation-right="The model defines what data an expense can hold. You would add 'notes' to the $fillable array so Laravel allows it to be saved."
+           data-explanation-wrong="The model is where you define an expense data fields. Routes handle URLs, styles handle appearance, and seeders handle test data.">
+        <h3 class="quiz-question">You want to add a "notes" field to expenses. Which file would you modify first?</h3>
+        <div class="quiz-options">
+          <button class="quiz-option" data-value="option-a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>routes/web.php — the traffic director</span></button>
+          <button class="quiz-option" data-value="option-b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>app/Models/Expense.php — the expense model</span></button>
+          <button class="quiz-option" data-value="option-c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>styles.css — the visual layer</span></button>
+          <button class="quiz-option" data-value="option-d" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>database/seeders — the test data</span></button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question-block"
+           data-correct="option-b"
+           data-explanation-right="The booted() method is where history tracking is wired up. If the updated event listener has a bug, edits would save but history entries would not be created."
+           data-explanation-wrong="History tracking lives in the Expense model booted() method — that is where created and updated event listeners auto-create ExpenseHistory records.">
+        <h3 class="quiz-question">A user reports that editing an expense does not show in the history. Where would you look first?</h3>
+        <div class="quiz-options">
+          <button class="quiz-option" data-value="option-a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>The browser developer console</span></button>
+          <button class="quiz-option" data-value="option-b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>The booted() method in Expense.php</span></button>
+          <button class="quiz-option" data-value="option-c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>The Category model</span></button>
+          <button class="quiz-option" data-value="option-d" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>The route file</span></button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question-block"
+           data-correct="option-b"
+           data-explanation-right="Livewire keeps everything in one language — PHP. You get reactive, interactive pages without maintaining a separate JavaScript codebase."
+           data-explanation-wrong="Livewire main advantage is simplicity: one language (PHP) for both server logic and page interactivity, instead of juggling PHP on the backend and JavaScript on the frontend.">
+        <h3 class="quiz-question">Why does Kharcha Track use Livewire instead of React or Vue?</h3>
+        <div class="quiz-options">
+          <button class="quiz-option" data-value="option-a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Livewire is faster at rendering</span></button>
+          <button class="quiz-option" data-value="option-b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>It lets you write interactive pages in PHP without a separate JavaScript framework</span></button>
+          <button class="quiz-option" data-value="option-c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>React and Vue cost money</span></button>
+          <button class="quiz-option" data-value="option-d" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Livewire has better colors</span></button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <button class="quiz-check-btn" onclick="checkQuiz('quiz-module1')">Check Answers</button>
+      <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module1')">Try Again</button>
+
+    </div>
+  </div>
+
+</section>
+<!-- ============================================================
+     MODULE 2 — MEET THE CAST
+     ============================================================ -->
+<section class="module" id="module-2" style="background: var(--color-bg-warm)">
+
+  <!-- ── Screen 1: The Six Actors ────────────────────────────── -->
+  <div class="module-header animate-in">
+    <span class="module-number">02</span>
+    <h2 class="module-title">Meet the Cast</h2>
+    <p class="module-subtitle">Every app has characters. In Kharcha Track, the six database <span class="term" data-definition="A model is a PHP class that represents a table in your database. It defines what data exists and how it relates to other data.">models</span> are like actors in a theater company — each with a specific role to play.</p>
+  </div>
+
+  <div class="icon-rows stagger-children">
+
+    <div class="icon-row animate-in">
+      <div class="icon-circle" style="background: var(--color-actor-1); color: white;">&#128100;</div>
+      <div>
+        <strong>User — The Person</strong>
+        <p>Has roles (admin or regular user), email, and password. Everything in the app belongs to a user — they are the starting point of all data.</p>
+      </div>
+    </div>
+
+    <div class="icon-row animate-in">
+      <div class="icon-circle" style="background: var(--color-actor-2); color: white;">&#11088;</div>
+      <div>
+        <strong>Expense — The Star</strong>
+        <p>Title, amount, date, category, payment method. This is the main thing being tracked — the lead actor that every other character supports.</p>
+      </div>
+    </div>
+
+    <div class="icon-row animate-in">
+      <div class="icon-circle" style="background: var(--color-actor-3); color: white;">&#128193;</div>
+      <div>
+        <strong>Category — The Organizer</strong>
+        <p>Groups expenses into buckets like Food, Transport, and Bills. Each user has their own categories plus shared system categories.</p>
+      </div>
+    </div>
+
+    <div class="icon-row animate-in">
+      <div class="icon-circle" style="background: var(--color-actor-4); color: white;">&#128220;</div>
+      <div>
+        <strong>ExpenseHistory — The Historian</strong>
+        <p>Automatically records every create and update as a timeline entry. You never call it directly — it watches silently in the background.</p>
+      </div>
+    </div>
+
+    <div class="icon-row animate-in">
+      <div class="icon-circle" style="background: var(--color-actor-5); color: white;">&#128302;</div>
+      <div>
+        <strong>Forecast — The Oracle</strong>
+        <p>Uses past spending to predict future months. Stores predictions with confidence scores so you know how reliable each guess is.</p>
+      </div>
+    </div>
+
+    <div class="icon-row animate-in">
+      <div class="icon-circle" style="background: var(--color-actor-1); color: white;">&#128269;</div>
+      <div>
+        <strong>Anomaly — The Detective</strong>
+        <p>Scans expenses for unusual amounts and flags them with scores. If something looks off compared to your normal spending, this model catches it.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Screen 2: How They're Connected ─────────────────────── -->
+  <h3 class="animate-in" style="margin-top: var(--space-12);">How They're Connected</h3>
+  <p class="animate-in">These six actors don't work alone. They're linked together through relationships — here's who talks to whom.</p>
+
+  <div class="arch-diagram animate-in">
+    <div class="arch-zone">
+      <div class="arch-zone-label">Relationships</div>
+      <div style="display: flex; flex-direction: column; gap: var(--space-4); font-family: var(--font-mono); font-size: var(--text-sm);">
+        <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+          <span class="arch-component" style="border-color: var(--color-actor-1);">&#128100; User</span>
+          <span style="color: var(--color-text-muted); font-weight: 700;">(1) ──&#9654; (&#8734;)</span>
+          <span class="arch-component" style="border-color: var(--color-actor-2);">&#11088; Expense</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+          <span class="arch-component" style="border-color: var(--color-actor-1);">&#128100; User</span>
+          <span style="color: var(--color-text-muted); font-weight: 700;">(1) ──&#9654; (&#8734;)</span>
+          <span class="arch-component" style="border-color: var(--color-actor-3);">&#128193; Category</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+          <span class="arch-component" style="border-color: var(--color-actor-3);">&#128193; Category</span>
+          <span style="color: var(--color-text-muted); font-weight: 700;">(1) ──&#9654; (&#8734;)</span>
+          <span class="arch-component" style="border-color: var(--color-actor-2);">&#11088; Expense</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+          <span class="arch-component" style="border-color: var(--color-actor-2);">&#11088; Expense</span>
+          <span style="color: var(--color-text-muted); font-weight: 700;">(1) ──&#9654; (&#8734;)</span>
+          <span class="arch-component" style="border-color: var(--color-actor-4);">&#128220; ExpenseHistory</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+          <span class="arch-component" style="border-color: var(--color-actor-1);">&#128100; User</span>
+          <span style="color: var(--color-text-muted); font-weight: 700;">(1) ──&#9654; (&#8734;)</span>
+          <span class="arch-component" style="border-color: var(--color-actor-5);">&#128302; Forecast</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+          <span class="arch-component" style="border-color: var(--color-actor-1);">&#128100; User</span>
+          <span style="color: var(--color-text-muted); font-weight: 700;">(1) ──&#9654; (&#8734;)</span>
+          <span class="arch-component" style="border-color: var(--color-actor-1);">&#128269; Anomaly</span>
+        </div>
+      </div>
+    </div>
+    <div class="arch-description">
+      Each arrow reads: "one ___ <span class="term" data-definition="A hasMany relationship means one record (like a User) can own many records of another type (like Expenses). In Laravel, you define this with a hasMany() method on the model.">has many</span> ___." A User has many Expenses. A Category has many Expenses. An Expense has many History entries.
+    </div>
+  </div>
+
+  <div class="callout callout-accent animate-in">
+    <span class="callout-icon">&#128161;</span>
+    <div>
+      <span class="callout-title">Key Pattern</span>
+      <div class="callout-content">
+        <p>This pattern — where one thing "has many" of another — is called a <span class="term" data-definition="A one-to-many relationship means one record in a table can be linked to many records in another table. For example, one User can have many Expenses. It's one of the most common patterns in database design.">one-to-many relationship</span>. It's one of the most common patterns in software. Almost every app you use has this at its core.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Screen 3: Code Translation — The Expense Model ──────── -->
+  <h3 class="animate-in" style="margin-top: var(--space-12);">Code Translation: The Expense Model</h3>
+  <p class="animate-in">Here's a real piece of code from Kharcha Track. On the left, what the developer wrote. On the right, what it actually means.</p>
+
+  <div class="translation-block animate-in">
+    <div class="translation-code">
+      <span class="translation-label">app/Models/Expense.php</span>
+<pre style="margin:0; white-space: pre-wrap;">protected $<span class="term" data-definition="The fillable array tells Laravel which fields are allowed to be set when creating or updating a record. It's a security feature that prevents unwanted data from being saved.">fillable</span> = [
+    'user_id',
+    'title',
+    'description',
+    'amount',
+    'date',
+    'category_id',
+    'payment_method',
+    'is_recurring',
+    'is_anomaly',
+];</pre>
+    </div>
+    <div class="translation-english">
+      <span class="translation-label">Plain English</span>
+      <div class="translation-lines">
+        <div class="tl">"Here are the fields that an expense can have..."</div>
+        <div class="tl"><strong>user_id</strong> — Who owns this expense</div>
+        <div class="tl"><strong>title</strong> — What you spent on</div>
+        <div class="tl"><strong>description</strong> — Optional details about the purchase</div>
+        <div class="tl"><strong>amount</strong> — How much it cost</div>
+        <div class="tl"><strong>date</strong> — When it happened</div>
+        <div class="tl"><strong>category_id</strong> — Which category it belongs to</div>
+        <div class="tl"><strong>payment_method</strong> — How you paid (cash, card, UPI...)</div>
+        <div class="tl"><strong>is_recurring</strong> — Does it repeat monthly?</div>
+        <div class="tl"><strong>is_anomaly</strong> — Was it flagged as unusual?</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Screen 4: The Stage — Livewire Components ───────────── -->
+  <h3 class="animate-in" style="margin-top: var(--space-12);">The Stage: Livewire Components</h3>
+  <p class="animate-in">The models are the actors, but they need a stage. <span class="term" data-definition="A Livewire component is a PHP class paired with a Blade template that creates interactive pages without writing JavaScript. It handles user actions like clicking, typing, and form submissions on the server side.">Livewire components</span> are the pages where users actually interact with the data.</p>
+
+  <div class="pattern-cards stagger-children">
+
+    <div class="pattern-card animate-in" style="border-top-color: var(--color-actor-2);">
+      <div class="pattern-icon" style="background: rgba(42,123,155,0.1); color: var(--color-actor-2);">&#128203;</div>
+      <div class="pattern-title">expenses/index</div>
+      <p class="pattern-desc">The expense list with search, sort, add, edit, and delete. This is where users spend most of their time.</p>
+    </div>
+
+    <div class="pattern-card animate-in" style="border-top-color: var(--color-actor-5);">
+      <div class="pattern-icon" style="background: rgba(45,139,85,0.1); color: var(--color-actor-5);">&#128302;</div>
+      <div class="pattern-title">expenses/forecasting</div>
+      <p class="pattern-desc">The crystal ball page. Shows predicted spending for future months based on your history.</p>
+    </div>
+
+    <div class="pattern-card animate-in" style="border-top-color: var(--color-actor-1);">
+      <div class="pattern-icon" style="background: rgba(217,79,48,0.1); color: var(--color-actor-1);">&#128269;</div>
+      <div class="pattern-title">expenses/anomalies</div>
+      <p class="pattern-desc">The detective page. Lists flagged expenses that look unusual compared to your normal spending.</p>
+    </div>
+
+    <div class="pattern-card animate-in" style="border-top-color: var(--color-actor-3);">
+      <div class="pattern-icon" style="background: rgba(123,109,170,0.1); color: var(--color-actor-3);">&#128193;</div>
+      <div class="pattern-title">categories/index</div>
+      <p class="pattern-desc">Manage your spending categories. Create, rename, or delete the buckets that organize your expenses.</p>
+    </div>
+
+    <div class="pattern-card animate-in" style="border-top-color: var(--color-actor-4);">
+      <div class="pattern-icon" style="background: rgba(212,168,67,0.1); color: var(--color-actor-4);">&#128200;</div>
+      <div class="pattern-title">dashboard</div>
+      <p class="pattern-desc">Your personal spending overview with charts, totals, and trends at a glance.</p>
+    </div>
+
+    <div class="pattern-card animate-in" style="border-top-color: var(--color-text-muted);">
+      <div class="pattern-icon" style="background: rgba(0,0,0,0.05); color: var(--color-text-muted);">&#128274;</div>
+      <div class="pattern-title">admin/users/index</div>
+      <p class="pattern-desc">(Admin only) Manage all users in the system. Regular users never see this page.</p>
+    </div>
+
+  </div>
+
+  <!-- ── Screen 5: Group Chat Animation ──────────────────────── -->
+  <h3 class="animate-in" style="margin-top: var(--space-12);">What Happens When You Add an Expense?</h3>
+  <p class="animate-in">Watch the models talk to each other when a user logs a new expense.</p>
+
+  <div class="chat-window animate-in" id="chat-module2">
+    <div class="chat-messages">
+      <div class="chat-message" data-msg="0" data-sender="user" style="display:none">
+        <div class="chat-avatar" style="background: var(--color-actor-1)">U</div>
+        <div class="chat-bubble">
+          <span class="chat-sender" style="color: var(--color-actor-1)">User</span>
+          <p>I just logged a &#8377;500 grocery expense.</p>
+        </div>
+      </div>
+      <div class="chat-message" data-msg="1" data-sender="expense" style="display:none">
+        <div class="chat-avatar" style="background: var(--color-actor-2)">E</div>
+        <div class="chat-bubble">
+          <span class="chat-sender" style="color: var(--color-actor-2)">Expense</span>
+          <p>Got it! Storing title="Groceries", amount=500, category=Food.</p>
+        </div>
+      </div>
+      <div class="chat-message" data-msg="2" data-sender="category" style="display:none">
+        <div class="chat-avatar" style="background: var(--color-actor-3)">C</div>
+        <div class="chat-bubble">
+          <span class="chat-sender" style="color: var(--color-actor-3)">Category</span>
+          <p>That is me -- Food! I will make sure this shows up in the right bucket.</p>
+        </div>
+      </div>
+      <div class="chat-message" data-msg="3" data-sender="history" style="display:none">
+        <div class="chat-avatar" style="background: var(--color-actor-4)">H</div>
+        <div class="chat-bubble">
+          <span class="chat-sender" style="color: var(--color-actor-4)">ExpenseHistory</span>
+          <p>I saw that! Already recorded the "create" action with all the details.</p>
+        </div>
+      </div>
+      <div class="chat-message" data-msg="4" data-sender="forecast" style="display:none">
+        <div class="chat-avatar" style="background: var(--color-actor-5)">F</div>
+        <div class="chat-bubble">
+          <span class="chat-sender" style="color: var(--color-actor-5)">Forecast</span>
+          <p>Interesting... I will factor this into next month prediction.</p>
+        </div>
+      </div>
+      <div class="chat-message" data-msg="5" data-sender="anomaly" style="display:none">
+        <div class="chat-avatar" style="background: var(--color-actor-1)">A</div>
+        <div class="chat-bubble">
+          <span class="chat-sender" style="color: var(--color-actor-1)">Anomaly</span>
+          <p>&#8377;500 for groceries? That is within normal range. No red flags from me.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-typing" style="display:none">
+      <div class="chat-avatar" id="chat-module2-typing-avatar" style="background: var(--color-actor-1)">?</div>
+      <div class="chat-typing-dots">
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+      </div>
+    </div>
+
+    <div class="chat-controls">
+      <button class="btn chat-next-btn">Next Message</button>
+      <button class="btn chat-all-btn">Play All</button>
+      <button class="btn chat-reset-btn">Replay</button>
+      <span class="chat-progress"></span>
+    </div>
+  </div>
+
+  <!-- ── Screen 6: Quiz ──────────────────────────────────────── -->
+  <h3 class="animate-in" style="margin-top: var(--space-12);">Check Your Understanding</h3>
+
+  <div class="quiz-container animate-in" id="quiz-module2">
+
+    <!-- Question 1 -->
+    <div class="quiz-question-block"
+         data-correct="option-b"
+         data-explanation-right="You would need to change the relationship from belongsTo to belongsToMany, which means creating a new pivot table connecting expenses to categories. Both models need new relationship methods."
+         data-explanation-wrong="Think about where the category_id lives. Right now an expense has one category_id — to support multiple, you need a linking table between both models.">
+      <h3 class="quiz-question">You want to let users tag expenses with multiple categories instead of just one. Which models would need to change?</h3>
+      <div class="quiz-options">
+        <button class="quiz-option" data-value="option-a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Only Expense</span></button>
+        <button class="quiz-option" data-value="option-b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Expense and Category</span></button>
+        <button class="quiz-option" data-value="option-c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Only Category</span></button>
+        <button class="quiz-option" data-value="option-d" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>User and Expense</span></button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="quiz-question-block"
+         data-correct="option-b"
+         data-explanation-right="The Forecast model has forecastForUser() and forecastByCategory() methods containing the moving average algorithm. Models in Laravel often hold business logic, not just data structure."
+         data-explanation-wrong="Models in Laravel often contain business logic, not just data structure. The Forecast model has dedicated methods with the actual prediction algorithm.">
+      <h3 class="quiz-question">The forecast page shows stale predictions. Where does the prediction logic live?</h3>
+      <div class="quiz-options">
+        <button class="quiz-option" data-value="option-a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>In the Livewire component</span></button>
+        <button class="quiz-option" data-value="option-b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>In the Forecast model</span></button>
+        <button class="quiz-option" data-value="option-c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>In the route file</span></button>
+        <button class="quiz-option" data-value="option-d" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>In the database migration</span></button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="quiz-question-block"
+         data-correct="option-b"
+         data-explanation-right="By recording every version separately, you can see what changed, when, and how — like version control for your spending data."
+         data-explanation-wrong="Think about what you would lose if you only kept the latest version. The old value would be gone forever. A separate history model preserves every past state.">
+      <h3 class="quiz-question">Why is ExpenseHistory a separate model instead of just updating the Expense?</h3>
+      <div class="quiz-options">
+        <button class="quiz-option" data-value="option-a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>It is faster</span></button>
+        <button class="quiz-option" data-value="option-b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>To keep a complete audit trail of every change</span></button>
+        <button class="quiz-option" data-value="option-c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>It uses less storage</span></button>
+        <button class="quiz-option" data-value="option-d" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>The database requires it</span></button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <button class="quiz-check-btn" onclick="checkQuiz('quiz-module2')">Check Answers</button>
+    <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module2')">Try Again</button>
+  </div>
+
+</section>
+<section class="module" id="module-3" style="background: var(--color-bg)">
+
+  <!-- ── MODULE HEADER ──────────────────────────────────────── -->
+  <div class="module-header animate-in">
+    <span class="module-number">03</span>
+    <h2 class="module-title">How the Pieces Talk</h2>
+    <p class="module-subtitle">Data flow: routes direct traffic, Livewire delivers in real-time, model events create automatic carbon copies.</p>
+  </div>
+
+  <!-- ── SCREEN 1: ROUTES ───────────────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>The Traffic Director &mdash; Routes</h3>
+    <p>Think of <span class="term" data-definition="A route maps a URL (like /expenses) to the code that should handle it. It is the address book of your web application.">routes</span> as a postal address book. Every URL has a destination, and <span class="term" data-definition="Middleware is a checkpoint that runs before a page loads. It can block access, redirect users, or modify requests &mdash; like a security guard at the door.">middleware</span> acts as the security checkpoints along the way.</p>
+
+    <div class="translation-block">
+      <div class="translation-code">
+        <span class="translation-label">routes/web.php</span>
+        <pre><code>Route::middleware(['auth', 'verified'])-&gt;group(function () {
+    Route::middleware('role:admin')-&gt;prefix('admin')-&gt;name('admin.')-&gt;group(function () {
+        Route::livewire('/users', 'admin.users.index')-&gt;name('admin.users.index');
+        Route::livewire('/roles', 'admin.roles.index')-&gt;name('admin.roles.index');
+        Route::livewire('/permissions', 'admin.permissions.index')-&gt;name('permissions.index');
+    });
+
+    Route::livewire('/forecast', 'expenses.forecasting')-&gt;name('forecast.index');
+    Route::livewire('/anomaly', 'expenses.anomalies')-&gt;name('anomaly.index');
+    Route::livewire('/expenses', 'expenses.index')-&gt;name('expenses.index');</code></pre>
+      </div>
+      <div class="translation-english">
+        <span class="translation-label">Plain English</span>
+        <div class="translation-lines">
+          <p class="tl">For any page that needs login AND email verification...</p>
+          <p class="tl">If the user is an admin, add the /admin <span class="term" data-definition="A prefix is a path segment added before all routes in a group, like /admin. It keeps URLs organized without repeating yourself.">prefix</span>...</p>
+          <p class="tl">Map /admin/users, /admin/roles, and /admin/permissions to their management <span class="term" data-definition="A component is a self-contained piece of UI that handles its own logic and rendering. In Livewire, each component is a PHP class paired with a Blade template.">components</span>.</p>
+          <p class="tl">Map /forecast to the forecasting component.</p>
+          <p class="tl">Map /anomaly to the anomaly detection component.</p>
+          <p class="tl">Map /expenses to the expense list component.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 2: LIVEWIRE ─────────────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>Livewire &mdash; The Magic Mail Carrier</h3>
+    <p><span class="term" data-definition="Livewire is a Laravel framework that lets you build dynamic, reactive interfaces using only PHP &mdash; no separate JavaScript framework needed. It sends small AJAX requests behind the scenes.">Livewire</span> lets you build interactive pages without writing a separate JavaScript app. When a user clicks a button, Livewire sends a tiny <span class="term" data-definition="AJAX (Asynchronous JavaScript and XML) is a technique for sending data to/from a server without reloading the entire page. It makes web apps feel fast and responsive.">AJAX</span> request to the server and updates only the parts of the page that changed.</p>
+
+    <div class="translation-block">
+      <div class="translation-code">
+        <span class="translation-label">Expenses Livewire Component &mdash; save()</span>
+        <pre><code>public function save(): void
+{
+    $data = $this-&gt;validate([
+        'title' =&gt; 'required|string|max:255',
+        'description' =&gt; 'nullable|string',
+        'amount' =&gt; 'required|numeric|gt:0',
+        'category_id' =&gt; 'required|exists:categories,id',
+        'date' =&gt; 'required|date',
+    ]);
+
+    if ($this-&gt;editing_id) {
+        $expense = Expense::findOrFail($this-&gt;editing_id);
+        $expense-&gt;update($data);
+        $this-&gt;success('Expense updated successfully');
+    } else {
+        $data['user_id'] = auth()-&gt;id();
+        Expense::create($data);
+        $this-&gt;success('Expense created successfully');
+    }
+    $this-&gt;drawer = false;
+}</code></pre>
+      </div>
+      <div class="translation-english">
+        <span class="translation-label">Plain English</span>
+        <div class="translation-lines">
+          <p class="tl"><span class="term" data-definition="Validate means checking that user input meets all the rules before saving it. If any rule fails, Laravel rejects the data and shows error messages.">Validate</span> &mdash; check that all the form data is valid.</p>
+          <p class="tl">Title is required, max 255 characters.</p>
+          <p class="tl">Amount must be a positive number.</p>
+          <p class="tl">Category must exist in the database.</p>
+          <p class="tl">If we are editing an existing expense, find it and update.</p>
+          <p class="tl">Otherwise, attach the current user and create a new one.</p>
+          <p class="tl">Close the side drawer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 3: FLOW ANIMATION ───────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>Message Flow &mdash; Adding an Expense</h3>
+    <p>Follow the data as it travels through the system. Each step happens in milliseconds.</p>
+
+    <div class="flow-animation" id="flow-add-expense" data-steps='[
+      {"label":"User fills the form and clicks Save","highlight":"actor-1"},
+      {"label":"Form data sent via AJAX (no page reload!)","packet":true,"from":"actor-1","to":"actor-2","highlight":"actor-2"},
+      {"label":"validate() checks all fields","highlight":"actor-2"},
+      {"label":"Expense::create() with validated data","packet":true,"from":"actor-2","to":"actor-3","highlight":"actor-3"},
+      {"label":"INSERT INTO expenses...","packet":true,"from":"actor-3","to":"actor-5","highlight":"actor-5"},
+      {"label":"Model event fires: created","highlight":"actor-3"},
+      {"label":"Auto-creates history record","packet":true,"from":"actor-3","to":"actor-4","highlight":"actor-4"},
+      {"label":"INSERT INTO expense_histories...","packet":true,"from":"actor-4","to":"actor-5","highlight":"actor-5"},
+      {"label":"Success toast + table refreshes","packet":true,"from":"actor-2","to":"actor-1","highlight":"actor-1"}
+    ]'>
+      <div class="flow-actors">
+        <div class="flow-actor" id="flow-actor-1" style="--actor-color: var(--color-actor-1)">
+          <div class="flow-actor-icon">&#x1F310;</div>
+          <div class="flow-actor-name">Browser</div>
+        </div>
+        <div class="flow-actor" id="flow-actor-2" style="--actor-color: var(--color-actor-2)">
+          <div class="flow-actor-icon">&#x26A1;</div>
+          <div class="flow-actor-name">Livewire</div>
+        </div>
+        <div class="flow-actor" id="flow-actor-3" style="--actor-color: var(--color-actor-3)">
+          <div class="flow-actor-icon">&#x1F4E6;</div>
+          <div class="flow-actor-name">Expense Model</div>
+        </div>
+        <div class="flow-actor" id="flow-actor-4" style="--actor-color: var(--color-actor-4)">
+          <div class="flow-actor-icon">&#x1F4CB;</div>
+          <div class="flow-actor-name">ExpenseHistory</div>
+        </div>
+        <div class="flow-actor" id="flow-actor-5" style="--actor-color: var(--color-actor-5)">
+          <div class="flow-actor-icon">&#x1F5C4;</div>
+          <div class="flow-actor-name">Database</div>
+        </div>
+      </div>
+      <div class="flow-packet"></div>
+      <div class="flow-step-label">Click "Next Step" to begin</div>
+      <div class="flow-progress">Step 0 / 9</div>
+      <div class="flow-controls">
+        <button class="btn btn-accent flow-next-btn">Next Step</button>
+        <button class="btn btn-secondary flow-reset-btn">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 4: MODEL EVENTS ─────────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>The Carbon Copy &mdash; Model Events</h3>
+    <p>Every time an expense changes, a <span class="term" data-definition="A model event is a hook that fires automatically when something happens to a database record &mdash; created, updated, or deleted. You register listeners in the booted() method.">model event</span> fires and creates an automatic snapshot. This is the <span class="term" data-definition="The Observer Pattern is a design pattern where an object (the subject) notifies other objects (observers) when its state changes. It decouples the thing that changes from the things that react to it.">observer pattern</span> in action.</p>
+
+    <div class="translation-block">
+      <div class="translation-code">
+        <span class="translation-label">Expense Model &mdash; booted()</span>
+        <pre><code>static::updated(function ($expense) {
+    $expense-&gt;histories()-&gt;create([
+        'user_id' =&gt; $expense-&gt;user_id,
+        'title' =&gt; $expense-&gt;title,
+        'amount' =&gt; $expense-&gt;amount,
+        'date' =&gt; $expense-&gt;date,
+        'category_id' =&gt; $expense-&gt;category_id,
+        'payment_method' =&gt; $expense-&gt;payment_method,
+        'is_recurring' =&gt; $expense-&gt;is_recurring,
+        'action' =&gt; 'update',
+    ]);
+});</code></pre>
+      </div>
+      <div class="translation-english">
+        <span class="translation-label">Plain English</span>
+        <div class="translation-lines">
+          <p class="tl">Whenever an expense gets updated...</p>
+          <p class="tl">Automatically create a new history snapshot.</p>
+          <p class="tl">Copy the current state of every <span class="term" data-definition="Fillable fields are the model attributes that Laravel allows to be mass-assigned. They act as a whitelist preventing unwanted data from being saved.">fillable</span> field.</p>
+          <p class="tl">Mark it as an &quot;update&quot; so we know what happened.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-accent animate-in">
+      <div class="callout-icon">&#128161;</div>
+      <div class="callout-content">
+        <strong class="callout-title">Why This Matters</strong>
+        <p>This pattern &mdash; "when X happens, automatically do Y" &mdash; is called an event listener. It is everywhere in software: when you get an email, your phone dings. When a file saves, your backup runs. Kharcha Track uses it so every expense change is automatically journaled without anyone having to remember to log it.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 5: QUIZ ─────────────────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>Check Your Understanding</h3>
+
+    <div class="quiz-container" id="quiz-module3">
+
+      <!-- Q1 -->
+      <div class="quiz-question-block" data-correct="b"
+           data-explanation-right="The expenses() method runs the database query that feeds the table. If data looks stale, the query or caching layer is the first place to look."
+           data-explanation-wrong="Data freshness issues almost always trace back to the query or caching layer, not CSS or HTML.">
+        <p class="quiz-question">A user says the expense list page loads but the data is stale. What should you check?</p>
+        <button class="quiz-option" data-value="a" onclick="selectOption(this)">The CSS file</button>
+        <button class="quiz-option" data-value="b" onclick="selectOption(this)">The Livewire component&#39;s expenses() query</button>
+        <button class="quiz-option" data-value="c" onclick="selectOption(this)">The HTML template</button>
+        <button class="quiz-option" data-value="d" onclick="selectOption(this)">The route name</button>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="quiz-question-block" data-correct="b"
+           data-explanation-right="Middleware acts as a checkpoint &mdash; it runs before the page loads and can redirect unverified users."
+           data-explanation-wrong="Access control in Laravel is handled at the route level with middleware, not with JavaScript or database changes.">
+        <p class="quiz-question">You want the /expenses page to only be accessible after email verification. How?</p>
+        <button class="quiz-option" data-value="a" onclick="selectOption(this)">Add JavaScript validation</button>
+        <button class="quiz-option" data-value="b" onclick="selectOption(this)">Add the &quot;verified&quot; middleware to the route</button>
+        <button class="quiz-option" data-value="c" onclick="selectOption(this)">Change the database</button>
+        <button class="quiz-option" data-value="d" onclick="selectOption(this)">Edit the Expense model</button>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="quiz-question-block" data-correct="b"
+           data-explanation-right="Model events fire at specific moments &mdash; if you record values at the wrong moment, you capture stale data. This is a classic timing bug."
+           data-explanation-wrong="Think about WHEN the event fires relative to WHEN the data changes. Timing is everything with model events.">
+        <p class="quiz-question">An expense was edited but the history shows the OLD values. What went wrong?</p>
+        <button class="quiz-option" data-value="a" onclick="selectOption(this)">The database lost data</button>
+        <button class="quiz-option" data-value="b" onclick="selectOption(this)">The booted() event fires before the update saves the new values</button>
+        <button class="quiz-option" data-value="c" onclick="selectOption(this)">The user did not click save</button>
+        <button class="quiz-option" data-value="d" onclick="selectOption(this)">The route is wrong</button>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <button class="quiz-check-btn" onclick="checkQuiz('quiz-module3')">Check Answers</button>
+      <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module3')">Try Again</button>
+    </div>
+  </div>
+
+</section>
+<section class="module" id="module-4" style="background: var(--color-bg-warm)">
+
+  <!-- ── MODULE HEADER ──────────────────────────────────────── -->
+  <div class="module-header animate-in">
+    <span class="module-number">04</span>
+    <h2 class="module-title">The Crystal Ball</h2>
+    <p class="module-subtitle">Forecasting predicts where your money is going. Anomaly detection catches when something looks wrong. Together, they give your expense tracker a sixth sense.</p>
+  </div>
+
+  <!-- ── SCREEN 1: TWO SUPERPOWERS ─────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>Two Superpowers</h3>
+    <p>Think of these features like a weather service and a smoke alarm. The forecast looks at recent patterns and makes predictions. The <span class="term" data-definition="Anomaly detection is a technique that identifies data points that deviate significantly from expected behavior. It compares each item against the group to find outliers.">anomaly detector</span> does not predict &mdash; it reacts when something seems off.</p>
+
+    <div class="icon-rows stagger-children">
+      <div class="icon-row animate-in">
+        <div class="icon-circle" style="background: var(--color-actor-5); color: white;">&#x1F52E;</div>
+        <div>
+          <strong>Forecasting</strong>
+          <p>Predicts next month&rsquo;s spending using past patterns. Like a weather forecast &mdash; it looks at recent history and extrapolates forward.</p>
+        </div>
+      </div>
+      <div class="icon-row animate-in">
+        <div class="icon-circle" style="background: var(--color-actor-1); color: white;">&#x1F6A8;</div>
+        <div>
+          <strong>Anomaly Detection</strong>
+          <p>Flags expenses that look unusual compared to your normal spending. Like a smoke alarm &mdash; it does not predict fires, it reacts when smoke appears.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 2: HOW FORECASTING WORKS ───────────────────── -->
+  <div class="screen animate-in">
+    <h3>How Forecasting Works &mdash; Moving Average</h3>
+    <p>The forecast engine uses a technique called a <span class="term" data-definition="A moving average calculates the average of the most recent N data points. As new data arrives, the oldest point drops off and the newest is added. It smooths out short-term noise to reveal trends.">moving average</span>. It looks at your last few months of spending and averages them to predict the next month.</p>
+
+    <div class="translation-block animate-in">
+      <div class="translation-code">
+        <span class="translation-label">Forecast.php &mdash; Core Algorithm</span>
+        <pre><code>$windowSize = 3;
+$recentMonths = array_slice($monthlyTotals, -$windowSize);
+$movingAvg = array_sum($recentMonths) / count($recentMonths);
+$predictedAmount = round($movingAvg, 2);
+$confidence = min(0.9, 0.6 + (count($monthlyTotals) * 0.02));</code></pre>
+      </div>
+      <div class="translation-english">
+        <span class="translation-label">Plain English</span>
+        <div class="translation-lines">
+          <p class="tl">Look at the last 3 months of spending...</p>
+          <p class="tl">Take the average of those 3 months...</p>
+          <p class="tl">That average becomes next month&rsquo;s prediction...</p>
+          <p class="tl">The more months of data we have, the more confident we are (up to 90%)</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-cards stagger-children">
+      <div class="step-card animate-in">
+        <div class="step-num">1</div>
+        <div class="step-body">Your last 3 months: <strong>&#8377;5,000</strong>, <strong>&#8377;6,000</strong>, <strong>&#8377;5,500</strong></div>
+      </div>
+      <div class="step-card animate-in">
+        <div class="step-num">2</div>
+        <div class="step-body">Average: (5000 + 6000 + 5500) / 3 = <strong>&#8377;5,500</strong></div>
+      </div>
+      <div class="step-card animate-in">
+        <div class="step-num">3</div>
+        <div class="step-body">Prediction for next month: <strong>&#8377;5,500</strong></div>
+      </div>
+      <div class="step-card animate-in">
+        <div class="step-num">4</div>
+        <div class="step-body"><span class="term" data-definition="A confidence score indicates how reliable a prediction is, based on the amount and quality of historical data. More data generally means higher confidence.">Confidence</span>: <strong>78%</strong> (you have 9 months of history)</div>
+      </div>
+    </div>
+
+    <div class="callout callout-accent animate-in">
+      <div class="callout-icon">&#128161;</div>
+      <div class="callout-content">
+        <strong class="callout-title">Why Moving Averages Work</strong>
+        <p>This technique &mdash; averaging recent <span class="term" data-definition="A data point is a single observation or measurement in a dataset. In Kharcha Track, each monthly total is a data point used by the forecast algorithm.">data points</span> to smooth out noise &mdash; is called a <span class="term" data-definition="A moving average calculates the average of the most recent N data points. As new data arrives, the oldest point drops off and the newest is added. It smooths out short-term noise to reveal trends.">moving average</span>. Stock traders use it, weather services use it, and now your expense app uses it too. It is simple but surprisingly effective for short-term predictions.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 3: HOW ANOMALY DETECTION WORKS ─────────────── -->
+  <div class="screen animate-in">
+    <h3>How Anomaly Detection Works</h3>
+    <p>The anomaly detector uses <span class="term" data-definition="Normalization is the process of scaling data to a standard range (usually 0 to 1) so that values of different magnitudes can be compared fairly.">normalization</span> to put all expenses on the same scale, then flags anything that strays too far from normal.</p>
+
+    <div class="translation-block animate-in">
+      <div class="translation-code">
+        <span class="translation-label">Anomaly.php &mdash; Normalization</span>
+        <pre><code>$amounts = $expenses-&gt;pluck('amount')-&gt;toArray();
+$minAmount = min($amounts);
+$maxAmount = max($amounts);
+$amountRange = $maxAmount - $minAmount;
+
+$normalizedAmounts = [];
+foreach ($amounts as $amount) {
+    $normalizedAmounts[] = $amountRange &gt; 0 ? ($amount - $minAmount) / $amountRange : 0;
+}</code></pre>
+      </div>
+      <div class="translation-english">
+        <span class="translation-label">Plain English</span>
+        <div class="translation-lines">
+          <p class="tl">Grab all expense amounts as a list...</p>
+          <p class="tl">Find the smallest and largest amounts...</p>
+          <p class="tl">Calculate the range between them...</p>
+          <p class="tl">Scale every amount to be between 0 and 1...</p>
+          <p class="tl">If the range is zero (all same amount), everything is 0</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="translation-block animate-in">
+      <div class="translation-code">
+        <span class="translation-label">Anomaly.php &mdash; Scoring</span>
+        <pre><code>$meanAmount = array_sum($normalizedAmounts) / $numSamples;
+$distanceFromMean = abs($amount - $meanAmount);
+$score = min(1.0, $distanceFromMean * 3);</code></pre>
+      </div>
+      <div class="translation-english">
+        <span class="translation-label">Plain English</span>
+        <div class="translation-lines">
+          <p class="tl">Find the average of all normalized amounts...</p>
+          <p class="tl">How far is this expense from the average?</p>
+          <p class="tl">The further from average, the more suspicious (max <span class="term" data-definition="An anomaly score is a number (usually 0 to 1 or 0 to 10) indicating how unusual a data point is. Higher scores mean more suspicious. The threshold determines when to flag something.">anomaly score</span>: 1.0)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 4: GROUP CHAT ──────────────────────────────── -->
+  <h3 class="animate-in" style="margin-top: var(--space-12);">Group Chat &mdash; When an Anomaly is Detected</h3>
+  <p class="animate-in">Watch the actors react in real time when an unusually large expense arrives.</p>
+
+  <div class="chat-window animate-in" id="chat-module4">
+    <div class="chat-messages">
+      <div class="chat-message" data-msg="0" data-sender="user" style="display:none">
+        <div class="chat-avatar" style="background: var(--color-actor-1)">U</div>
+        <div class="chat-bubble">
+          <span class="chat-sender" style="color: var(--color-actor-1)">User</span>
+          <p>I just logged a &#8377;15,000 expense for Electronics</p>
+        </div>
+      </div>
+      <div class="chat-message" data-msg="1" data-sender="expense" style="display:none">
+        <div class="chat-avatar" style="background: var(--color-actor-2)">E</div>
+        <div class="chat-bubble">
+          <span class="chat-sender" style="color: var(--color-actor-2)">Expense</span>
+          <p>Stored! Amount: &#8377;15,000, Category: Electronics</p>
+        </div>
+      </div>
+      <div class="chat-message" data-msg="2" data-sender="anomaly" style="display:none">
+        <div class="chat-avatar" style="background: var(--color-actor-4)">A</div>
+        <div class="chat-bubble">
+          <span class="chat-sender" style="color: var(--color-actor-4)">Anomaly</span>
+          <p>Hold on... let me check the numbers</p>
+        </div>
+      </div>
+      <div class="chat-message" data-msg="3" data-sender="anomaly" style="display:none">
+        <div class="chat-avatar" style="background: var(--color-actor-4)">A</div>
+        <div class="chat-bubble">
+          <span class="chat-sender" style="color: var(--color-actor-4)">Anomaly</span>
+          <p>Your average expense is &#8377;800. This is &#8377;15,000. That is 18x the average!</p>
+        </div>
+      </div>
+      <div class="chat-message" data-msg="4" data-sender="anomaly" style="display:none">
+        <div class="chat-avatar" style="background: var(--color-actor-4)">A</div>
+        <div class="chat-bubble">
+          <span class="chat-sender" style="color: var(--color-actor-4)">Anomaly</span>
+          <p><span class="term" data-definition="An anomaly score is a number (usually 0 to 1 or 0 to 10) indicating how unusual a data point is. Higher scores mean more suspicious. The threshold determines when to flag something.">Anomaly score</span>: 8.5 out of 10. Flagging this as suspicious</p>
+        </div>
+      </div>
+      <div class="chat-message" data-msg="5" data-sender="forecast" style="display:none">
+        <div class="chat-avatar" style="background: var(--color-actor-5)">F</div>
+        <div class="chat-bubble">
+          <span class="chat-sender" style="color: var(--color-actor-5)">Forecast</span>
+          <p>Noted. This will spike my prediction for next month unless it is a one-off</p>
+        </div>
+      </div>
+      <div class="chat-message" data-msg="6" data-sender="user" style="display:none">
+        <div class="chat-avatar" style="background: var(--color-actor-1)">U</div>
+        <div class="chat-bubble">
+          <span class="chat-sender" style="color: var(--color-actor-1)">User</span>
+          <p>It was a laptop purchase — definitely a one-off</p>
+        </div>
+      </div>
+      <div class="chat-message" data-msg="7" data-sender="anomaly" style="display:none">
+        <div class="chat-avatar" style="background: var(--color-actor-4)">A</div>
+        <div class="chat-bubble">
+          <span class="chat-sender" style="color: var(--color-actor-4)">Anomaly</span>
+          <p>Got it. I will still keep the flag for your records, but the review shows it is confirmed normal</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-typing" style="display:none">
+      <div class="chat-avatar" id="chat-module4-typing-avatar" style="background: var(--color-actor-1)">?</div>
+      <div class="chat-typing-dots">
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+      </div>
+    </div>
+
+    <div class="chat-controls">
+      <button class="btn chat-next-btn">Next Message</button>
+      <button class="btn chat-all-btn">Play All</button>
+      <button class="btn chat-reset-btn">Replay</button>
+      <span class="chat-progress"></span>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 5: QUIZ ────────────────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>Check Your Understanding</h3>
+
+    <div class="quiz-container" id="quiz-module4">
+
+      <!-- Q1 -->
+      <div class="quiz-question-block" data-correct="c"
+           data-explanation-right="Moving averages are backward-looking &mdash; they can not predict one-time events. The forecast gives you a baseline for normal months, but you should always layer in your own knowledge of upcoming expenses."
+           data-explanation-wrong="Moving averages only look at historical patterns. They are useful baselines but can not predict unusual future events like vacations.">
+        <p class="quiz-question">Your forecast shows &#8377;5,000 for next month, but you know you have a vacation planned that will cost &#8377;20,000. Should you trust the forecast?</p>
+        <button class="quiz-option" data-value="a" onclick="selectOption(this)">Yes, the <span class="term" data-definition="An algorithm is a step-by-step procedure for solving a problem or performing a computation. The forecast and anomaly features each use a different algorithm.">algorithm</span> is always right</button>
+        <button class="quiz-option" data-value="b" onclick="selectOption(this)">No, delete the forecast data</button>
+        <button class="quiz-option" data-value="c" onclick="selectOption(this)">No &mdash; moving averages only see past patterns, not future plans. Use it as a baseline and adjust manually</button>
+        <button class="quiz-option" data-value="d" onclick="selectOption(this)">Run the forecast again with more data</button>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="quiz-question-block" data-correct="b"
+           data-explanation-right="When most expenses cluster tightly around the same amount, even small deviations get high scores. The fix: adjust the <span class='term' data-definition='A threshold is a cutoff value that determines when a score triggers an action. In anomaly detection, expenses with scores above the threshold get flagged.'>threshold</span> parameter to be less sensitive."
+           data-explanation-wrong="Anomaly detection depends heavily on the <span class='term' data-definition='A threshold is a cutoff value that determines when a score triggers an action. In anomaly detection, expenses with scores above the threshold get flagged.'>threshold</span> setting. If your spending is very consistent, the detector becomes overly sensitive to even normal variation.">
+        <p class="quiz-question">The anomaly detector flags a &#8377;50 coffee as suspicious. What is most likely happening?</p>
+        <button class="quiz-option" data-value="a" onclick="selectOption(this)">The algorithm found a real anomaly</button>
+        <button class="quiz-option" data-value="b" onclick="selectOption(this)">The <span class="term" data-definition="A threshold is a cutoff value that determines when a score triggers an action. In anomaly detection, expenses with scores above the threshold get flagged.">threshold</span> is too sensitive &mdash; most expenses are similar amounts, so even small deviations look unusual</button>
+        <button class="quiz-option" data-value="c" onclick="selectOption(this)">The database has corrupted data</button>
+        <button class="quiz-option" data-value="d" onclick="selectOption(this)">The coffee shop overcharged</button>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="quiz-question-block" data-correct="a"
+           data-explanation-right="A larger window smooths out more noise but responds slower to real trends. The current 3-month window is a balance, but for some users a 6-month window might be more stable."
+           data-explanation-wrong="Forecast accuracy depends on the algorithm parameters, especially the window size. The database engine and styling have no effect on predictions.">
+        <p class="quiz-question">You want to improve the forecast accuracy. What would help most?</p>
+        <button class="quiz-option" data-value="a" onclick="selectOption(this)">Use more than 3 months in the moving average window</button>
+        <button class="quiz-option" data-value="b" onclick="selectOption(this)">Change the database from PostgreSQL to MySQL</button>
+        <button class="quiz-option" data-value="c" onclick="selectOption(this)">Add more CSS styling</button>
+        <button class="quiz-option" data-value="d" onclick="selectOption(this)">Delete old expenses</button>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <button class="quiz-check-btn" onclick="checkQuiz('quiz-module4')">Check Answers</button>
+      <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module4')">Try Again</button>
+    </div>
+  </div>
+
+</section>
+<section class="module" id="module-5" style="background: var(--color-bg)">
+
+  <!-- ── MODULE HEADER ──────────────────────────────────────── -->
+  <div class="module-header animate-in">
+    <span class="module-number">05</span>
+    <h2 class="module-title">Guards &amp; Gates</h2>
+    <p class="module-subtitle">Authentication &amp; Authorization &mdash; the building security system that controls who gets in and what they can do.</p>
+  </div>
+
+  <!-- ── SCREEN 1: AUTH VS AUTHZ ────────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>Two Sides of Security</h3>
+    <p>Think of a building security system. The front door lock proves who you are. The key card system inside decides which floors you can visit.</p>
+
+    <div class="icon-rows stagger-children">
+
+      <div class="icon-row animate-in">
+        <div class="icon-circle" style="background: var(--color-actor-2); color: white;">&#x1F510;</div>
+        <div>
+          <strong><span class="term" data-definition="Authentication is the process of proving who you are &mdash; typically by providing a username/email and password. It answers the question: Are you who you claim to be?">Authentication</span></strong>
+          <p>Proving who you are. Login with email + password. Laravel checks your <span class="term" data-definition="Credentials are the pieces of information used to prove your identity &mdash; usually an email address and a password.">credentials</span> and gives you a <span class="term" data-definition="A session is a temporary record stored on the server that remembers who you are between page loads. Without it, you would have to log in on every single click.">session</span> &mdash; like getting a wristband at a concert.</p>
+        </div>
+      </div>
+
+      <div class="icon-row animate-in">
+        <div class="icon-circle" style="background: var(--color-actor-5); color: white;">&#x1F6E1;</div>
+        <div>
+          <strong><span class="term" data-definition="Authorization is the process of determining what an authenticated user is allowed to do. It answers the question: Do you have permission to perform this action?">Authorization</span></strong>
+          <p>Proving what you can do. Admin can manage users; regular users can only manage their own expenses. Like having different access levels on a building key card.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout callout-accent animate-in">
+      <div class="callout-icon">&#128161;</div>
+      <div class="callout-content">
+        <strong class="callout-title">Key Terms</strong>
+        <p><span class="term" data-definition="Middleware is a checkpoint that runs before a page loads. It can block access, redirect users, or modify requests &mdash; like a security guard at the door.">Middleware</span> enforces both of these. A <span class="term" data-definition="A role is a named group of permissions assigned to a user. Instead of giving permissions one by one, you assign a role like admin or user that bundles them together. This is called Role-Based Access Control (RBAC).">role</span> bundles multiple <span class="term" data-definition="A permission is a single, specific action a user is allowed to perform &mdash; like view users or delete expenses. Permissions are grouped into roles for easier management.">permissions</span> together so you do not have to manage them one by one.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 2: THE ROLE SYSTEM ──────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>The Role System &mdash; Who Gets Which Keys</h3>
+    <p>A <span class="term" data-definition="A seeder is a Laravel class that populates the database with initial data. It runs once during setup to create default roles, permissions, categories, or test data.">seeder</span> runs once during setup to create all the roles and permissions the app needs.</p>
+
+    <div class="translation-block animate-in">
+      <div class="translation-code">
+        <span class="translation-label">RolesAndPermissionsSeeder.php</span>
+        <pre><code>$permissions = [
+    'view users', 'create users', 'edit users', 'delete users',
+    'view roles', 'create roles', 'edit roles', 'delete roles',
+    'view permissions', 'create permissions', 'edit permissions', 'delete permissions',
+    'access dashboard',
+];
+
+foreach ($permissions as $permission) {
+    Permission::create(['name' =&gt; $permission]);
+}
+
+$userRole = Role::create(['name' =&gt; 'user']);
+$userRole-&gt;givePermissionTo(['access dashboard']);
+
+$adminRole = Role::create(['name' =&gt; 'admin']);
+$adminRole-&gt;givePermissionTo(Permission::all());</code></pre>
+      </div>
+      <div class="translation-english">
+        <span class="translation-label">Plain English</span>
+        <div class="translation-lines">
+          <p class="tl">Define 13 specific permissions &mdash; each one is a single action like "view users" or "delete roles".</p>
+          <p class="tl">Create each permission in the database so Laravel can check them later.</p>
+          <p class="tl">Create a "user" role &mdash; regular users who just need basic access.</p>
+          <p class="tl">Users can only access the dashboard &mdash; nothing else.</p>
+          <p class="tl">Create an "admin" role &mdash; the boss of the system.</p>
+          <p class="tl">Admins get EVERY permission &mdash; full control over everything.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 3: USER MODEL ───────────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>The User Model &mdash; Layers of Protection</h3>
+    <p>The User model is the identity card of the application. Every security feature connects back to it.</p>
+
+    <div class="translation-block animate-in">
+      <div class="translation-code">
+        <span class="translation-label">User.php</span>
+        <pre><code>class User extends Authenticatable implements MustVerifyEmail
+{
+    use HasApiTokens, HasFactory, HasRoles, Notifiable;
+
+    protected $fillable = [
+        'name', 'email', 'password',
+        'email_verified_at', 'previously_verified',
+    ];
+
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
+    protected $casts = [
+        'email_verified_at' =&gt; 'datetime',
+        'password' =&gt; 'hashed',
+    ];
+}</code></pre>
+      </div>
+      <div class="translation-english">
+        <span class="translation-label">Plain English</span>
+        <div class="translation-lines">
+          <p class="tl">This User can log in (Authenticatable) and must verify their email (MustVerifyEmail).</p>
+          <p class="tl">It can generate <span class="term" data-definition="An API token is a secret key that lets external applications authenticate as a user without using a password. Think of it as a digital pass that proves your identity to other software.">API tokens</span>, have roles, and receive notifications.</p>
+          <p class="tl">These fields can be set when creating or updating a user.</p>
+          <p class="tl">Password and remember token are NEVER shown in responses &mdash; security first.</p>
+          <p class="tl">Email verification date is treated as a datetime, and password is automatically encrypted.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-accent animate-in">
+      <div class="callout-icon">&#128161;</div>
+      <div class="callout-content">
+        <strong class="callout-title">Why <code>'password' =&gt; 'hashed'</code> Matters</strong>
+        <p>Laravel automatically encrypts passwords before storing them. Even if someone stole the entire database, they would see scrambled gibberish instead of actual passwords. This is called <span class="term" data-definition="Hashing is a one-way mathematical transformation that turns readable text (like a password) into a fixed-length string of random-looking characters. It is practically impossible to reverse &mdash; you cannot turn the hash back into the original password.">hashing</span> &mdash; a one-way transformation that is practically impossible to reverse.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 4: MIDDLEWARE CHECKPOINTS ────────────────────── -->
+  <div class="screen animate-in">
+    <h3>Middleware &mdash; The Checkpoints</h3>
+    <p>Every request to a protected page passes through a series of checkpoints. If any check fails, the request is stopped before it ever reaches the page.</p>
+
+    <div class="step-cards stagger-children">
+      <div class="step-card animate-in">
+        <span class="step-number">1</span>
+        <div class="step-content">
+          <strong>Request arrives</strong>
+          <p>A user navigates to <code>/admin/users</code></p>
+        </div>
+      </div>
+      <div class="step-card animate-in">
+        <span class="step-number">2</span>
+        <div class="step-content">
+          <strong><code>auth</code> middleware</strong>
+          <p>Are you logged in? If no &rarr; redirect to login page.</p>
+        </div>
+      </div>
+      <div class="step-card animate-in">
+        <span class="step-number">3</span>
+        <div class="step-content">
+          <strong><code>verified</code> middleware</strong>
+          <p>Is your email verified? If no &rarr; redirect to verification page.</p>
+        </div>
+      </div>
+      <div class="step-card animate-in">
+        <span class="step-number">4</span>
+        <div class="step-content">
+          <strong><code>role:admin</code> middleware</strong>
+          <p>Are you an admin? If no &rarr; <span class="term" data-definition="403 Forbidden is an HTTP status code that means the server understood your request but refuses to authorize it. You proved who you are (authentication passed), but you do not have permission (authorization failed).">403 Forbidden</span>.</p>
+        </div>
+      </div>
+      <div class="step-card animate-in">
+        <span class="step-number">5</span>
+        <div class="step-content">
+          <strong>All checks passed!</strong>
+          <p>Load the users management page.</p>
+        </div>
+      </div>
+    </div>
+
+    <h4 style="margin-top: var(--space-8); margin-bottom: var(--space-4);">Middleware Layers at a Glance</h4>
+    <div class="badge-list">
+      <div class="badge-item"><code>auth</code> &mdash; Must be logged in</div>
+      <div class="badge-item"><code>verified</code> &mdash; Email must be verified</div>
+      <div class="badge-item"><code>role:admin</code> &mdash; Must have admin role</div>
+      <div class="badge-item"><code>permission:access dashboard</code> &mdash; Must have specific permission</div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 5: QUIZ ─────────────────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>Check Your Understanding</h3>
+
+    <div class="quiz-container" id="quiz-module5">
+
+      <!-- Q1 -->
+      <div class="quiz-question-block" data-correct="c"
+           data-explanation-right="The user role was designed for exactly this &mdash; dashboard access without admin powers. Roles let you bundle permissions so you do not have to manage them one by one."
+           data-explanation-wrong="The role system exists so you can give people exactly the access they need &mdash; no more, no less. The &quot;user&quot; role already has &quot;access dashboard&quot; built in.">
+        <p class="quiz-question">A new team member needs to view the dashboard but not manage users. What do you do?</p>
+        <button class="quiz-option" data-value="a" onclick="selectOption(this)">Give them the admin role</button>
+        <button class="quiz-option" data-value="b" onclick="selectOption(this)">Remove the auth middleware from the dashboard route</button>
+        <button class="quiz-option" data-value="c" onclick="selectOption(this)">Assign them the "user" role &mdash; it has the "access dashboard" permission but nothing else</button>
+        <button class="quiz-option" data-value="d" onclick="selectOption(this)">Edit the dashboard component to skip authorization</button>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="quiz-question-block" data-correct="b"
+           data-explanation-right="A 403 means &quot;forbidden&quot; &mdash; you are who you say you are (auth passed), but you do not have permission. The role:admin middleware checked their role and said no."
+           data-explanation-wrong="403 Forbidden means authorization failed, not authentication. They logged in fine, but the role middleware blocked access because they are not an admin.">
+        <p class="quiz-question">A user can log in but gets a 403 error on /admin/users. What is the most likely cause?</p>
+        <button class="quiz-option" data-value="a" onclick="selectOption(this)">Their password is wrong</button>
+        <button class="quiz-option" data-value="b" onclick="selectOption(this)">They do not have the admin role &mdash; the "role:admin" middleware is blocking them</button>
+        <button class="quiz-option" data-value="c" onclick="selectOption(this)">The database is down</button>
+        <button class="quiz-option" data-value="d" onclick="selectOption(this)">The CSS is broken</button>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="quiz-question-block" data-correct="d"
+           data-explanation-right="When users change their email, they need to re-verify. This flag lets the app show &quot;Welcome back! New email verified.&quot; instead of &quot;Email verified for the first time!&quot; &mdash; a small UX detail that shows thoughtful design."
+           data-explanation-wrong="The previously_verified flag tracks whether this user has verified before. When they change their email and re-verify, the app can show a different, more appropriate message.">
+        <p class="quiz-question">Why does Kharcha Track store "previously_verified" on the User model?</p>
+        <button class="quiz-option" data-value="a" onclick="selectOption(this)">To track login attempts</button>
+        <button class="quiz-option" data-value="b" onclick="selectOption(this)">To improve performance</button>
+        <button class="quiz-option" data-value="c" onclick="selectOption(this)">To show different colors in the UI</button>
+        <button class="quiz-option" data-value="d" onclick="selectOption(this)">To distinguish first-time verification from re-verification after changing email &mdash; so it can show the right welcome message</button>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <button class="quiz-check-btn" onclick="checkQuiz('quiz-module5')">Check Answers</button>
+      <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module5')">Try Again</button>
+    </div>
+  </div>
+
+</section>
+  </main>
+
+</body>
+</html>

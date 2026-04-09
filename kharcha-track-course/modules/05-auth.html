@@ -1,0 +1,230 @@
+<section class="module" id="module-5" style="background: var(--color-bg)">
+
+  <!-- ── MODULE HEADER ──────────────────────────────────────── -->
+  <div class="module-header animate-in">
+    <span class="module-number">05</span>
+    <h2 class="module-title">Guards &amp; Gates</h2>
+    <p class="module-subtitle">Authentication &amp; Authorization &mdash; the building security system that controls who gets in and what they can do.</p>
+  </div>
+
+  <!-- ── SCREEN 1: AUTH VS AUTHZ ────────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>Two Sides of Security</h3>
+    <p>Think of a building security system. The front door lock proves who you are. The key card system inside decides which floors you can visit.</p>
+
+    <div class="icon-rows stagger-children">
+
+      <div class="icon-row animate-in">
+        <div class="icon-circle" style="background: var(--color-actor-2); color: white;">&#x1F510;</div>
+        <div>
+          <strong><span class="term" data-definition="Authentication is the process of proving who you are &mdash; typically by providing a username/email and password. It answers the question: Are you who you claim to be?">Authentication</span></strong>
+          <p>Proving who you are. Login with email + password. Laravel checks your <span class="term" data-definition="Credentials are the pieces of information used to prove your identity &mdash; usually an email address and a password.">credentials</span> and gives you a <span class="term" data-definition="A session is a temporary record stored on the server that remembers who you are between page loads. Without it, you would have to log in on every single click.">session</span> &mdash; like getting a wristband at a concert.</p>
+        </div>
+      </div>
+
+      <div class="icon-row animate-in">
+        <div class="icon-circle" style="background: var(--color-actor-5); color: white;">&#x1F6E1;</div>
+        <div>
+          <strong><span class="term" data-definition="Authorization is the process of determining what an authenticated user is allowed to do. It answers the question: Do you have permission to perform this action?">Authorization</span></strong>
+          <p>Proving what you can do. Admin can manage users; regular users can only manage their own expenses. Like having different access levels on a building key card.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout callout-accent animate-in">
+      <div class="callout-icon">&#128161;</div>
+      <div class="callout-content">
+        <strong class="callout-title">Key Terms</strong>
+        <p><span class="term" data-definition="Middleware is a checkpoint that runs before a page loads. It can block access, redirect users, or modify requests &mdash; like a security guard at the door.">Middleware</span> enforces both of these. A <span class="term" data-definition="A role is a named group of permissions assigned to a user. Instead of giving permissions one by one, you assign a role like admin or user that bundles them together. This is called Role-Based Access Control (RBAC).">role</span> bundles multiple <span class="term" data-definition="A permission is a single, specific action a user is allowed to perform &mdash; like view users or delete expenses. Permissions are grouped into roles for easier management.">permissions</span> together so you do not have to manage them one by one.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 2: THE ROLE SYSTEM ──────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>The Role System &mdash; Who Gets Which Keys</h3>
+    <p>A <span class="term" data-definition="A seeder is a Laravel class that populates the database with initial data. It runs once during setup to create default roles, permissions, categories, or test data.">seeder</span> runs once during setup to create all the roles and permissions the app needs.</p>
+
+    <div class="translation-block animate-in">
+      <div class="translation-code">
+        <span class="translation-label">RolesAndPermissionsSeeder.php</span>
+        <pre><code>$permissions = [
+    'view users', 'create users', 'edit users', 'delete users',
+    'view roles', 'create roles', 'edit roles', 'delete roles',
+    'view permissions', 'create permissions', 'edit permissions', 'delete permissions',
+    'access dashboard',
+];
+
+foreach ($permissions as $permission) {
+    Permission::create(['name' =&gt; $permission]);
+}
+
+$userRole = Role::create(['name' =&gt; 'user']);
+$userRole-&gt;givePermissionTo(['access dashboard']);
+
+$adminRole = Role::create(['name' =&gt; 'admin']);
+$adminRole-&gt;givePermissionTo(Permission::all());</code></pre>
+      </div>
+      <div class="translation-english">
+        <span class="translation-label">Plain English</span>
+        <div class="translation-lines">
+          <p class="tl">Define 13 specific permissions &mdash; each one is a single action like "view users" or "delete roles".</p>
+          <p class="tl">Create each permission in the database so Laravel can check them later.</p>
+          <p class="tl">Create a "user" role &mdash; regular users who just need basic access.</p>
+          <p class="tl">Users can only access the dashboard &mdash; nothing else.</p>
+          <p class="tl">Create an "admin" role &mdash; the boss of the system.</p>
+          <p class="tl">Admins get EVERY permission &mdash; full control over everything.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 3: USER MODEL ───────────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>The User Model &mdash; Layers of Protection</h3>
+    <p>The User model is the identity card of the application. Every security feature connects back to it.</p>
+
+    <div class="translation-block animate-in">
+      <div class="translation-code">
+        <span class="translation-label">User.php</span>
+        <pre><code>class User extends Authenticatable implements MustVerifyEmail
+{
+    use HasApiTokens, HasFactory, HasRoles, Notifiable;
+
+    protected $fillable = [
+        'name', 'email', 'password',
+        'email_verified_at', 'previously_verified',
+    ];
+
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
+    protected $casts = [
+        'email_verified_at' =&gt; 'datetime',
+        'password' =&gt; 'hashed',
+    ];
+}</code></pre>
+      </div>
+      <div class="translation-english">
+        <span class="translation-label">Plain English</span>
+        <div class="translation-lines">
+          <p class="tl">This User can log in (Authenticatable) and must verify their email (MustVerifyEmail).</p>
+          <p class="tl">It can generate <span class="term" data-definition="An API token is a secret key that lets external applications authenticate as a user without using a password. Think of it as a digital pass that proves your identity to other software.">API tokens</span>, have roles, and receive notifications.</p>
+          <p class="tl">These fields can be set when creating or updating a user.</p>
+          <p class="tl">Password and remember token are NEVER shown in responses &mdash; security first.</p>
+          <p class="tl">Email verification date is treated as a datetime, and password is automatically encrypted.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-accent animate-in">
+      <div class="callout-icon">&#128161;</div>
+      <div class="callout-content">
+        <strong class="callout-title">Why <code>'password' =&gt; 'hashed'</code> Matters</strong>
+        <p>Laravel automatically encrypts passwords before storing them. Even if someone stole the entire database, they would see scrambled gibberish instead of actual passwords. This is called <span class="term" data-definition="Hashing is a one-way mathematical transformation that turns readable text (like a password) into a fixed-length string of random-looking characters. It is practically impossible to reverse &mdash; you cannot turn the hash back into the original password.">hashing</span> &mdash; a one-way transformation that is practically impossible to reverse.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 4: MIDDLEWARE CHECKPOINTS ────────────────────── -->
+  <div class="screen animate-in">
+    <h3>Middleware &mdash; The Checkpoints</h3>
+    <p>Every request to a protected page passes through a series of checkpoints. If any check fails, the request is stopped before it ever reaches the page.</p>
+
+    <div class="step-cards stagger-children">
+      <div class="step-card animate-in">
+        <span class="step-number">1</span>
+        <div class="step-content">
+          <strong>Request arrives</strong>
+          <p>A user navigates to <code>/admin/users</code></p>
+        </div>
+      </div>
+      <div class="step-card animate-in">
+        <span class="step-number">2</span>
+        <div class="step-content">
+          <strong><code>auth</code> middleware</strong>
+          <p>Are you logged in? If no &rarr; redirect to login page.</p>
+        </div>
+      </div>
+      <div class="step-card animate-in">
+        <span class="step-number">3</span>
+        <div class="step-content">
+          <strong><code>verified</code> middleware</strong>
+          <p>Is your email verified? If no &rarr; redirect to verification page.</p>
+        </div>
+      </div>
+      <div class="step-card animate-in">
+        <span class="step-number">4</span>
+        <div class="step-content">
+          <strong><code>role:admin</code> middleware</strong>
+          <p>Are you an admin? If no &rarr; <span class="term" data-definition="403 Forbidden is an HTTP status code that means the server understood your request but refuses to authorize it. You proved who you are (authentication passed), but you do not have permission (authorization failed).">403 Forbidden</span>.</p>
+        </div>
+      </div>
+      <div class="step-card animate-in">
+        <span class="step-number">5</span>
+        <div class="step-content">
+          <strong>All checks passed!</strong>
+          <p>Load the users management page.</p>
+        </div>
+      </div>
+    </div>
+
+    <h4 style="margin-top: var(--space-8); margin-bottom: var(--space-4);">Middleware Layers at a Glance</h4>
+    <div class="badge-list">
+      <div class="badge-item"><code>auth</code> &mdash; Must be logged in</div>
+      <div class="badge-item"><code>verified</code> &mdash; Email must be verified</div>
+      <div class="badge-item"><code>role:admin</code> &mdash; Must have admin role</div>
+      <div class="badge-item"><code>permission:access dashboard</code> &mdash; Must have specific permission</div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 5: QUIZ ─────────────────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>Check Your Understanding</h3>
+
+    <div class="quiz-container" id="quiz-module5">
+
+      <!-- Q1 -->
+      <div class="quiz-question-block" data-correct="c"
+           data-explanation-right="The user role was designed for exactly this &mdash; dashboard access without admin powers. Roles let you bundle permissions so you do not have to manage them one by one."
+           data-explanation-wrong="The role system exists so you can give people exactly the access they need &mdash; no more, no less. The &quot;user&quot; role already has &quot;access dashboard&quot; built in.">
+        <p class="quiz-question">A new team member needs to view the dashboard but not manage users. What do you do?</p>
+        <button class="quiz-option" data-value="a" onclick="selectOption(this)">Give them the admin role</button>
+        <button class="quiz-option" data-value="b" onclick="selectOption(this)">Remove the auth middleware from the dashboard route</button>
+        <button class="quiz-option" data-value="c" onclick="selectOption(this)">Assign them the "user" role &mdash; it has the "access dashboard" permission but nothing else</button>
+        <button class="quiz-option" data-value="d" onclick="selectOption(this)">Edit the dashboard component to skip authorization</button>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="quiz-question-block" data-correct="b"
+           data-explanation-right="A 403 means &quot;forbidden&quot; &mdash; you are who you say you are (auth passed), but you do not have permission. The role:admin middleware checked their role and said no."
+           data-explanation-wrong="403 Forbidden means authorization failed, not authentication. They logged in fine, but the role middleware blocked access because they are not an admin.">
+        <p class="quiz-question">A user can log in but gets a 403 error on /admin/users. What is the most likely cause?</p>
+        <button class="quiz-option" data-value="a" onclick="selectOption(this)">Their password is wrong</button>
+        <button class="quiz-option" data-value="b" onclick="selectOption(this)">They do not have the admin role &mdash; the "role:admin" middleware is blocking them</button>
+        <button class="quiz-option" data-value="c" onclick="selectOption(this)">The database is down</button>
+        <button class="quiz-option" data-value="d" onclick="selectOption(this)">The CSS is broken</button>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="quiz-question-block" data-correct="d"
+           data-explanation-right="When users change their email, they need to re-verify. This flag lets the app show &quot;Welcome back! New email verified.&quot; instead of &quot;Email verified for the first time!&quot; &mdash; a small UX detail that shows thoughtful design."
+           data-explanation-wrong="The previously_verified flag tracks whether this user has verified before. When they change their email and re-verify, the app can show a different, more appropriate message.">
+        <p class="quiz-question">Why does Kharcha Track store "previously_verified" on the User model?</p>
+        <button class="quiz-option" data-value="a" onclick="selectOption(this)">To track login attempts</button>
+        <button class="quiz-option" data-value="b" onclick="selectOption(this)">To improve performance</button>
+        <button class="quiz-option" data-value="c" onclick="selectOption(this)">To show different colors in the UI</button>
+        <button class="quiz-option" data-value="d" onclick="selectOption(this)">To distinguish first-time verification from re-verification after changing email &mdash; so it can show the right welcome message</button>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <button class="quiz-check-btn" onclick="checkQuiz('quiz-module5')">Check Answers</button>
+      <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module5')">Try Again</button>
+    </div>
+  </div>
+
+</section>

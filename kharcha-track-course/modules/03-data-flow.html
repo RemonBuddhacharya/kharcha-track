@@ -1,0 +1,224 @@
+<section class="module" id="module-3" style="background: var(--color-bg)">
+
+  <!-- ── MODULE HEADER ──────────────────────────────────────── -->
+  <div class="module-header animate-in">
+    <span class="module-number">03</span>
+    <h2 class="module-title">How the Pieces Talk</h2>
+    <p class="module-subtitle">Data flow: routes direct traffic, Livewire delivers in real-time, model events create automatic carbon copies.</p>
+  </div>
+
+  <!-- ── SCREEN 1: ROUTES ───────────────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>The Traffic Director &mdash; Routes</h3>
+    <p>Think of <span class="term" data-definition="A route maps a URL (like /expenses) to the code that should handle it. It is the address book of your web application.">routes</span> as a postal address book. Every URL has a destination, and <span class="term" data-definition="Middleware is a checkpoint that runs before a page loads. It can block access, redirect users, or modify requests &mdash; like a security guard at the door.">middleware</span> acts as the security checkpoints along the way.</p>
+
+    <div class="translation-block">
+      <div class="translation-code">
+        <span class="translation-label">routes/web.php</span>
+        <pre><code>Route::middleware(['auth', 'verified'])-&gt;group(function () {
+    Route::middleware('role:admin')-&gt;prefix('admin')-&gt;name('admin.')-&gt;group(function () {
+        Route::livewire('/users', 'admin.users.index')-&gt;name('admin.users.index');
+        Route::livewire('/roles', 'admin.roles.index')-&gt;name('admin.roles.index');
+        Route::livewire('/permissions', 'admin.permissions.index')-&gt;name('permissions.index');
+    });
+
+    Route::livewire('/forecast', 'expenses.forecasting')-&gt;name('forecast.index');
+    Route::livewire('/anomaly', 'expenses.anomalies')-&gt;name('anomaly.index');
+    Route::livewire('/expenses', 'expenses.index')-&gt;name('expenses.index');</code></pre>
+      </div>
+      <div class="translation-english">
+        <span class="translation-label">Plain English</span>
+        <div class="translation-lines">
+          <p class="tl">For any page that needs login AND email verification...</p>
+          <p class="tl">If the user is an admin, add the /admin <span class="term" data-definition="A prefix is a path segment added before all routes in a group, like /admin. It keeps URLs organized without repeating yourself.">prefix</span>...</p>
+          <p class="tl">Map /admin/users, /admin/roles, and /admin/permissions to their management <span class="term" data-definition="A component is a self-contained piece of UI that handles its own logic and rendering. In Livewire, each component is a PHP class paired with a Blade template.">components</span>.</p>
+          <p class="tl">Map /forecast to the forecasting component.</p>
+          <p class="tl">Map /anomaly to the anomaly detection component.</p>
+          <p class="tl">Map /expenses to the expense list component.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 2: LIVEWIRE ─────────────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>Livewire &mdash; The Magic Mail Carrier</h3>
+    <p><span class="term" data-definition="Livewire is a Laravel framework that lets you build dynamic, reactive interfaces using only PHP &mdash; no separate JavaScript framework needed. It sends small AJAX requests behind the scenes.">Livewire</span> lets you build interactive pages without writing a separate JavaScript app. When a user clicks a button, Livewire sends a tiny <span class="term" data-definition="AJAX (Asynchronous JavaScript and XML) is a technique for sending data to/from a server without reloading the entire page. It makes web apps feel fast and responsive.">AJAX</span> request to the server and updates only the parts of the page that changed.</p>
+
+    <div class="translation-block">
+      <div class="translation-code">
+        <span class="translation-label">Expenses Livewire Component &mdash; save()</span>
+        <pre><code>public function save(): void
+{
+    $data = $this-&gt;validate([
+        'title' =&gt; 'required|string|max:255',
+        'description' =&gt; 'nullable|string',
+        'amount' =&gt; 'required|numeric|gt:0',
+        'category_id' =&gt; 'required|exists:categories,id',
+        'date' =&gt; 'required|date',
+    ]);
+
+    if ($this-&gt;editing_id) {
+        $expense = Expense::findOrFail($this-&gt;editing_id);
+        $expense-&gt;update($data);
+        $this-&gt;success('Expense updated successfully');
+    } else {
+        $data['user_id'] = auth()-&gt;id();
+        Expense::create($data);
+        $this-&gt;success('Expense created successfully');
+    }
+    $this-&gt;drawer = false;
+}</code></pre>
+      </div>
+      <div class="translation-english">
+        <span class="translation-label">Plain English</span>
+        <div class="translation-lines">
+          <p class="tl"><span class="term" data-definition="Validate means checking that user input meets all the rules before saving it. If any rule fails, Laravel rejects the data and shows error messages.">Validate</span> &mdash; check that all the form data is valid.</p>
+          <p class="tl">Title is required, max 255 characters.</p>
+          <p class="tl">Amount must be a positive number.</p>
+          <p class="tl">Category must exist in the database.</p>
+          <p class="tl">If we are editing an existing expense, find it and update.</p>
+          <p class="tl">Otherwise, attach the current user and create a new one.</p>
+          <p class="tl">Close the side drawer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 3: FLOW ANIMATION ───────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>Message Flow &mdash; Adding an Expense</h3>
+    <p>Follow the data as it travels through the system. Each step happens in milliseconds.</p>
+
+    <div class="flow-animation" id="flow-add-expense" data-steps='[
+      {"label":"User fills the form and clicks Save","highlight":"actor-1"},
+      {"label":"Form data sent via AJAX (no page reload!)","packet":true,"from":"actor-1","to":"actor-2","highlight":"actor-2"},
+      {"label":"validate() checks all fields","highlight":"actor-2"},
+      {"label":"Expense::create() with validated data","packet":true,"from":"actor-2","to":"actor-3","highlight":"actor-3"},
+      {"label":"INSERT INTO expenses...","packet":true,"from":"actor-3","to":"actor-5","highlight":"actor-5"},
+      {"label":"Model event fires: created","highlight":"actor-3"},
+      {"label":"Auto-creates history record","packet":true,"from":"actor-3","to":"actor-4","highlight":"actor-4"},
+      {"label":"INSERT INTO expense_histories...","packet":true,"from":"actor-4","to":"actor-5","highlight":"actor-5"},
+      {"label":"Success toast + table refreshes","packet":true,"from":"actor-2","to":"actor-1","highlight":"actor-1"}
+    ]'>
+      <div class="flow-actors">
+        <div class="flow-actor" id="flow-actor-1" style="--actor-color: var(--color-actor-1)">
+          <div class="flow-actor-icon">&#x1F310;</div>
+          <div class="flow-actor-name">Browser</div>
+        </div>
+        <div class="flow-actor" id="flow-actor-2" style="--actor-color: var(--color-actor-2)">
+          <div class="flow-actor-icon">&#x26A1;</div>
+          <div class="flow-actor-name">Livewire</div>
+        </div>
+        <div class="flow-actor" id="flow-actor-3" style="--actor-color: var(--color-actor-3)">
+          <div class="flow-actor-icon">&#x1F4E6;</div>
+          <div class="flow-actor-name">Expense Model</div>
+        </div>
+        <div class="flow-actor" id="flow-actor-4" style="--actor-color: var(--color-actor-4)">
+          <div class="flow-actor-icon">&#x1F4CB;</div>
+          <div class="flow-actor-name">ExpenseHistory</div>
+        </div>
+        <div class="flow-actor" id="flow-actor-5" style="--actor-color: var(--color-actor-5)">
+          <div class="flow-actor-icon">&#x1F5C4;</div>
+          <div class="flow-actor-name">Database</div>
+        </div>
+      </div>
+      <div class="flow-packet"></div>
+      <div class="flow-step-label">Click "Next Step" to begin</div>
+      <div class="flow-progress">Step 0 / 9</div>
+      <div class="flow-controls">
+        <button class="btn btn-accent flow-next-btn">Next Step</button>
+        <button class="btn btn-secondary flow-reset-btn">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 4: MODEL EVENTS ─────────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>The Carbon Copy &mdash; Model Events</h3>
+    <p>Every time an expense changes, a <span class="term" data-definition="A model event is a hook that fires automatically when something happens to a database record &mdash; created, updated, or deleted. You register listeners in the booted() method.">model event</span> fires and creates an automatic snapshot. This is the <span class="term" data-definition="The Observer Pattern is a design pattern where an object (the subject) notifies other objects (observers) when its state changes. It decouples the thing that changes from the things that react to it.">observer pattern</span> in action.</p>
+
+    <div class="translation-block">
+      <div class="translation-code">
+        <span class="translation-label">Expense Model &mdash; booted()</span>
+        <pre><code>static::updated(function ($expense) {
+    $expense-&gt;histories()-&gt;create([
+        'user_id' =&gt; $expense-&gt;user_id,
+        'title' =&gt; $expense-&gt;title,
+        'amount' =&gt; $expense-&gt;amount,
+        'date' =&gt; $expense-&gt;date,
+        'category_id' =&gt; $expense-&gt;category_id,
+        'payment_method' =&gt; $expense-&gt;payment_method,
+        'is_recurring' =&gt; $expense-&gt;is_recurring,
+        'action' =&gt; 'update',
+    ]);
+});</code></pre>
+      </div>
+      <div class="translation-english">
+        <span class="translation-label">Plain English</span>
+        <div class="translation-lines">
+          <p class="tl">Whenever an expense gets updated...</p>
+          <p class="tl">Automatically create a new history snapshot.</p>
+          <p class="tl">Copy the current state of every <span class="term" data-definition="Fillable fields are the model attributes that Laravel allows to be mass-assigned. They act as a whitelist preventing unwanted data from being saved.">fillable</span> field.</p>
+          <p class="tl">Mark it as an &quot;update&quot; so we know what happened.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-accent animate-in">
+      <div class="callout-icon">&#128161;</div>
+      <div class="callout-content">
+        <strong class="callout-title">Why This Matters</strong>
+        <p>This pattern &mdash; "when X happens, automatically do Y" &mdash; is called an event listener. It is everywhere in software: when you get an email, your phone dings. When a file saves, your backup runs. Kharcha Track uses it so every expense change is automatically journaled without anyone having to remember to log it.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 5: QUIZ ─────────────────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>Check Your Understanding</h3>
+
+    <div class="quiz-container" id="quiz-module3">
+
+      <!-- Q1 -->
+      <div class="quiz-question-block" data-correct="b"
+           data-explanation-right="The expenses() method runs the database query that feeds the table. If data looks stale, the query or caching layer is the first place to look."
+           data-explanation-wrong="Data freshness issues almost always trace back to the query or caching layer, not CSS or HTML.">
+        <p class="quiz-question">A user says the expense list page loads but the data is stale. What should you check?</p>
+        <button class="quiz-option" data-value="a" onclick="selectOption(this)">The CSS file</button>
+        <button class="quiz-option" data-value="b" onclick="selectOption(this)">The Livewire component&#39;s expenses() query</button>
+        <button class="quiz-option" data-value="c" onclick="selectOption(this)">The HTML template</button>
+        <button class="quiz-option" data-value="d" onclick="selectOption(this)">The route name</button>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="quiz-question-block" data-correct="b"
+           data-explanation-right="Middleware acts as a checkpoint &mdash; it runs before the page loads and can redirect unverified users."
+           data-explanation-wrong="Access control in Laravel is handled at the route level with middleware, not with JavaScript or database changes.">
+        <p class="quiz-question">You want the /expenses page to only be accessible after email verification. How?</p>
+        <button class="quiz-option" data-value="a" onclick="selectOption(this)">Add JavaScript validation</button>
+        <button class="quiz-option" data-value="b" onclick="selectOption(this)">Add the &quot;verified&quot; middleware to the route</button>
+        <button class="quiz-option" data-value="c" onclick="selectOption(this)">Change the database</button>
+        <button class="quiz-option" data-value="d" onclick="selectOption(this)">Edit the Expense model</button>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="quiz-question-block" data-correct="b"
+           data-explanation-right="Model events fire at specific moments &mdash; if you record values at the wrong moment, you capture stale data. This is a classic timing bug."
+           data-explanation-wrong="Think about WHEN the event fires relative to WHEN the data changes. Timing is everything with model events.">
+        <p class="quiz-question">An expense was edited but the history shows the OLD values. What went wrong?</p>
+        <button class="quiz-option" data-value="a" onclick="selectOption(this)">The database lost data</button>
+        <button class="quiz-option" data-value="b" onclick="selectOption(this)">The booted() event fires before the update saves the new values</button>
+        <button class="quiz-option" data-value="c" onclick="selectOption(this)">The user did not click save</button>
+        <button class="quiz-option" data-value="d" onclick="selectOption(this)">The route is wrong</button>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <button class="quiz-check-btn" onclick="checkQuiz('quiz-module3')">Check Answers</button>
+      <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module3')">Try Again</button>
+    </div>
+  </div>
+
+</section>

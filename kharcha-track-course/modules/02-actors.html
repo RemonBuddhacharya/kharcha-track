@@ -1,0 +1,321 @@
+<!-- ============================================================
+     MODULE 2 — MEET THE CAST
+     ============================================================ -->
+<section class="module" id="module-2" style="background: var(--color-bg-warm)">
+
+  <!-- ── Screen 1: The Six Actors ────────────────────────────── -->
+  <div class="module-header animate-in">
+    <span class="module-number">02</span>
+    <h2 class="module-title">Meet the Cast</h2>
+    <p class="module-subtitle">Every app has characters. In Kharcha Track, the six database <span class="term" data-definition="A model is a PHP class that represents a table in your database. It defines what data exists and how it relates to other data.">models</span> are like actors in a theater company — each with a specific role to play.</p>
+  </div>
+
+  <div class="icon-rows stagger-children">
+
+    <div class="icon-row animate-in">
+      <div class="icon-circle" style="background: var(--color-actor-1); color: white;">&#128100;</div>
+      <div>
+        <strong>User — The Person</strong>
+        <p>Has roles (admin or regular user), email, and password. Everything in the app belongs to a user — they are the starting point of all data.</p>
+      </div>
+    </div>
+
+    <div class="icon-row animate-in">
+      <div class="icon-circle" style="background: var(--color-actor-2); color: white;">&#11088;</div>
+      <div>
+        <strong>Expense — The Star</strong>
+        <p>Title, amount, date, category, payment method. This is the main thing being tracked — the lead actor that every other character supports.</p>
+      </div>
+    </div>
+
+    <div class="icon-row animate-in">
+      <div class="icon-circle" style="background: var(--color-actor-3); color: white;">&#128193;</div>
+      <div>
+        <strong>Category — The Organizer</strong>
+        <p>Groups expenses into buckets like Food, Transport, and Bills. Each user has their own categories plus shared system categories.</p>
+      </div>
+    </div>
+
+    <div class="icon-row animate-in">
+      <div class="icon-circle" style="background: var(--color-actor-4); color: white;">&#128220;</div>
+      <div>
+        <strong>ExpenseHistory — The Historian</strong>
+        <p>Automatically records every create and update as a timeline entry. You never call it directly — it watches silently in the background.</p>
+      </div>
+    </div>
+
+    <div class="icon-row animate-in">
+      <div class="icon-circle" style="background: var(--color-actor-5); color: white;">&#128302;</div>
+      <div>
+        <strong>Forecast — The Oracle</strong>
+        <p>Uses past spending to predict future months. Stores predictions with confidence scores so you know how reliable each guess is.</p>
+      </div>
+    </div>
+
+    <div class="icon-row animate-in">
+      <div class="icon-circle" style="background: var(--color-actor-1); color: white;">&#128269;</div>
+      <div>
+        <strong>Anomaly — The Detective</strong>
+        <p>Scans expenses for unusual amounts and flags them with scores. If something looks off compared to your normal spending, this model catches it.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Screen 2: How They're Connected ─────────────────────── -->
+  <h3 class="animate-in" style="margin-top: var(--space-12);">How They're Connected</h3>
+  <p class="animate-in">These six actors don't work alone. They're linked together through relationships — here's who talks to whom.</p>
+
+  <div class="arch-diagram animate-in">
+    <div class="arch-zone">
+      <div class="arch-zone-label">Relationships</div>
+      <div style="display: flex; flex-direction: column; gap: var(--space-4); font-family: var(--font-mono); font-size: var(--text-sm);">
+        <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+          <span class="arch-component" style="border-color: var(--color-actor-1);">&#128100; User</span>
+          <span style="color: var(--color-text-muted); font-weight: 700;">(1) ──&#9654; (&#8734;)</span>
+          <span class="arch-component" style="border-color: var(--color-actor-2);">&#11088; Expense</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+          <span class="arch-component" style="border-color: var(--color-actor-1);">&#128100; User</span>
+          <span style="color: var(--color-text-muted); font-weight: 700;">(1) ──&#9654; (&#8734;)</span>
+          <span class="arch-component" style="border-color: var(--color-actor-3);">&#128193; Category</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+          <span class="arch-component" style="border-color: var(--color-actor-3);">&#128193; Category</span>
+          <span style="color: var(--color-text-muted); font-weight: 700;">(1) ──&#9654; (&#8734;)</span>
+          <span class="arch-component" style="border-color: var(--color-actor-2);">&#11088; Expense</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+          <span class="arch-component" style="border-color: var(--color-actor-2);">&#11088; Expense</span>
+          <span style="color: var(--color-text-muted); font-weight: 700;">(1) ──&#9654; (&#8734;)</span>
+          <span class="arch-component" style="border-color: var(--color-actor-4);">&#128220; ExpenseHistory</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+          <span class="arch-component" style="border-color: var(--color-actor-1);">&#128100; User</span>
+          <span style="color: var(--color-text-muted); font-weight: 700;">(1) ──&#9654; (&#8734;)</span>
+          <span class="arch-component" style="border-color: var(--color-actor-5);">&#128302; Forecast</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+          <span class="arch-component" style="border-color: var(--color-actor-1);">&#128100; User</span>
+          <span style="color: var(--color-text-muted); font-weight: 700;">(1) ──&#9654; (&#8734;)</span>
+          <span class="arch-component" style="border-color: var(--color-actor-1);">&#128269; Anomaly</span>
+        </div>
+      </div>
+    </div>
+    <div class="arch-description">
+      Each arrow reads: "one ___ <span class="term" data-definition="A hasMany relationship means one record (like a User) can own many records of another type (like Expenses). In Laravel, you define this with a hasMany() method on the model.">has many</span> ___." A User has many Expenses. A Category has many Expenses. An Expense has many History entries.
+    </div>
+  </div>
+
+  <div class="callout callout-accent animate-in">
+    <span class="callout-icon">&#128161;</span>
+    <div>
+      <span class="callout-title">Key Pattern</span>
+      <div class="callout-content">
+        <p>This pattern — where one thing "has many" of another — is called a <span class="term" data-definition="A one-to-many relationship means one record in a table can be linked to many records in another table. For example, one User can have many Expenses. It's one of the most common patterns in database design.">one-to-many relationship</span>. It's one of the most common patterns in software. Almost every app you use has this at its core.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Screen 3: Code Translation — The Expense Model ──────── -->
+  <h3 class="animate-in" style="margin-top: var(--space-12);">Code Translation: The Expense Model</h3>
+  <p class="animate-in">Here's a real piece of code from Kharcha Track. On the left, what the developer wrote. On the right, what it actually means.</p>
+
+  <div class="translation-block animate-in">
+    <div class="translation-code">
+      <span class="translation-label">app/Models/Expense.php</span>
+<pre style="margin:0; white-space: pre-wrap;">protected $<span class="term" data-definition="The fillable array tells Laravel which fields are allowed to be set when creating or updating a record. It's a security feature that prevents unwanted data from being saved.">fillable</span> = [
+    'user_id',
+    'title',
+    'description',
+    'amount',
+    'date',
+    'category_id',
+    'payment_method',
+    'is_recurring',
+    'is_anomaly',
+];</pre>
+    </div>
+    <div class="translation-english">
+      <span class="translation-label">Plain English</span>
+      <div class="translation-lines">
+        <div class="tl">"Here are the fields that an expense can have..."</div>
+        <div class="tl"><strong>user_id</strong> — Who owns this expense</div>
+        <div class="tl"><strong>title</strong> — What you spent on</div>
+        <div class="tl"><strong>description</strong> — Optional details about the purchase</div>
+        <div class="tl"><strong>amount</strong> — How much it cost</div>
+        <div class="tl"><strong>date</strong> — When it happened</div>
+        <div class="tl"><strong>category_id</strong> — Which category it belongs to</div>
+        <div class="tl"><strong>payment_method</strong> — How you paid (cash, card, UPI...)</div>
+        <div class="tl"><strong>is_recurring</strong> — Does it repeat monthly?</div>
+        <div class="tl"><strong>is_anomaly</strong> — Was it flagged as unusual?</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Screen 4: The Stage — Livewire Components ───────────── -->
+  <h3 class="animate-in" style="margin-top: var(--space-12);">The Stage: Livewire Components</h3>
+  <p class="animate-in">The models are the actors, but they need a stage. <span class="term" data-definition="A Livewire component is a PHP class paired with a Blade template that creates interactive pages without writing JavaScript. It handles user actions like clicking, typing, and form submissions on the server side.">Livewire components</span> are the pages where users actually interact with the data.</p>
+
+  <div class="pattern-cards stagger-children">
+
+    <div class="pattern-card animate-in" style="border-top-color: var(--color-actor-2);">
+      <div class="pattern-icon" style="background: rgba(42,123,155,0.1); color: var(--color-actor-2);">&#128203;</div>
+      <div class="pattern-title">expenses/index</div>
+      <p class="pattern-desc">The expense list with search, sort, add, edit, and delete. This is where users spend most of their time.</p>
+    </div>
+
+    <div class="pattern-card animate-in" style="border-top-color: var(--color-actor-5);">
+      <div class="pattern-icon" style="background: rgba(45,139,85,0.1); color: var(--color-actor-5);">&#128302;</div>
+      <div class="pattern-title">expenses/forecasting</div>
+      <p class="pattern-desc">The crystal ball page. Shows predicted spending for future months based on your history.</p>
+    </div>
+
+    <div class="pattern-card animate-in" style="border-top-color: var(--color-actor-1);">
+      <div class="pattern-icon" style="background: rgba(217,79,48,0.1); color: var(--color-actor-1);">&#128269;</div>
+      <div class="pattern-title">expenses/anomalies</div>
+      <p class="pattern-desc">The detective page. Lists flagged expenses that look unusual compared to your normal spending.</p>
+    </div>
+
+    <div class="pattern-card animate-in" style="border-top-color: var(--color-actor-3);">
+      <div class="pattern-icon" style="background: rgba(123,109,170,0.1); color: var(--color-actor-3);">&#128193;</div>
+      <div class="pattern-title">categories/index</div>
+      <p class="pattern-desc">Manage your spending categories. Create, rename, or delete the buckets that organize your expenses.</p>
+    </div>
+
+    <div class="pattern-card animate-in" style="border-top-color: var(--color-actor-4);">
+      <div class="pattern-icon" style="background: rgba(212,168,67,0.1); color: var(--color-actor-4);">&#128200;</div>
+      <div class="pattern-title">dashboard</div>
+      <p class="pattern-desc">Your personal spending overview with charts, totals, and trends at a glance.</p>
+    </div>
+
+    <div class="pattern-card animate-in" style="border-top-color: var(--color-text-muted);">
+      <div class="pattern-icon" style="background: rgba(0,0,0,0.05); color: var(--color-text-muted);">&#128274;</div>
+      <div class="pattern-title">admin/users/index</div>
+      <p class="pattern-desc">(Admin only) Manage all users in the system. Regular users never see this page.</p>
+    </div>
+
+  </div>
+
+  <!-- ── Screen 5: Group Chat Animation ──────────────────────── -->
+  <h3 class="animate-in" style="margin-top: var(--space-12);">What Happens When You Add an Expense?</h3>
+  <p class="animate-in">Watch the models talk to each other when a user logs a new expense.</p>
+
+  <div class="chat-window animate-in" id="chat-module2">
+    <div class="chat-messages">
+      <div class="chat-message" data-msg="0" data-sender="user" style="display:none">
+        <div class="chat-avatar" style="background: var(--color-actor-1)">U</div>
+        <div class="chat-bubble">
+          <span class="chat-sender" style="color: var(--color-actor-1)">User</span>
+          <p>I just logged a &#8377;500 grocery expense.</p>
+        </div>
+      </div>
+      <div class="chat-message" data-msg="1" data-sender="expense" style="display:none">
+        <div class="chat-avatar" style="background: var(--color-actor-2)">E</div>
+        <div class="chat-bubble">
+          <span class="chat-sender" style="color: var(--color-actor-2)">Expense</span>
+          <p>Got it! Storing title="Groceries", amount=500, category=Food.</p>
+        </div>
+      </div>
+      <div class="chat-message" data-msg="2" data-sender="category" style="display:none">
+        <div class="chat-avatar" style="background: var(--color-actor-3)">C</div>
+        <div class="chat-bubble">
+          <span class="chat-sender" style="color: var(--color-actor-3)">Category</span>
+          <p>That is me -- Food! I will make sure this shows up in the right bucket.</p>
+        </div>
+      </div>
+      <div class="chat-message" data-msg="3" data-sender="history" style="display:none">
+        <div class="chat-avatar" style="background: var(--color-actor-4)">H</div>
+        <div class="chat-bubble">
+          <span class="chat-sender" style="color: var(--color-actor-4)">ExpenseHistory</span>
+          <p>I saw that! Already recorded the "create" action with all the details.</p>
+        </div>
+      </div>
+      <div class="chat-message" data-msg="4" data-sender="forecast" style="display:none">
+        <div class="chat-avatar" style="background: var(--color-actor-5)">F</div>
+        <div class="chat-bubble">
+          <span class="chat-sender" style="color: var(--color-actor-5)">Forecast</span>
+          <p>Interesting... I will factor this into next month prediction.</p>
+        </div>
+      </div>
+      <div class="chat-message" data-msg="5" data-sender="anomaly" style="display:none">
+        <div class="chat-avatar" style="background: var(--color-actor-1)">A</div>
+        <div class="chat-bubble">
+          <span class="chat-sender" style="color: var(--color-actor-1)">Anomaly</span>
+          <p>&#8377;500 for groceries? That is within normal range. No red flags from me.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-typing" style="display:none">
+      <div class="chat-avatar" id="chat-module2-typing-avatar" style="background: var(--color-actor-1)">?</div>
+      <div class="chat-typing-dots">
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+      </div>
+    </div>
+
+    <div class="chat-controls">
+      <button class="btn chat-next-btn">Next Message</button>
+      <button class="btn chat-all-btn">Play All</button>
+      <button class="btn chat-reset-btn">Replay</button>
+      <span class="chat-progress"></span>
+    </div>
+  </div>
+
+  <!-- ── Screen 6: Quiz ──────────────────────────────────────── -->
+  <h3 class="animate-in" style="margin-top: var(--space-12);">Check Your Understanding</h3>
+
+  <div class="quiz-container animate-in" id="quiz-module2">
+
+    <!-- Question 1 -->
+    <div class="quiz-question-block"
+         data-correct="option-b"
+         data-explanation-right="You would need to change the relationship from belongsTo to belongsToMany, which means creating a new pivot table connecting expenses to categories. Both models need new relationship methods."
+         data-explanation-wrong="Think about where the category_id lives. Right now an expense has one category_id — to support multiple, you need a linking table between both models.">
+      <h3 class="quiz-question">You want to let users tag expenses with multiple categories instead of just one. Which models would need to change?</h3>
+      <div class="quiz-options">
+        <button class="quiz-option" data-value="option-a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Only Expense</span></button>
+        <button class="quiz-option" data-value="option-b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Expense and Category</span></button>
+        <button class="quiz-option" data-value="option-c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Only Category</span></button>
+        <button class="quiz-option" data-value="option-d" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>User and Expense</span></button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="quiz-question-block"
+         data-correct="option-b"
+         data-explanation-right="The Forecast model has forecastForUser() and forecastByCategory() methods containing the moving average algorithm. Models in Laravel often hold business logic, not just data structure."
+         data-explanation-wrong="Models in Laravel often contain business logic, not just data structure. The Forecast model has dedicated methods with the actual prediction algorithm.">
+      <h3 class="quiz-question">The forecast page shows stale predictions. Where does the prediction logic live?</h3>
+      <div class="quiz-options">
+        <button class="quiz-option" data-value="option-a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>In the Livewire component</span></button>
+        <button class="quiz-option" data-value="option-b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>In the Forecast model</span></button>
+        <button class="quiz-option" data-value="option-c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>In the route file</span></button>
+        <button class="quiz-option" data-value="option-d" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>In the database migration</span></button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="quiz-question-block"
+         data-correct="option-b"
+         data-explanation-right="By recording every version separately, you can see what changed, when, and how — like version control for your spending data."
+         data-explanation-wrong="Think about what you would lose if you only kept the latest version. The old value would be gone forever. A separate history model preserves every past state.">
+      <h3 class="quiz-question">Why is ExpenseHistory a separate model instead of just updating the Expense?</h3>
+      <div class="quiz-options">
+        <button class="quiz-option" data-value="option-a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>It is faster</span></button>
+        <button class="quiz-option" data-value="option-b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>To keep a complete audit trail of every change</span></button>
+        <button class="quiz-option" data-value="option-c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>It uses less storage</span></button>
+        <button class="quiz-option" data-value="option-d" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>The database requires it</span></button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <button class="quiz-check-btn" onclick="checkQuiz('quiz-module2')">Check Answers</button>
+    <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module2')">Try Again</button>
+  </div>
+
+</section>

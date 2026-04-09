@@ -1,0 +1,211 @@
+<!-- ============================================================
+     MODULE 1 — WHAT IS KHARCHA TRACK?
+     ============================================================ -->
+<section class="module" id="module-1" style="background: var(--color-bg)">
+
+  <!-- ── Screen 1: Welcome ──────────────────────────────────── -->
+  <div class="module-header animate-in">
+    <span class="module-number">01</span>
+    <h2 class="module-title">What Is Kharcha Track?</h2>
+    <p class="module-subtitle">Your expense tracker — and the code behind it</p>
+  </div>
+
+  <div class="screen animate-in">
+    <p>Kharcha Track is a personal expense tracker with superpowers. "Kharcha" means "expense" in Nepali. It does what any good tracker does — records what you spend — but it also <strong>predicts your future spending</strong> and <strong>detects unusual purchases</strong> automatically.</p>
+
+    <p>Think of it as a financial diary that reads itself back to you and warns you about unusual pages. By the end of this course, you will understand every line of code that makes it work.</p>
+  </div>
+
+  <!-- ── Screen 2: Tech Stack ───────────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>The Technology Behind It</h3>
+    <p>Four main technologies work together to make Kharcha Track run. Each handles a different job.</p>
+
+    <div class="pattern-cards stagger-children">
+
+      <div class="pattern-card animate-in">
+        <div class="icon-circle" style="background: var(--color-actor-1); color: white;">&#9881;&#65039;</div>
+        <strong><span class="term" data-definition="A PHP framework — a pre-built toolkit that handles common web app tasks like routing, database access, and security so you don't start from scratch.">Laravel</span> 12</strong>
+        <p>The engine that powers everything — handles requests, talks to the database, enforces rules.</p>
+      </div>
+
+      <div class="pattern-card animate-in">
+        <div class="icon-circle" style="background: var(--color-actor-2); color: white;">&#9889;</div>
+        <strong><span class="term" data-definition="A Laravel tool that lets you build interactive web pages using only PHP. Instead of writing separate JavaScript, your PHP code handles button clicks, form submissions, and page updates automatically.">Livewire</span> 4</strong>
+        <p>Makes pages interactive without writing JavaScript separately — like magic HTML that updates itself.</p>
+      </div>
+
+      <div class="pattern-card animate-in">
+        <div class="icon-circle" style="background: var(--color-actor-3); color: white;">&#127912;</div>
+        <strong><span class="term" data-definition="A component library for Laravel — pre-built UI pieces like buttons, tables, modals, and forms that you can drop into your pages.">MaryUI</span> + <span class="term" data-definition="A CSS framework where you style elements by adding class names directly in HTML, like 'text-red-500' for red text. No separate stylesheet needed.">Tailwind CSS</span></strong>
+        <p>The visual layer — beautiful buttons, tables, and forms out of the box.</p>
+      </div>
+
+      <div class="pattern-card animate-in">
+        <div class="icon-circle" style="background: var(--color-actor-5); color: white;">&#128452;&#65039;</div>
+        <strong><span class="term" data-definition="A powerful open-source database. Think of it as a super-organized spreadsheet that can handle millions of rows and multiple users at once.">PostgreSQL</span></strong>
+        <p>The filing cabinet — stores every expense, category, and user permanently.</p>
+      </div>
+
+    </div>
+
+    <p>All of these are built on <span class="term" data-definition="A programming language designed for building web applications. It runs on the server — the computer that hosts your website.">PHP</span>, a server-side language, and follow a <span class="term" data-definition="A pre-built foundation of code that handles common tasks, so you can focus on what makes your app unique instead of reinventing the wheel.">framework</span> pattern that keeps code organized.</p>
+  </div>
+
+  <!-- ── Screen 3: Project Map ──────────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>The Project Map</h3>
+    <p>Here is where the important files live. You will visit each of these throughout the course.</p>
+
+    <div class="file-tree">
+      <div class="file-tree-item">
+        <span class="folder">app/Models/</span> — <em>The 6 data characters (User, Expense, Category...)</em>
+        <div class="file-tree-item">
+          <span class="file">Expense.php</span> — <em>The star — defines what an expense looks like</em>
+        </div>
+        <div class="file-tree-item">
+          <span class="file">Forecast.php</span> — <em>The oracle — predicts future spending</em>
+        </div>
+        <div class="file-tree-item">
+          <span class="file">Anomaly.php</span> — <em>The detective — spots unusual expenses</em>
+        </div>
+      </div>
+      <div class="file-tree-item">
+        <span class="folder">resources/views/livewire/</span> — <em>The pages users actually see</em>
+        <div class="file-tree-item">
+          <span class="file">expenses/index.blade.php</span> — <em>The main expense list</em>
+        </div>
+        <div class="file-tree-item">
+          <span class="file">dashboard.blade.php</span> — <em>Your spending overview</em>
+        </div>
+      </div>
+      <div class="file-tree-item">
+        <span class="file">routes/web.php</span> — <em>The traffic director — maps URLs to pages</em>
+      </div>
+      <div class="file-tree-item">
+        <span class="folder">database/migrations/</span> — <em>The blueprints — define database table structures</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Screen 4: Tracing "Add Expense" ────────────────────── -->
+  <div class="screen animate-in">
+    <h3>Tracing "Add Expense"</h3>
+    <p>Let us follow a single action through the entire codebase — from button click to database row.</p>
+
+    <div class="step-cards stagger-children">
+      <div class="step-card animate-in">
+        <span class="step-number">1</span>
+        <p>User clicks "Add Expense" button</p>
+      </div>
+      <div class="step-card animate-in">
+        <span class="step-number">2</span>
+        <p><span class="term" data-definition="A Laravel tool that lets you build interactive web pages using only PHP. Instead of writing separate JavaScript, your PHP code handles button clicks, form submissions, and page updates automatically.">Livewire</span> opens a side drawer with an empty form</p>
+      </div>
+      <div class="step-card animate-in">
+        <span class="step-number">3</span>
+        <p>User fills in title, amount, category, date</p>
+      </div>
+      <div class="step-card animate-in">
+        <span class="step-number">4</span>
+        <p><code>save()</code> method validates all fields (amount &gt; 0, category exists, etc.)</p>
+      </div>
+      <div class="step-card animate-in">
+        <span class="step-number">5</span>
+        <p><code>Expense::create()</code> saves to database</p>
+      </div>
+      <div class="step-card animate-in">
+        <span class="step-number">6</span>
+        <p>Model event fires — ExpenseHistory auto-logs the creation</p>
+      </div>
+    </div>
+
+    <div class="code-translation animate-in">
+      <div class="translation-code">
+<pre><code><span class="code-keyword">protected static function</span> <span class="code-function">booted</span>(): <span class="code-keyword">void</span>
+{
+    <span class="code-keyword">static</span>::<span class="code-function">created</span>(<span class="code-keyword">function</span> (<span class="code-property">$expense</span>) {
+        <span class="code-property">$expense</span>-&gt;<span class="code-function">histories</span>()-&gt;<span class="code-function">create</span>([
+            <span class="code-string">'user_id'</span> <span class="code-operator">=&gt;</span> <span class="code-property">$expense</span>-&gt;user_id,
+            <span class="code-string">'title'</span> <span class="code-operator">=&gt;</span> <span class="code-property">$expense</span>-&gt;title,
+            <span class="code-string">'amount'</span> <span class="code-operator">=&gt;</span> <span class="code-property">$expense</span>-&gt;amount,
+            <span class="code-string">'action'</span> <span class="code-operator">=&gt;</span> <span class="code-string">'create'</span>,
+        ]);
+    });
+}</code></pre>
+      </div>
+      <div class="translation-english">
+        <div class="translation-lines">
+          <p class="tl">When this model first wakes up, set up automatic behaviors...</p>
+          <p class="tl">Whenever a new expense is created...</p>
+          <p class="tl">Automatically create a history record...</p>
+          <p class="tl">Copy the user, title, and amount...</p>
+          <p class="tl">Mark it as a 'create' action — the first entry in this expense's story</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-accent animate-in">
+      <div class="callout-icon">&#128161;</div>
+      <div class="callout-content">
+        <strong class="callout-title">Key Insight</strong>
+        <p>This pattern — "when X happens, automatically do Y" — is called an <strong>event listener</strong>. It is everywhere: when you get an email, your phone dings. Kharcha Track uses it so every expense change is automatically journaled.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Screen 5: Quiz ─────────────────────────────────────── -->
+  <div class="screen animate-in">
+    <h3>Check Your Understanding</h3>
+
+    <div class="quiz-container" id="quiz-module1">
+
+      <div class="quiz-question-block"
+           data-correct="option-b"
+           data-explanation-right="The model defines what data an expense can hold. You would add 'notes' to the $fillable array so Laravel allows it to be saved."
+           data-explanation-wrong="The model is where you define an expense data fields. Routes handle URLs, styles handle appearance, and seeders handle test data.">
+        <h3 class="quiz-question">You want to add a "notes" field to expenses. Which file would you modify first?</h3>
+        <div class="quiz-options">
+          <button class="quiz-option" data-value="option-a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>routes/web.php — the traffic director</span></button>
+          <button class="quiz-option" data-value="option-b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>app/Models/Expense.php — the expense model</span></button>
+          <button class="quiz-option" data-value="option-c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>styles.css — the visual layer</span></button>
+          <button class="quiz-option" data-value="option-d" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>database/seeders — the test data</span></button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question-block"
+           data-correct="option-b"
+           data-explanation-right="The booted() method is where history tracking is wired up. If the updated event listener has a bug, edits would save but history entries would not be created."
+           data-explanation-wrong="History tracking lives in the Expense model booted() method — that is where created and updated event listeners auto-create ExpenseHistory records.">
+        <h3 class="quiz-question">A user reports that editing an expense does not show in the history. Where would you look first?</h3>
+        <div class="quiz-options">
+          <button class="quiz-option" data-value="option-a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>The browser developer console</span></button>
+          <button class="quiz-option" data-value="option-b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>The booted() method in Expense.php</span></button>
+          <button class="quiz-option" data-value="option-c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>The Category model</span></button>
+          <button class="quiz-option" data-value="option-d" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>The route file</span></button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question-block"
+           data-correct="option-b"
+           data-explanation-right="Livewire keeps everything in one language — PHP. You get reactive, interactive pages without maintaining a separate JavaScript codebase."
+           data-explanation-wrong="Livewire main advantage is simplicity: one language (PHP) for both server logic and page interactivity, instead of juggling PHP on the backend and JavaScript on the frontend.">
+        <h3 class="quiz-question">Why does Kharcha Track use Livewire instead of React or Vue?</h3>
+        <div class="quiz-options">
+          <button class="quiz-option" data-value="option-a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Livewire is faster at rendering</span></button>
+          <button class="quiz-option" data-value="option-b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>It lets you write interactive pages in PHP without a separate JavaScript framework</span></button>
+          <button class="quiz-option" data-value="option-c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>React and Vue cost money</span></button>
+          <button class="quiz-option" data-value="option-d" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Livewire has better colors</span></button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <button class="quiz-check-btn" onclick="checkQuiz('quiz-module1')">Check Answers</button>
+      <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module1')">Try Again</button>
+
+    </div>
+  </div>
+
+</section>

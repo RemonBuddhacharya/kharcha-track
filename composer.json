@@ -15,7 +15,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^4.0",
-        "nativephp/mobile": "^3.0",
+        "nativephp/mobile": "^3.2",
         "robsontenorio/mary": "^2.0",
         "silviolleite/laravelpwa": "^2.0",
         "spatie/laravel-permission": "^7.2.3"

@@ -57,7 +57,14 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::livewire('/profile', 'profile')->name('profile');
     Route::livewire('/dashboard', 'dashboard')->name('dashboard')->middleware('permission:access dashboard');
-    Route::livewire('/logout', 'auth.logout')->name('logout');
+    Route::get('/logout', function (Request $request) {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return to_route('landing');
+    })->name('logout');
 });
 
 // Protected routes requiring email verification

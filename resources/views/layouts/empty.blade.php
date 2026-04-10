@@ -13,11 +13,27 @@
     @vite('resources/js/app.js')
     @laravelPWA
 </head>
-<body class="min-h-screen font-sans antialiased bg-base-200">
-    <x-main full-width>
-        <x-slot:content>
+<body class="min-h-screen font-sans antialiased bg-base-200 nativephp-safe-area">
+    @mobile
+        {{-- NativePHP Mobile: Top Bar --}}
+        <native:top-bar
+            title="{{ isset($title) ? $title : config('app.name') }}"
+            :show-navigation-icon="false"
+            background-color="#1a1a1a"
+            text-color="#ffffff"
+        />
+
+        <div class="w-full p-4">
             {{ $slot }}
-        </x-slot:content>
-    </x-main>
+        </div>
+    @endmobile
+
+    @web
+        <x-main full-width>
+            <x-slot:content>
+                {{ $slot }}
+            </x-slot:content>
+        </x-main>
+    @endweb
 </body>
 </html>

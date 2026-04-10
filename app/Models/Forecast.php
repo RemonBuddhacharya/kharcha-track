@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Support\DatabaseHelper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -59,7 +60,7 @@ class Forecast extends Model
 
         // Get the last 12 months of expense data
         $history = DB::table('expenses')
-            ->selectRaw("strftime('%Y', date) as year, strftime('%m', date) as month, SUM(amount) as total")
+            ->selectRaw(DatabaseHelper::yearMonthSumSelect())
             ->where('user_id', $userId)
             ->where('date', '>=', $now->copy()->subMonths(12)->startOfMonth())
             ->groupBy('year', 'month')
@@ -145,7 +146,7 @@ class Forecast extends Model
         foreach ($categories as $category) {
             // Get history for this category
             $history = DB::table('expenses')
-                ->selectRaw("strftime('%Y', date) as year, strftime('%m', date) as month, SUM(amount) as total")
+                ->selectRaw(DatabaseHelper::yearMonthSumSelect())
                 ->where('user_id', $userId)
                 ->where('category_id', $category->id)
                 ->where('date', '>=', $now->copy()->subMonths(12)->startOfMonth())

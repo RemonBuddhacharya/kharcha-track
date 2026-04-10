@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\Expense;
+use App\Support\DatabaseHelper;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -59,8 +60,16 @@ class extends Component
                 ],
                 'options' => [
                     'responsive' => true,
+                    'maintainAspectRatio' => true,
                     'plugins' => [
-                        'legend' => ['display' => true],
+                        'legend' => [
+                            'display' => true,
+                            'labels' => ['boxWidth' => 12, 'padding' => 10, 'font' => ['size' => 11]],
+                        ],
+                    ],
+                    'scales' => [
+                        'x' => ['ticks' => ['maxRotation' => 45, 'font' => ['size' => 10]]],
+                        'y' => ['ticks' => ['font' => ['size' => 10]]],
                     ],
                 ],
             ];
@@ -87,8 +96,16 @@ class extends Component
                 ],
                 'options' => [
                     'responsive' => true,
+                    'maintainAspectRatio' => true,
                     'plugins' => [
-                        'legend' => ['display' => true],
+                        'legend' => [
+                            'display' => true,
+                            'labels' => ['boxWidth' => 12, 'padding' => 10, 'font' => ['size' => 11]],
+                        ],
+                    ],
+                    'scales' => [
+                        'x' => ['ticks' => ['maxRotation' => 45, 'font' => ['size' => 10]]],
+                        'y' => ['ticks' => ['font' => ['size' => 10]]],
                     ],
                 ],
             ];
@@ -107,7 +124,7 @@ class extends Component
     {
         $expenses =
             Expense::query()
-                ->selectRaw("strftime('%Y', date) as year, strftime('%m', date) as month, SUM(amount) as total")
+                ->selectRaw(DatabaseHelper::yearMonthSumSelect())
                 ->where('date', '>=', Carbon::now()->subMonths(11)->startOfMonth())
                 ->groupBy('year', 'month')
                 ->orderBy('year')
@@ -130,7 +147,7 @@ class extends Component
     {
         $expenses =
             Expense::query()
-                ->selectRaw("strftime('%Y', date) as year, strftime('%m', date) as month, SUM(amount) as total")
+                ->selectRaw(DatabaseHelper::yearMonthSumSelect())
                 ->where('user_id', $userId)
                 ->where('date', '>=', Carbon::now()->subMonths(11)->startOfMonth())
                 ->groupBy('year', 'month')
@@ -192,9 +209,11 @@ class extends Component
                 </div>
             </x-card>
             <!-- System-wide Expense Trend Chart -->
-            <x-card class="col-span-1 xl:col-span-2">
+            <x-card class="col-span-1 md:col-span-2 xl:col-span-2">
                 <div class="font-semibold mb-2">System Expense Trend (Last 12 Months)</div>
-                <x-chart wire:model="systemExpenseTrendChart" />
+                <div class="relative h-72 md:h-64 lg:h-56">
+                    <x-chart wire:model="systemExpenseTrendChart" />
+                </div>
             </x-card>
         @else
             <!-- User Overview Cards -->
@@ -226,9 +245,11 @@ class extends Component
                 </div>
             </x-card>
             <!-- User Expense Trend Chart -->
-            <x-card class="col-span-1 xl:col-span-2">
+            <x-card class="col-span-1 md:col-span-2 xl:col-span-2">
                 <div class="font-semibold mb-2">Your Expense Trend (Last 12 Months)</div>
-                <x-chart wire:model="userExpenseTrendChart" />
+                <div class="relative h-72 md:h-64 lg:h-56">
+                    <x-chart wire:model="userExpenseTrendChart" />
+                </div>
             </x-card>
         @endrole
     </div>

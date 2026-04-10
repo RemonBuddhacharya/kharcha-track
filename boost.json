@@ -1,0 +1,24 @@
+{
+    "agents": [
+        "opencode",
+        "claude_code",
+        "copilot"
+    ],
+    "guidelines": true,
+    "mcp": true,
+    "nightwatch_mcp": false,
+    "packages": [
+        "nativephp/mobile",
+        "spatie/laravel-permission"
+    ],
+    "sail": false,
+    "skills": [
+        "laravel-best-practices",
+        "livewire-development",
+        "pest-testing",
+        "tailwindcss-development",
+        "nativephp-mobile",
+        "laravel-permission-development",
+        "laravel-specialist"
+    ]
+}

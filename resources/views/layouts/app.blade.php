@@ -16,15 +16,17 @@
     @laravelPWA
 </head>
 <body class="min-h-screen font-sans antialiased bg-base-200 nativephp-safe-area">
-    @mobile
+    @if(config('nativephp-internal.running'))
         {{-- NativePHP Mobile: Top Bar --}}
         <native:top-bar
-            title="{{ isset($title) ? $title : 'Kharcha Track' }}"
+            title="{{ 'Kharcha Track' }}"
             :show-navigation-icon="false"
             background-color="#1a1a1a"
             text-color="#ffffff"
         >
             <native:top-bar-action id="profile" label="Profile" icon="person" :url="route('profile')" />
+            <native:top-bar-action id="logout" label="Logout" icon="logout" :url="route('logout')" />
+
         </native:top-bar>
 
         {{-- Mobile: Simple content without drawer layout --}}
@@ -94,9 +96,7 @@
                 />
             @endrole
         </native:bottom-nav>
-    @endmobile
-
-    @web
+    @else
         {{-- Web: Navbar mobile only --}}
         <x-nav sticky class="lg:hidden">
             <x-slot:brand>
@@ -119,7 +119,7 @@
                 {{ $slot }}
             </x-slot:content>
         </x-main>
-    @endweb
+    @endif
 
     {{--  TOAST area --}}
     <x-toast />

@@ -100,6 +100,7 @@ class Anomaly extends Model
 
             return [
                 'expense_id' => $expense->id,
+                'title' => $expense->title,
                 'amount' => $expense->amount,
                 'date' => $expense->date,
                 'is_anomaly' => $anomaly ? true : false,

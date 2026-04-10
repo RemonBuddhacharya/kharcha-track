@@ -14,7 +14,7 @@
     @laravelPWA
 </head>
 <body class="min-h-screen font-sans antialiased bg-base-200 nativephp-safe-area">
-    @mobile
+    @if(config('nativephp-internal.running'))
         {{-- NativePHP Mobile: Top Bar --}}
         <native:top-bar
             title="{{ isset($title) ? $title : config('app.name') }}"
@@ -26,14 +26,12 @@
         <div class="w-full p-4">
             {{ $slot }}
         </div>
-    @endmobile
-
-    @web
+    @else
         <x-main full-width>
             <x-slot:content>
                 {{ $slot }}
             </x-slot:content>
         </x-main>
-    @endweb
+    @endif
 </body>
 </html>

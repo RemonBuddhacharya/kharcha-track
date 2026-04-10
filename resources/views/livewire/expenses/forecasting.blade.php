@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Models\Forecast;
 use App\Models\Category;
+use App\Support\DatabaseHelper;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -49,8 +50,16 @@ new class extends Component {
             ],
             'options' => [
                 'responsive' => true,
+                'maintainAspectRatio' => true,
                 'plugins' => [
-                    'legend' => ['display' => true],
+                    'legend' => [
+                        'display' => true,
+                        'labels' => ['boxWidth' => 12, 'padding' => 10, 'font' => ['size' => 11]],
+                    ],
+                ],
+                'scales' => [
+                    'x' => ['ticks' => ['maxRotation' => 45, 'font' => ['size' => 10]]],
+                    'y' => ['ticks' => ['font' => ['size' => 10]]],
                 ],
             ],
         ];
@@ -96,8 +105,16 @@ new class extends Component {
                     ],
                     'options' => [
                         'responsive' => true,
+                        'maintainAspectRatio' => true,
                         'plugins' => [
-                            'legend' => ['display' => true],
+                            'legend' => [
+                                'display' => true,
+                                'labels' => ['boxWidth' => 12, 'padding' => 10, 'font' => ['size' => 11]],
+                            ],
+                        ],
+                        'scales' => [
+                            'x' => ['ticks' => ['maxRotation' => 45, 'font' => ['size' => 10]]],
+                            'y' => ['ticks' => ['font' => ['size' => 10]]],
                         ],
                     ],
                 ]
@@ -117,7 +134,7 @@ new class extends Component {
 
         // Get distinct months for which we have forecasts
         $months = DB::table('forecasts')
-            ->select(DB::raw('DISTINCT TO_CHAR(forecast_date, \'YYYY-MM\') as month'))
+            ->select(DB::raw('DISTINCT ' . DatabaseHelper::yearMonthExpression('forecast_date') . ' as month'))
             ->where('user_id', $userId)
             ->where('forecast_date', '<', $now)
             ->orderBy('month', 'desc')
@@ -169,7 +186,7 @@ new class extends Component {
     <x-header title="Expense Forecast" separator />
 
     <!-- Forecast Controls -->
-    <div class="flex justify-between items-center mb-4">
+    <div class="flex justify-between items-end mb-4">
         <div>
             <label for="forecastMonths" class="mr-2">Forecast Months:</label>
             <select id="forecastMonths" wire:model="forecastMonths" wire:change="updateForecastMonths" class="select select-bordered select-sm">
@@ -179,6 +196,7 @@ new class extends Component {
                 <option value="12">12 Months</option>
             </select>
         </div>
+        
         <button wire:click="togglePastForecasts" class="btn btn-sm btn-outline">
             {{ $showPastForecasts ? 'Hide Past Forecasts' : 'Show Past Forecasts' }}
         </button>
@@ -190,7 +208,9 @@ new class extends Component {
         <div class="text-sm text-gray-500 mb-4">
             Using moving average algorithm with data from the last 12 months
         </div>
-        <x-chart wire:model="forecastChart" />
+        <div class="relative h-72 md:h-64 lg:h-56">
+            <x-chart wire:model="forecastChart" />
+        </div>
     </x-card>
 
     <!-- Overall Forecast Table -->
@@ -255,7 +275,7 @@ new class extends Component {
                 <select id="selectedMonth" wire:model="selectedMonth" wire:change="updateSelectedMonth" class="select select-bordered select-sm">
                     @php
                         $months = DB::table('forecasts')
-                            ->select(DB::raw('DISTINCT TO_CHAR(forecast_date, \'YYYY-MM\') as month'))
+                            ->select(DB::raw('DISTINCT ' . DatabaseHelper::yearMonthExpression('forecast_date') . ' as month'))
                             ->where('user_id', Auth::id())
                             ->where('forecast_date', '<', now())
                             ->orderBy('month', 'desc')

@@ -147,7 +147,7 @@ new class extends Component {
             @scope('cell_permissions', $role)
                 <div class="flex flex-wrap gap-1">
                     @foreach($role->permissions as $permission)
-                        <x-badge :value="$permission->name" class="badge-ghost" />
+                        <x-badge :value="$permission->name" class="badge-ghost p-1 mb-1 h-auto" />
                     @endforeach
                 </div>
             @endscope

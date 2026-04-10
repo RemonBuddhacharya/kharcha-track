@@ -165,7 +165,7 @@ new #[Title('Expenses')] class extends Component {
             @endscope
 
             @scope('cell_category', $expense)
-                <x-badge :value="$expense->category->name" class="badge-ghost" />
+                <x-badge :value="$expense->category->name" class="badge-ghost p-1 mb-1 h-auto" />
             @endscope
 
             @scope('cell_date', $expense)

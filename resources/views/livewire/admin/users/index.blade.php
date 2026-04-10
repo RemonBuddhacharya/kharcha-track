@@ -163,7 +163,7 @@ new class extends Component {
         >
             @scope('cell_roles', $user)
                 @foreach($user->roles as $role)
-                    <x-badge :value="$role->name" class="badge-ghost" />
+                    <x-badge :value="$role->name" class="badge-ghost p-1 mb-1 h-auto" />
                 @endforeach
             @endscope
 
